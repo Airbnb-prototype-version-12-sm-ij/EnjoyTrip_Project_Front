@@ -1,6 +1,6 @@
 <script setup>
 import HeaderView from './views/HeaderView.vue'
-import ReviewView from './views/ReviewView.vue'
+import ReviewWriteView from './views/ReviewWriteView.vue'
 import MainView from './views/MainView.vue'
 import SearchView from './views/SearchView.vue'
 </script>
@@ -9,7 +9,7 @@ import SearchView from './views/SearchView.vue'
   <div>
     <HeaderView />
     <MainView />
-    <ReviewView />
+    <ReviewWriteView />
     <SearchView />
   </div>
 </template>
