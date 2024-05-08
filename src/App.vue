@@ -1,8 +1,8 @@
 <script setup>
-import MainView from './views/MainView.vue'
 import HeaderView from './views/HeaderView.vue'
 import ReviewView from './views/ReviewView.vue';
 
+import SearchView from './views/SearchView.vue'
 </script>
 
 <template>
@@ -10,6 +10,7 @@ import ReviewView from './views/ReviewView.vue';
     <HeaderView />
     <MainView />
     <ReviewView />
+    <SearchView />
   </div>
 </template>
 
