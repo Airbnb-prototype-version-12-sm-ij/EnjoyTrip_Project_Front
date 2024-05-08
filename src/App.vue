@@ -1,7 +1,13 @@
-<script setup></script>
+<script setup>
+import MainView from './views/MainView.vue'
+import HeaderView from './views/HeaderView.vue'
+</script>
 
 <template>
-  <div>음</div>
+  <div>
+    <HeaderView />
+    <MainView />
+  </div>
 </template>
 
 <style scoped></style>
