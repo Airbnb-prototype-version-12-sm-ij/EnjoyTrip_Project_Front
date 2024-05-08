@@ -1,12 +1,12 @@
 <script setup>
-import MainView from './views/MainView.vue'
 import HeaderView from './views/HeaderView.vue'
+import SearchView from './views/SearchView.vue'
 </script>
 
 <template>
   <div>
     <HeaderView />
-    <MainView />
+    <SearchView />
   </div>
 </template>
 
