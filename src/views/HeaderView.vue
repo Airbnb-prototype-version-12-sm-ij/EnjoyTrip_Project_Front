@@ -11,6 +11,9 @@
           width="60"
           style="aspect-ratio: 160 / 160; object-fit: cover"
         />
+        <div>
+          <h1 class="text-2xl font-bold text-primary-foreground">방방곡곡</h1>
+        </div>
         <div class="flex items-center">
           <input
             class="flex h-10 w-full border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border rounded-lg px-4 py-2"
