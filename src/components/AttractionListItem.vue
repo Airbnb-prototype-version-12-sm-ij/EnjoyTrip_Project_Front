@@ -1,7 +1,8 @@
 <script setup></script>
 
 <template>
-  <div
+  <RouterLink
+    :to="{ name: 'detail' }"
     class="rounded-lg border bg-card text-card-foreground shadow-sm flex flex-row"
     data-v0-t="card"
   >
@@ -46,7 +47,7 @@
         있기는 취향이 있다 먹지 않겠죠...
       </p>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <style scoped></style>
