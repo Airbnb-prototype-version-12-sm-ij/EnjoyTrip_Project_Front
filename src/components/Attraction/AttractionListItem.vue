@@ -1,7 +1,11 @@
 <script setup>
-defineProps({
+const props = defineProps({
   attractionItem: Object
 })
+
+const SRC_IMG = props.attractionItem.firstImage
+  ? props.attractionItem.firstImage
+  : 'src/assets/noImg.png'
 </script>
 
 <template>
@@ -12,10 +16,10 @@ defineProps({
   >
     <!-- 이미지 -->
     <img
-      alt="Restaurant Image"
+      :alt="attractionItem.title"
       class="w-1/3 rounded-l-md"
       height="120"
-      :src="attractionItem.firstImage"
+      :src="SRC_IMG"
       width="120"
       style="aspect-ratio: 120 / 120; object-fit: cover"
     />
@@ -43,7 +47,7 @@ defineProps({
         <span class="ml-2">65</span>
         <span class="mx-2">|</span>
         <!-- 카테고리 -->
-        <span>{{ attractionItem.addr1 }}{{ attractionItem.addr2 }}</span>
+        <span>{{ attractionItem.addr1 }} | {{ attractionItem.addr2 }}</span>
       </div>
       <!-- 설명 -->
       <p class="text-sm">

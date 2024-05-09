@@ -3,9 +3,18 @@ import SideMenu from '../components/SideMenu.vue'
 import AttractionList from '../components/Attraction/AttractionList.vue'
 import { useAttractionStore } from '@/store/attrationStore'
 import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
 const attractionStore = useAttractionStore()
 const { attractionItems } = storeToRefs(attractionStore)
+const router = useRouter()
+
+onMounted(() => {
+  if (!attractionItems.value.length) {
+    router.push('/')
+  }
+})
 </script>
 
 <template>

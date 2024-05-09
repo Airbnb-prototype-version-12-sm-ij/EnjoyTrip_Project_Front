@@ -18,7 +18,7 @@ const state = ref({
     <div class="text-center">
       <h1 class="text-4xl font-bold mb-4">추천 관광지</h1>
       <Carousel
-        class="w-64"
+        class="w-[800px]"
         :autoplay="2500"
         :transition="1000"
         :wrap-around="true"
@@ -29,7 +29,7 @@ const state = ref({
             <img
               :src="place.image"
               :alt="place.name"
-              class="w-full h-32 object-cover rounded mb-2"
+              class="w-full h-full object-cover rounded mb-2"
             />
             <h2 class="text-2xl font-bold mb-2">{{ place.name }}</h2>
             <p>여기는 {{ place.name }}입니다.</p>

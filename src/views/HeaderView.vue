@@ -2,10 +2,12 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-
+import { useSwal } from '../useSwal'
 import { useAttractionStore } from '@/store/attrationStore'
 
 const router = useRouter()
+
+const Swal = useSwal()
 
 const { setItems } = useAttractionStore()
 
@@ -26,7 +28,11 @@ const attractionSearch = () => {
     })
     .then((res) => {
       if (res.data.length === 0) {
-        alert('검색 결과가 없습니다.')
+        Swal.fire({
+          icon: 'success',
+          title: 'Hello',
+          text: 'Hello brave new world!'
+        })
       } else {
         attractionItems.value = res.data
         setItems(attractionItems.value)
