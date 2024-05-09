@@ -1,6 +1,6 @@
 <script setup>
 import SideMenu from '../components/SideMenu.vue'
-import AttractionList from '../components/AttractionList.vue'
+import AttractionList from '../components/Attraction/AttractionList.vue'
 </script>
 
 <template>

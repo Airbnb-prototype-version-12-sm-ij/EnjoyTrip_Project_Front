@@ -11,7 +11,7 @@
       alt="Restaurant Image"
       class="w-1/3 rounded-l-md"
       height="120"
-      src="../assets/bangbang_goggog_logo_1.svg"
+      src="../../assets/bangbang_goggog_logo_1.svg"
       width="120"
       style="aspect-ratio: 120 / 120; object-fit: cover"
     />

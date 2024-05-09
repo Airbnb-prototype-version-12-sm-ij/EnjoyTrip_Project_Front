@@ -1,9 +1,9 @@
 <script setup>
-import RecommandAttraction from '@/components/RecommandAttraction.vue'
+import AttractionRecommand from '@/components/Attraction/AttractionRecommand.vue'
 </script>
 
 <template>
-  <RecommandAttraction />
+  <AttractionRecommand />
 </template>
 
 <style scoped></style>
