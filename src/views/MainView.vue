@@ -1,7 +1,9 @@
-<script setup></script>
+<script setup>
+import AttractionRecommand from '@/components/Attraction/AttractionRecommand.vue'
+</script>
 
 <template>
-  <div>메인 페이지</div>
+  <AttractionRecommand />
 </template>
 
 <style scoped></style>
