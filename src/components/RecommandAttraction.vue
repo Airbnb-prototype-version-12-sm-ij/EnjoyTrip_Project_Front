@@ -18,14 +18,14 @@ const state = ref({
     <div class="text-center">
       <h1 class="text-4xl font-bold mb-4">추천 관광지</h1>
       <Carousel
-        :autoplay="2000"
-        :perPage="3"
-        :navigationEnabled="true"
-        :direction="'horizontal'"
-        class="carousel-container"
+        class="w-64"
+        :autoplay="2500"
+        :transition="1000"
+        :wrap-around="true"
+        :items-to-show="1"
       >
         <Slide v-for="(place, index) in state.recommendedPlaces" :key="index">
-          <div class="w-64 h-64 bg-white shadow rounded p-4">
+          <div class="w-full bg-white shadow rounded p-4" style="aspect-ratio: 1/1">
             <img
               :src="place.image"
               :alt="place.name"
@@ -35,9 +35,24 @@ const state = ref({
             <p>여기는 {{ place.name }}입니다.</p>
           </div>
         </Slide>
+        <template #addons>
+          <navigation />
+          <pagination />
+        </template>
       </Carousel>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.carousel-container .carousel__navigation--next,
+.carousel-container .carousel__navigation--prev {
+  background-color: black;
+  color: white;
+}
+
+.carousel-container .carousel__navigation--next:hover,
+.carousel-container .carousel__navigation--prev:hover {
+  background-color: gray;
+}
+</style>
