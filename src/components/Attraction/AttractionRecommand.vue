@@ -18,11 +18,12 @@ const state = ref({
     <div class="text-center">
       <h1 class="text-4xl font-bold mb-4">추천 관광지</h1>
       <Carousel
-        class="w-[800px]"
+        class="w-[500px]"
         :autoplay="2500"
         :transition="1000"
         :wrap-around="true"
         :items-to-show="1"
+        :mouse-drag="false"
       >
         <Slide v-for="(place, index) in state.recommendedPlaces" :key="index">
           <div class="w-full bg-white shadow rounded p-4" style="aspect-ratio: 1/1">

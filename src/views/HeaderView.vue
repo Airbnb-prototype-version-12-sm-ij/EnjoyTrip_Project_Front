@@ -2,12 +2,22 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-import { useSwal } from '../useSwal'
+import Swal from 'sweetalert2'
 import { useAttractionStore } from '@/store/attrationStore'
 
-const router = useRouter()
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
-const Swal = useSwal()
+const router = useRouter()
 
 const { setItems } = useAttractionStore()
 
@@ -28,10 +38,9 @@ const attractionSearch = () => {
     })
     .then((res) => {
       if (res.data.length === 0) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Hello',
-          text: 'Hello brave new world!'
+        Toast.fire({
+          icon: 'error',
+          title: '검색 결과가 없습니다.'
         })
       } else {
         attractionItems.value = res.data
