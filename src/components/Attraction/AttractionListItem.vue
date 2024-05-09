@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+defineProps({
+  attractionItem: Object
+})
+</script>
 
 <template>
   <RouterLink
@@ -11,13 +15,13 @@
       alt="Restaurant Image"
       class="w-1/3 rounded-l-md"
       height="120"
-      src="../../assets/bangbang_goggog_logo_1.svg"
+      :src="attractionItem.firstImage"
       width="120"
       style="aspect-ratio: 120 / 120; object-fit: cover"
     />
     <div class="w-2/3 p-4">
       <!-- 제목 -->
-      <h3 class="text-lg font-semibold">유명가게(와) 인기있는 거실 코너</h3>
+      <h3 class="text-lg font-semibold">{{ attractionItem.title }}</h3>
       <div class="flex items-center mt-2 mb-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -39,12 +43,11 @@
         <span class="ml-2">65</span>
         <span class="mx-2">|</span>
         <!-- 카테고리 -->
-        <span>단골집, 좌석</span>
+        <span>{{ attractionItem.addr1 }}{{ attractionItem.addr2 }}</span>
       </div>
       <!-- 설명 -->
       <p class="text-sm">
-        ... 시민들 다 먹는 지역에 위치하는 사람들이 많은 편한 풍경을 담아 보는 술집이 대학 기복 답고
-        있기는 취향이 있다 먹지 않겠죠...
+        {{ attractionItem.overview }}
       </p>
     </div>
   </RouterLink>
