@@ -1,17 +1,12 @@
 <script setup>
 import HeaderView from './views/HeaderView.vue'
-import AttractionDetailView from './views/AttractionDetailView.vue'
-
-
-import 'vue3-carousel/dist/carousel.css'
-
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
   <div>
     <HeaderView />
-
-    <AttractionDetailView />
+    <RouterView />
   </div>
 </template>
 
