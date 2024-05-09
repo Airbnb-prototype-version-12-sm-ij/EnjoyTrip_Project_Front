@@ -1,11 +1,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useAttractionStore } from '@/store/attrationStore'
 import LoginModal from '@/views/modal/LoginModal.vue'
-import client from '../api/client'
+import client from '@/api/client'
 // 알림창
 const Toast = Swal.mixin({
   toast: true,
@@ -18,6 +17,10 @@ const Toast = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 })
+// 게시판 이동
+const goToBoard = () => {
+  router.push({ name: 'board' })
+}
 
 // 관광지 검색
 const router = useRouter()
@@ -29,7 +32,7 @@ const attractionItems = ref([])
 
 const attractionSearch = async () => {
   try {
-    const res = await axios.get('http://localhost/attractions/search', {
+    const res = await client.get('/attractions/search', {
       params: {
         sidoCode: sidoCode.value,
         typeCode: contentId.value,
@@ -60,6 +63,7 @@ const closeLoginModal = () => {
   isLoginModalOpen.value = false
 }
 
+// 세션에서 로그인 정보 가져오기
 const loadingState = ref({ isLoading: true })
 
 onMounted(async () => {

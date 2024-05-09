@@ -1,15 +1,13 @@
 <script setup>
 import HeaderView from './views/HeaderView.vue'
 import { RouterView } from 'vue-router'
-
 </script>
 
 <template>
-  <div>
+  <div class="dark:bg-gray-500">
     <HeaderView />
+    <RouterView />
   </div>
-  <RouterView />
 </template>
-
 
 <style scoped></style>
