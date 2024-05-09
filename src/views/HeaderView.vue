@@ -206,18 +206,12 @@ const logout = async () => {
           </div>
         </div>
         <div class="flex space-x-4">
+          <!-- 게시판 버튼 -->
           <button
-            type="button"
-            role="combobox"
-            aria-controls="radix-:r11:"
-            aria-expanded="false"
-            aria-autocomplete="none"
-            dir="ltr"
-            data-state="closed"
-            data-placeholder=""
-            class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            @click="goToBoard"
+            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 border rounded-lg"
           >
-            <span style="pointer-events: none">KRW</span>
+            게시판
           </button>
           <!-- 로그인 버튼 -->
           <button

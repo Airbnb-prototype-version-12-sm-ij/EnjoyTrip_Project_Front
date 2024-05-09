@@ -6,23 +6,36 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/MainView.vue')
+      component: () => import('@/views/MainView.vue')
     },
     {
       path: '/search',
       name: 'search',
-      component: () => import('../views/SearchView.vue'),
+      component: () => import('@/views/SearchView.vue'),
       props: true
     },
     {
       path: '/detail',
       name: 'detail',
-      component: () => import('../views/DetailView.vue')
+      component: () => import('@/views/DetailView.vue')
     },
+
     {
       path: '/review',
       name: 'review',
-      component: () => import('../views/ReviewWriteView.vue')
+      component: () => import('@/views/ReviewWriteView.vue')
+    },
+
+    {
+      path: '/board/:boardId',
+      name: 'boardDetailView',
+      component: () => import('@/views/BoardDetailView.vue')
+    },
+
+    {
+      path: '/board',
+      name: 'board',
+      component: () => import('@/views/BoardListView.vue')
     }
   ]
 })
