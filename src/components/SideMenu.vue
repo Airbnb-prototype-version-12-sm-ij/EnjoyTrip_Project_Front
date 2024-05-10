@@ -9,36 +9,25 @@ const state = ref({
     '',
     '',
     '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
     ''
   ]
 })
 </script>
 
 <template>
-  <div>
-    <nav class="col-span-1 space-y-1">
-      <a
-        v-for="(link, index) in state.links"
-        :key="index"
-        class="block px-4 py-2 text-sm"
-        :href="link"
-        @mouseover="state.hover[index] = true"
-        @mouseleave="state.hover[index] = false"
-        :class="{ 'bg-gray-200 rounded-md': state.hover[index] }"
-      >
-        링크 {{ index + 1 }}
-      </a>
-    </nav>
-  </div>
+  <nav class="col-span-1 space-y-1 w-full pl-3">
+    <a
+      v-for="(link, index) in state.links"
+      :key="index"
+      class="block px-4 py-2 text-sm w-full"
+      :href="link"
+      @mouseover="state.hover[index] = true"
+      @mouseleave="state.hover[index] = false"
+      :class="{ 'bg-gray-200 rounded-md': state.hover[index] }"
+    >
+      링크 {{ index + 1 }}
+    </a>
+  </nav>
 </template>
 
 <style scoped></style>

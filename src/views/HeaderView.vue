@@ -5,6 +5,10 @@ import Swal from 'sweetalert2'
 import { useAttractionStore } from '@/store/attrationStore'
 import LoginModal from '@/views/modal/LoginModal.vue'
 import client from '@/api/client'
+import SignupModal from '@/views/modal/SignupModal.vue'
+import MyInfoModal from '@/views/modal/MyInfoModal.vue'
+import MemberModal from '@/views/modal/MemberModal.vue'
+
 // 알림창
 const Toast = Swal.mixin({
   toast: true,
@@ -63,6 +67,46 @@ const closeLoginModal = () => {
   isLoginModalOpen.value = false
 }
 
+// 마이 페이지 모달 관리
+const isMyInfoModalOpen = ref(false)
+
+const openMyInfoModal = () => {
+  isMyInfoModalOpen.value = true
+}
+
+const closeMyInfoModal = () => {
+  isMyInfoModalOpen.value = false
+}
+
+// 회원 관리 모달 관리
+
+const isMemberModalOpen = ref(false)
+
+const isOpenMemberModal = () => {
+  isMyInfoModalOpen.value = false
+  isMemberModalOpen.value = true
+}
+
+const closeMemberModal = () => {
+  isMyInfoModalOpen.value = true
+  isMemberModalOpen.value = false
+}
+
+// 회원가입 모달 관리
+const isSiginUpModalOpen = ref(false)
+
+const isOpenSignupModal = () => {
+  console.log('회원가입 모달 열기')
+  isLoginModalOpen.value = false // 로그인 모달 닫기
+  isSiginUpModalOpen.value = true
+}
+
+const closeSignupModal = () => {
+  console.log('회원가입 모달 닫기')
+  isLoginModalOpen.value = true // 로그인 모달 닫기
+  isSiginUpModalOpen.value = false
+}
+
 // 세션에서 로그인 정보 가져오기
 const loadingState = ref({ isLoading: true })
 
@@ -91,12 +135,13 @@ onMounted(async () => {
 
   loadingState.value.isLoading = false // 로딩이 완료되었음을 표시
 })
-
+// 로그인 정보 계속 확인용
 client.get('/members/ping').then((res) => {
   if (res.status === 200) {
     if (res.data === '') {
       return
     }
+
     sessionStorage.setItem('memberDto', JSON.stringify(res.data))
   } else {
     router.go(0)
@@ -119,7 +164,14 @@ const logout = async () => {
   try {
     await client.post('/members/logout')
     sessionStorage.removeItem('memberDto')
-    router.go(0)
+    Swal.fire({
+      title: '로그아웃 성공',
+      icon: 'success',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: '확인'
+    }).then(() => {
+      router.go(0)
+    })
   } catch (error) {
     console.error('로그아웃 에러: ', error)
   }
@@ -231,6 +283,12 @@ const logout = async () => {
               안녕하세요, {{ userInfo.userName }}님
             </p>
             <button
+              @click="openMyInfoModal"
+              class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 border rounded-lg"
+            >
+              마이페이지
+            </button>
+            <button
               @click="logout"
               class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 border rounded-lg"
             >
@@ -238,8 +296,17 @@ const logout = async () => {
             </button>
           </div>
           <!-- 로그인 모달 -->
-          <div v-show="isLoginModalOpen">
-            <LoginModal @close="closeLoginModal" />
+          <div v-if="isLoginModalOpen">
+            <LoginModal @close="closeLoginModal" @isOpenSignupModal="isOpenSignupModal" />
+          </div>
+          <div v-if="isSiginUpModalOpen">
+            <SignupModal @close="closeSignupModal" />
+          </div>
+          <div v-if="isMyInfoModalOpen">
+            <MyInfoModal @close="closeMyInfoModal" @isOpenMemberModal="isOpenMemberModal" />
+          </div>
+          <div v-if="isMemberModalOpen">
+            <MemberModal @close="closeMemberModal" />
           </div>
         </div>
       </div>

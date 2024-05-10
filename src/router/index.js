@@ -17,27 +17,42 @@ const router = createRouter({
     {
       path: '/detail',
       name: 'detail',
-      component: () => import('@/views/DetailView.vue')
+      component: () => import('@/views/review/ReviewDetailView.vue'),
+      props: true
     },
 
     {
       path: '/review',
       name: 'review',
-      component: () => import('@/views/ReviewWriteView.vue')
+      component: () => import('@/views/review/ReviewWriteView.vue')
     },
 
     {
       path: '/board/:boardId',
       name: 'boardDetailView',
-      component: () => import('@/views/BoardDetailView.vue')
+      component: () => import('@/views/board/BoardDetailView.vue')
     },
 
     {
       path: '/board',
       name: 'board',
-      component: () => import('@/views/BoardListView.vue')
+      component: () => import('@/views/board/BoardListView.vue')
+    },
+
+    {
+      path: '/board/wirte',
+      name: 'boardWrite',
+      component: () => import('@/views/board/BoardWriteView.vue')
     }
+
+
+
+
   ]
 })
+
+
+
+
 
 export default router
