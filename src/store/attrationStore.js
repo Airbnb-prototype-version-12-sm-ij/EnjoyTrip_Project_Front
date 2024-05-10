@@ -9,3 +9,12 @@ export const useAttractionStore = defineStore('attraction', () => {
   }
   return { attractionItems, setItems }
 })
+
+export const useAttractionInfoStore = defineStore('attractionInfo', () => {
+  const attractionInfo = ref({})
+
+  const setItem = (item) => {
+    attractionInfo.value = item
+  }
+  return { attractionInfo, setItem }
+})

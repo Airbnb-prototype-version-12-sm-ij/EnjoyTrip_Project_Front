@@ -135,7 +135,7 @@ onMounted(async () => {
 
   loadingState.value.isLoading = false // 로딩이 완료되었음을 표시
 })
-
+// 로그인 정보 계속 확인용
 client.get('/members/ping').then((res) => {
   if (res.status === 200) {
     if (res.data === '') {

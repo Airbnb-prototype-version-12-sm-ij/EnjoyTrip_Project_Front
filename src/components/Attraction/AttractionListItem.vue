@@ -1,4 +1,9 @@
 <script setup>
+import { defineProps, ref } from 'vue'
+import { useAttractionInfoStore } from '@/store/attrationStore'
+
+const { setItem } = useAttractionInfoStore()
+
 const props = defineProps({
   attractionItem: Object
 })
@@ -6,6 +11,27 @@ const props = defineProps({
 const SRC_IMG = props.attractionItem.firstImage
   ? props.attractionItem.firstImage
   : 'src/assets/noImg.png'
+
+const attractionInfo = ref({
+  contentId: props.attractionItem.contentId,
+  contentTypeId: props.attractionItem.contentTypeId,
+  title: props.attractionItem.title,
+  addr1: props.attractionItem.addr1,
+  addr2: props.attractionItem.addr2,
+  zipcode: props.attractionItem.zipcode,
+  tel: props.attractionItem.tel,
+  firstImage: SRC_IMG,
+  firstImage2: props.attractionItem.firstImage2,
+  readCount: props.attractionItem.readCount,
+  sidoCode: props.attractionItem.sidoCode,
+  gugunCode: props.attractionItem.gugunCode,
+  latitude: props.attractionItem.latitude,
+  longitude: props.attractionItem.longitude,
+  mlevel: props.attractionItem.mlevel,
+  overview: props.attractionItem.overview
+})
+
+setItem(attractionInfo.value)
 </script>
 
 <template>
