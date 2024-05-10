@@ -12,7 +12,6 @@ const boardList = ref([]);
 const getBoardList = () => {
     axios.get('http://localhost/posting/')
         .then((response) => {
-            console.log(response.data);
             boardList.value = response.data;
         })
         .catch(() => {
