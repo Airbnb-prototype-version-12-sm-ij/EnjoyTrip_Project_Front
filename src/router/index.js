@@ -43,16 +43,14 @@ const router = createRouter({
       path: '/board/wirte',
       name: 'boardWrite',
       component: () => import('@/views/board/BoardWriteView.vue')
+    },
+
+    {
+      path: '/board/:boardId',
+      name: 'boardModify',
+      component: () => import('@/views/board/BoardModifyView.vue')
     }
-
-
-
-
   ]
 })
-
-
-
-
 
 export default router
