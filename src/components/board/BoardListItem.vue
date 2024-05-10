@@ -8,24 +8,14 @@ const props = defineProps({
 })
 
 const boardDetail = () => {
-<<<<<<< HEAD
-    console.log(props.board.postId)
     router.push({
         name: 'boardDetailView',
-        params: { boardId: props.board.postId },
-        query: { board: JSON.stringify(props.board) }
+        params: { boardId: props.board.postId }
     })
-=======
-  router.push({
-    name: 'boardDetailView',
-    params: { boardId: props.board.postId }
-  })
->>>>>>> c4d4cc11162318f8d0a72bd30a6490163daa8dab
 }
 </script>
 
 <template>
-<<<<<<< HEAD
     <div
         class="dark:bg-gray-950 group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
         <a @click="boardDetail" class="absolute inset-0 z-10">
@@ -55,8 +45,6 @@ const boardDetail = () => {
                     <span class="text-gray-500 dark:text-gray-400 text-sm">25 likes</span>
                 </div>
             </div>
-        </div>
-    </div>
 </template>
 
 <style scoped></style>
