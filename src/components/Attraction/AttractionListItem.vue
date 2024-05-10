@@ -36,6 +36,7 @@ setItem(attractionInfo.value)
 
 <template>
   <RouterLink
+    @click="setItem(attractionInfo)"
     :to="{ name: 'detail' }"
     class="rounded-lg border bg-card text-card-foreground shadow-sm flex flex-row"
     data-v0-t="card"

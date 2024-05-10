@@ -1,16 +1,21 @@
 <script setup>
+import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps'
+import { defineProps, ref } from 'vue'
 const props = defineProps({
   lat: Number,
   lon: Number
 })
 
-console.log(props.lat, props.lon)
+const lat = ref(props.lat)
+const lng = ref(props.lon)
+
+console.log(lat.value, lng.value)
 </script>
 
 <template>
-  <div>
-    <h1>카카오맵</h1>
-  </div>
+  <KakaoMap :lat="lat" :lng="lng" :draggable="true" :width="500">
+    <KakaoMapMarker :lat="lat" :lng="lng"></KakaoMapMarker>
+  </KakaoMap>
 </template>
 
 <style scoped></style>
