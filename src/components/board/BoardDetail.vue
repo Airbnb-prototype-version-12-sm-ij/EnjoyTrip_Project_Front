@@ -1,28 +1,80 @@
 <script setup>
 
-defineProps({
-    board: Object
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import axios from 'axios';
+
+const route = useRoute();
+const isLoading = ref(true);
+
+const props = defineProps({
+    postId: Number
+})
+
+
+const memberDto = sessionStorage.getItem('memberDto');
+const userId = JSON.parse(memberDto).userId;
+console.log(userId);
+
+const board = ref({});
+const objBoard = null;
+
+
+const getBoard = async () => {
+    console.log('http://localhost/posting/' + props.postId);
+    try {
+        const response = await axios.get('http://localhost/posting/' + props.postId);
+        board.value = response.data;
+    } catch {
+        alert('에러가 발생했습니다.');
+    }
+}
+
+const imgPath = ref("");
+
+onMounted(async () => {
+    await getBoard();
+    isLoading.value = false;
+
+    const objBoard = board.value;
+    console.log("오브젝트")
+    console.log(typeof objBoard);
+    console.log(objBoard.fileInfo[0].saveFile);
+
+    imgPath.value = "C:/Users/qq221/Study/JAVA_Project/EnjoyTrip_Project/src/main/webapp/upload_img";
+    imgPath.value += "/" + objBoard.fileInfo[0].saveFolder + "/" + objBoard.fileInfo[0].saveFile;
+
+    console.log(imgPath.value);
 });
 
 
-const userId = JSON.parse(sessionStorage.getItem('memberDto')).userId;
 
 </script>
 
+
+
+
 <template>
-    <div class="grid gap-8 max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <div v-if='!isLoading' class="grid gap-8 max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div class="grid gap-2">
-            <h1 class="text-3xl font-bold">{{ board.title }}</h1>
+            <h1 class="text-3xl font-bold"> {{ board.title }}</h1>
             <div class="flex justify-between items-center gap-4 text-sm text-gray-500">
 
                 <div class="flex items-center gap-4">
                     <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+
                         <img class="aspect-square h-full w-full" alt="@shadcn" src="@/assets/sample.png" />
+
+
                     </span>
+
                     <div>
                         <div class="font-medium">{{ board.userId }}</div>
-                        <div>{{ board.createdAt }}</div>
+                        <div> {{ board.createdAt }} </div>
                     </div>
+                    {{ board.sidoName }}
+                    {{ board.gugunName }}
+                    조회수 : {{ board.hit }}
                 </div>
 
 
@@ -43,6 +95,10 @@ const userId = JSON.parse(sessionStorage.getItem('memberDto')).userId;
         </div>
         <img src="@/assets/boardSample.jpg" alt="Autumn Leaves" width="1200" height="800"
             class="rounded-lg object-cover w-full aspect-[3/2]" />
+
+        <img :src="imgPath" alt="ttt" />
+        {{ imgPath }}
+
         <div class="prose prose-lg max-w-none">
             <p>
                 {{ board.content }}

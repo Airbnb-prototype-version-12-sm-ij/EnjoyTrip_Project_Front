@@ -4,7 +4,9 @@ import BoardDetail from '@/components/board/BoardDetail.vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const board = JSON.parse(route.query.board);
+
+console.log("route.params.postId")
+console.log(route.params.boardId);
 </script>
 
 
@@ -12,7 +14,7 @@ const board = JSON.parse(route.query.board);
 
 <template>
     <div>
-        <BoardDetail :board='board' />
+        <BoardDetail :postId='route.params.boardId' />
     </div>
 </template>
 
