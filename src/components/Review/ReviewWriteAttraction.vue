@@ -11,7 +11,7 @@ const score = ref(3.2)
         alt="Place"
         class="border rounded-lg"
         height="300"
-        src="../assets/bangbang_goggog_logo_1.svg"
+        src="@/assets/bangbang_goggog_logo_1.svg"
         width="300"
         style="aspect-ratio: 300 / 300; object-fit: cover"
       />

@@ -20,20 +20,29 @@ onMounted(() => {
 </script>
 
 <template>
+  {{ attractionInfo }}
   <div class="max-w-7xl mx-auto py-10 flex flex-col">
-    <div class="flex">
+    <div class="flex container">
       <div class="flex mr-auto">
         <SideMenu />
       </div>
-      <div class="flex">
-        <PhotoView :IMG_SRC="attractionInfo.firstImage" />
+      <div>
+        <h1 class="text-3xl font-bold">{{ attractionInfo.title }}</h1>
+        <h2 class="text-gray-500">설명</h2>
+        <p class="text-gray-500">{{ attractionInfo.overview }}</p>
       </div>
-      <div class="flex ml-auto">
-        <KakaoMap :lat="attractionInfo.latitude" :lon="attractionInfo.longitude" />
-      </div>
+    </div>
+    <div class="flex">
+      <PhotoView :IMG_SRC="attractionInfo.firstImage" />
+      <KakaoMap :lat="attractionInfo.latitude" :lon="attractionInfo.longitude" />
     </div>
     <AttractionDetailReviewList />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  max-height: 90vh; /* 뷰포트 높이의 90%를 최대 높이로 설정 */
+  overflow: auto;
+}
+</style>

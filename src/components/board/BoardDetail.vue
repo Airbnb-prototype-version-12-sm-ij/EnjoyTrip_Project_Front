@@ -91,9 +91,7 @@ onMounted(async () => {
 
     <img :src="imgPath" alt="ttt" />
     {{ imgPath }}
-    <img
-      src="C:/Users/qq221/Study/JAVA_Project/EnjoyTrip_Project/src/main/webapp/upload_img/240510/0bbb618185ac4323bcb1971210bc6d4e.jpg"
-    />
+
     <div class="prose prose-lg max-w-none">
       <p>
         {{ board.content }}
