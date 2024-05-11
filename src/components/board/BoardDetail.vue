@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
+import BoaradComment from './BoaradComment.vue';
 // import { useRoute } from 'vue-router'
 import client from '@/api/client';
 import axios from 'axios'
@@ -107,14 +108,12 @@ onMounted(async () => {
     </div>
     <img :src="imgPath" alt="Autumn Leaves" width="1200" height="800"
       class="rounded-lg object-cover w-full aspect-[3/2]" />
-
-    {{ imgPath }}
-
     <div class="prose prose-lg max-w-none">
       <p>
         {{ board.content }}
       </p>
     </div>
+    <BoaradComment :boardId='board.postId' />
   </div>
 </template>
 

@@ -1,5 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
+import { ref } from 'vue';
 
 const router = useRouter()
 
@@ -7,6 +8,13 @@ const props = defineProps({
 	board: Object
 })
 
+
+const imgPath = ref('')
+if (props.board && props.board.fileInfo && props.board.fileInfo.length > 0) {
+	imgPath.value = "http://localhost/upload_img"
+	imgPath.value +=
+		'/' + props.board.fileInfo[0].saveFolder + '/' + props.board.fileInfo[0].saveFile;
+}
 const boardDetail = () => {
 	router.push({
 		name: 'boardDetailView',
@@ -17,13 +25,14 @@ const boardDetail = () => {
 </script>
 
 <template>
+
 	<div
 		class="dark:bg-gray-950 group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
 		<a @click="boardDetail" class="absolute inset-0 z-10">
 			<span class="sr-only">View</span>
 		</a>
-		<img src="@/assets/boardSample.jpg" alt="Gallery Item 1" width="300" height="300"
-			class="object-cover w-full h-60" style="aspect-ratio: 300 / 300; object-fit: cover" />
+		<img :src="imgPath" alt="이미지 로드중" width="300" height="300" class="object-cover w-full h-60"
+			style="aspect-ratio: 300 / 300; object-fit: cover" />
 		<div class="bg-white p-4 dark:bg-gray-950">
 			<h3 class="font-semibold text-lg md:text-xl group-hover:underline dark:text-white">
 				{{ props.board.title }}
