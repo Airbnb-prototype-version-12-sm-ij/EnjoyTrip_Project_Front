@@ -1,10 +1,12 @@
 <script setup>
 import HeaderView from './views/HeaderView.vue'
+import PrelineTest from '@/views/PrelineTest.vue'
 import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <div class="dark:bg-gray-500">
+  <div>
+    <PrelineTest />
     <HeaderView />
     <RouterView />
   </div>

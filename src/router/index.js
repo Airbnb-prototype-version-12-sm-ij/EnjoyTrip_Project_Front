@@ -20,25 +20,21 @@ const router = createRouter({
       component: () => import('@/views/review/ReviewDetailView.vue'),
       props: true
     },
-
     {
       path: '/review',
       name: 'review',
       component: () => import('@/views/review/ReviewWriteView.vue')
     },
-
     {
       path: '/board/:boardId',
       name: 'boardDetailView',
       component: () => import('@/views/board/BoardDetailView.vue')
     },
-
     {
       path: '/board',
       name: 'board',
       component: () => import('@/views/board/BoardListView.vue')
     },
-
     {
       path: '/board/wirte',
       name: 'boardWrite',

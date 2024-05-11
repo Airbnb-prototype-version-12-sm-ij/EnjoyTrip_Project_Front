@@ -7,12 +7,11 @@ defineProps({
 </script>
 
 <template>
-  <img class="w-1/4 rounded-l-md" :src="IMG_SRC" style="aspect-ratio: 1/1; object-fit: cover" />
+  <img class="w-full rounded-l-md" :src="IMG_SRC" style="aspect-ratio: 1/1; object-fit: cover" />
 </template>
 
 <style scoped>
 img {
-  width: 500px;
-  height: 50%;
+  width: 50%;
 }
 </style>

@@ -141,7 +141,6 @@ client.get('/members/ping').then((res) => {
     if (res.data === '') {
       return
     }
-
     sessionStorage.setItem('memberDto', JSON.stringify(res.data))
   } else {
     router.go(0)

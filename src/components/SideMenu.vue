@@ -19,7 +19,7 @@ const state = ref({
     <a
       v-for="(link, index) in state.links"
       :key="index"
-      class="block px-4 py-2 text-sm w-full"
+      class="block px-4 py-2 text-sm pr-32 text-nowrap"
       :href="link"
       @mouseover="state.hover[index] = true"
       @mouseleave="state.hover[index] = false"
