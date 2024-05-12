@@ -308,8 +308,10 @@ const login = async () => {
           <!-- 로그인 버튼 -->
           <button
             v-if="!isLoggedIn"
-            @click="openLoginModal"
-            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 border rounded-lg"
+            data-modal-target="login-modal"
+            data-modal-toggle="login-modal"
+            class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button"
           >
             로그인
           </button>
