@@ -1,72 +1,67 @@
 <script setup>
-// import { ref, defineEmits } from 'vue'
-// import { useRouter } from 'vue-router'
-// import Swal from 'sweetalert2'
-// import client from '@/api/client'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+import client from '@/api/client'
 
-// const router = useRouter()
+const router = useRouter()
 
-// // 알림창
-// const Toast = Swal.mixin({
-//   toast: true,
-//   position: 'top-end',
-//   showConfirmButton: false,
-//   timer: 3000,
-//   timerProgressBar: true,
-//   didOpen: (toast) => {
-//     toast.addEventListener('mouseenter', Swal.stopTimer)
-//     toast.addEventListener('mouseleave', Swal.resumeTimer)
-//   }
-// })
+// 알림창
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
-// 모달 닫기
-// const emit = defineEmits(['close', 'isOpenSignupModal'])
+const userId = ref('')
+const userPassword = ref('')
 
-// const close = () => {
-//   emit('close')
-// }
+const login = async () => {
+  try {
+    const response = await client.post('/members/login', {
+      userId: userId.value,
+      userPassword: userPassword.value
+    })
 
-// const isOpenSignupModal = () => {
-//   emit('isOpenSignupModal')
-// }
+    if (response.status !== 200) {
+      throw new Error('로그인 실패')
+    }
 
-// 로그인
-// const userId = ref('')
-// const userPassword = ref('')
+    sessionStorage.setItem('memberDto', JSON.stringify(response.data))
 
-// const login = async () => {
-//   try {
-//     const response = await client.post('/members/login', {
-//       userId: userId.value,
-//       userPassword: userPassword.value
-//     })
-
-//     if (response.status !== 200) {
-//       throw new Error('로그인 실패')
-//     }
-
-//     sessionStorage.setItem('memberDto', JSON.stringify(response.data))
-
-//     Swal.fire({
-//       title: '로그인성공',
-//       icon: 'success',
-//       confirmButtonColor: '#3085d6',
-//       confirmButtonText: '확인'
-//     }).then(() => {
-//       router.go(0)
-//     })
-//   } catch (error) {
-//     console.error('에러' + error)
-//     Toast.fire({
-//       icon: 'error',
-//       title: '로그인 실패'
-//     })
-//   }
-// }
+    Swal.fire({
+      title: '로그인성공',
+      icon: 'success',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: '확인'
+    }).then(() => {
+      router.go(0)
+    })
+  } catch (error) {
+    console.error('에러' + error)
+    Toast.fire({
+      icon: 'error',
+      title: '로그인 실패'
+    })
+  }
+}
 </script>
 
 <template>
-  <!-- Main modal -->
+  <button
+    data-modal-target="login-modal"
+    data-modal-toggle="login-modal"
+    type="button"
+    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+  >
+    Login
+  </button>
   <div
     id="login-modal"
     tabindex="-1"
@@ -80,9 +75,7 @@
         <div
           class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
         >
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-            Sign in to our platform
-          </h3>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Login</h3>
           <button
             type="button"
             class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -110,61 +103,38 @@
         <div class="p-4 md:p-5">
           <form class="space-y-4" action="#">
             <div>
-              <label
-                for="email"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Your email</label
-              >
               <input
-                type="email"
-                name="email"
-                id="email"
+                v-model="userId"
+                type="userId"
+                name="userId"
+                id="userId"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="name@company.com"
+                placeholder="ID"
                 required
               />
             </div>
             <div>
-              <label
-                for="password"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Your password</label
-              >
               <input
+                v-model="userPassword"
                 type="password"
-                name="password"
-                id="password"
-                placeholder="••••••••"
+                name="userPassword"
+                id="userPassword"
+                placeholder="Password"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
             </div>
             <div class="flex justify-between">
-              <div class="flex items-start">
-                <div class="flex items-center h-5">
-                  <input
-                    id="remember"
-                    type="checkbox"
-                    value=""
-                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                    required
-                  />
-                </div>
-                <label
-                  for="remember"
-                  class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >Remember me</label
-                >
-              </div>
               <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500"
                 >Lost Password?</a
               >
             </div>
             <button
+              @click="login"
               type="submit"
               class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Login to your account
+              Login
             </button>
             <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
               Not registered?
