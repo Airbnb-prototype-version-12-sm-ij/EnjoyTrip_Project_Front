@@ -17,8 +17,9 @@ const props = defineProps({
   postId: Number
 })
 
-const memberDto = sessionStorage.getItem('memberDto')
-const userId = JSON.parse(memberDto).userId
+// const memberDto = sessionStorage.getItem('memberDto')
+// const userId = JSON.parse(memberDto).userId
+const userId = 'qq221qq';
 
 const board = ref({})
 const objBoard = ref('')
@@ -113,7 +114,7 @@ onMounted(async () => {
         {{ board.content }}
       </p>
     </div>
-    <BoaradComment :boardId='board.postId' />
+    <BoaradComment :boardId='board.postId' :loginUser='userId' />
   </div>
 </template>
 

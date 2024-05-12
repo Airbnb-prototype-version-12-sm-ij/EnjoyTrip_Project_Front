@@ -1,21 +1,32 @@
 <script setup>
 
 const props = defineProps({
-    comment: Object
+    comment: Object,
+    loginUser: String
 })
 
 </script>
 
 <template>
     <div class="text-sm flex items-start gap-4">
-        <div
-            class="bg-gray-100 rounded-full w-10 h-10 flex items-center justify-center font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-50">
-            프로필
-        </div>
+        <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+            <img class="aspect-square h-full w-full" alt="@shadcn" src="@/assets/sample.png" />
+        </span>
         <div class="grid gap-1.5">
             <div class="flex items-center gap-2">
                 <div class="font-semibold">{{ comment.userId }}</div>
                 <div class="text-gray-500 text-xs dark:text-gray-400">{{ comment.createdAt }}</div>
+                <button @click="deleteComment" v-show="loginUser == comment.userId"
+                    class="inline-flex items-center justify-center rounded-full bg-red-500 p-2 text-white hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="h-5 w-5">
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                    </svg>
+                    <span class="sr-only">Delete comment</span>
+                </button>
             </div>
             <div>{{ comment.comment }}</div>
         </div>
