@@ -70,85 +70,71 @@ const onSubmit = (e) => {
 
 <template>
   <div class="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
-    <div class="w-full max-w-7xl px-10 py-8 bg-white rounded-lg shadow-lg dark:bg-gray-800">
-      <form class="space-y-16 h-[56rem] mx-auto" enctype="multipart/form-data" @submit.prevent="onSubmit">
-        <div class="flex">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor="city">
-              <strong>시도</strong>
-            </label>
-            <select id="sidoCode" name="sidoCode" v-model="sidoCode">
-              <option v-for="item in regionData" :key="item.id" :value="item.id">
-                {{ item.name }}
-              </option>
-            </select>
-          </div>
+    <div class="w-full max-w-7xl px-10 py-15 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+      <form class="space-y-10 h-[42rem] mx-auto" enctype="multipart/form-data" @submit.prevent="onSubmit">
+        <div class="flex mt-10">
+
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor="city">
-              <strong>구군</strong>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><strong>시도</strong>
+              <select id="sidoCode" name="sidoCode" v-model="sidoCode"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <option v-for="item in regionData" :key="item.id" :value="item.id">
+                  {{ item.name }}
+                </option>
+              </select>
             </label>
-            <Select id="gugunCode" name="gugunCode">
-              <option value="0">전체</option>
-              <option v-for="item in gugunData" :key="item.id" :value="item.id">
-                {{ item.name }}
-              </option>
-            </Select>
+          </div>
+
+
+          <div>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><strong>구군</strong>
+              <Select id="gugunCode" name="gugunCode"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <option value="0">전체</option>
+                <option v-for="item in gugunData" :key="item.id" :value="item.id">
+                  {{ item.name }}
+                </option>
+              </Select>
+            </label>
           </div>
         </div>
 
-        <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="title">
-            <strong>제목</strong>
+        <div class="mb-6">
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">제목
+            <input type="text" id="title" name="title" placeholder="제목을 입력하세요."
+              class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           </label>
+        </div>
+
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">내용
+          <textarea id="content" name="content" rows="8"
+            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="내용을 입력하세요."></textarea>
+        </label>
+
+
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size"><strong>사진
+            업로드</strong>
           <input
-            class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-            id="title" name="title" placeholder="Enter a title" type="text" />
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="content">
-            <strong>내용</strong>
-          </label>
-          <textarea
-            class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-            id="content" name="content" placeholder="Enter content" rows="20"></textarea>
-        </div>
-
-        <div class="flex flex-col items-start justify-center space-y-4">
-          <label for="image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            <strong>사진 업로드</strong>
-          </label>
-          <div
-            class="w-full max-w-l px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md dark:border-gray-600 flex items-center justify-center">
-            <div class="space-y-1 text-center">
-              <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48"
-                aria-hidden="true">
-                <path
-                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-              <div class="flex text-sm text-gray-600 dark:text-gray-400">
-                <label for="image"
-                  class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300">
-                  <input type="file" class="form-control border" id="upfile" name="upfile" multiple="multiple" />
-                </label>
-              </div>
-              <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG, GIF 최대 10MB</p>
-            </div>
-          </div>
-        </div>
+            class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            id="upfile" name="upfile" type="file">
+        </label>
 
         <div class="flex justify-end gap-4">
-          <button
-            class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600"
-            type="submit">
-            작성하기
-          </button>
-          <button
-            class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-gray-600 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 dark:bg-gray-500 dark:hover:bg-gray-600"
-            type="button" @click="router.push({ name: 'board' })">
-            뒤로가기
-          </button>
+
+          <button type="submit"
+            class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+            작성하기</button>
+
+
+
+          <button type="button" @click="router.push({ name: 'board' })"
+            class="text-white bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-800 shadow-lg shadow-gray-500/50 dark:shadow-lg dark:shadow-gray-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">
+            뒤로 가기</button>
+
         </div>
       </form>
     </div>

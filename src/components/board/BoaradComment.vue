@@ -78,7 +78,7 @@ onMounted(async () => {
             </span>
             <div class="grid gap-1.5 flex-1">
                 <div class="flex items-center gap-2">
-                    <div class="font-semibold">{{ loginUser }}</div>
+                    <div class="font-semibold">{{ userId }}</div>
                 </div>
                 <input type='text' v-model="comment"
                     class="flex min-h-[80px] ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full rounded-md border border-gray-300 dark:border-gray-700 bg-transparent p-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-600"

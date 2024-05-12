@@ -109,6 +109,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+
     <img :src="imgPath" alt="Autumn Leaves" width="1200" height="800"
       class="rounded-lg object-cover w-full aspect-[3/2]" />
     <div class="prose prose-lg max-w-none">
@@ -116,8 +117,11 @@ onMounted(async () => {
         {{ board.content }}
       </p>
     </div>
+
     <BoaradComment :boardId='board.postId' :loginUser='userId' />
   </div>
+
+
 </template>
 
 <style scoped></style>
