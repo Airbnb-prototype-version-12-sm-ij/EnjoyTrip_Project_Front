@@ -7,6 +7,8 @@ import { useRouter } from 'vue-router'
 import KakaoMap from '@/components/Attraction/KakaoMap.vue'
 import AttractionDetailReviewList from '@/components/attraction_detail/AttractionDetailReviewList.vue'
 import PhotoView from '../PhotoView.vue'
+import Score from '@/components/common/Score.vue'
+import contentTypeName from '@/api/contentTypeName'
 
 const router = useRouter()
 const attractionInfoStore = useAttractionInfoStore()
@@ -20,20 +22,38 @@ onMounted(() => {
 </script>
 
 <template>
-  {{ attractionInfo }}
   <div class="max-w-7xl mx-auto py-10 flex flex-col">
     <div class="flex container">
       <div class="flex mr-auto">
-        <SideMenu />
-      </div>
-      <div>
-        <h1 class="text-3xl font-bold">{{ attractionInfo.title }}</h1>
-        <h2 class="text-gray-500">설명</h2>
-        <p class="text-gray-500">{{ attractionInfo.overview }}</p>
+        <!-- <SideMenu /> -->
       </div>
     </div>
+
+
+    <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl 
+      dark:border-gray-700 dark:bg-gray-800 ">
+      <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-auto md:rounded-none md:rounded-s-lg"
+        :src="attractionInfo.firstImage" alt="">
+      <div class="flex flex-col justify-start p-4 leading-normal h-[30rem]">
+        <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ attractionInfo.title }}</h5>
+        <div class='flex flex-row justify-start'>
+          <Score :score='3' />
+          <p class='ml-3 mb-3'> 1,231건의 리뷰</p>
+          <p class='ml-3 mb-3'> {{ contentTypeName[attractionInfo.contentTypeId] }}</p>
+
+        </div>
+
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ attractionInfo.overview }}</p>
+
+      </div>
+    </div>
+
+
+
+
+
     <div class="flex">
-      <PhotoView :IMG_SRC="attractionInfo.firstImage" />
+      <!-- <PhotoView :IMG_SRC="attractionInfo.firstImage" /> -->
       <KakaoMap :lat="attractionInfo.latitude" :lon="attractionInfo.longitude" />
     </div>
     <AttractionDetailReviewList />
@@ -42,7 +62,8 @@ onMounted(() => {
 
 <style scoped>
 .container {
-  max-height: 90vh; /* 뷰포트 높이의 90%를 최대 높이로 설정 */
+  max-height: 90vh;
+  /* 뷰포트 높이의 90%를 최대 높이로 설정 */
   overflow: auto;
 }
 </style>

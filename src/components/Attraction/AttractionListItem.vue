@@ -1,12 +1,15 @@
 <script setup>
 import { defineProps, ref } from 'vue'
 import { useAttractionInfoStore } from '@/store/attrationStore'
+import Score from '../common/Score.vue';
 
 const { setItem } = useAttractionInfoStore()
 
 const props = defineProps({
   attractionItem: Object
 })
+
+const score = ref(3)
 
 const SRC_IMG = props.attractionItem.firstImage
   ? props.attractionItem.firstImage
@@ -36,13 +39,17 @@ setItem(attractionInfo.value)
 
 <template>
   <RouterLink @click="setItem(attractionInfo)" :to="{ name: 'detail' }"
-    class="rounded-lg border bg-card text-card-foreground shadow-sm flex flex-row" data-v0-t="card">
+    class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+    style='height:300px'>
     <!-- 이미지 -->
-    <img :alt="attractionItem.title" class="w-1/3 rounded-l-md" height="120" :src="SRC_IMG" width="120"
-      style="aspect-ratio: 120 / 120; object-fit: cover" />
-    <div class="w-2/3 p-4">
-      <!-- 제목 -->
-      <h3 class="text-lg font-semibold">{{ attractionItem.title }}</h3>
+    <img :alt="attractionItem.title"
+      class="object-cover w-full rounded-t-lg h-full md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" :src="SRC_IMG"
+      style="width:40%; aspect-ratio: 140 / 140; object-fit: cover; height: 100% " />
+
+    <div class=" flex flex-col justify-between p-8 leading-normal">
+      <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ attractionItem.title }}</h1>
+
+      <!-- 찜 수 -->
       <div class="flex items-center mt-2 mb-4">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-400">
@@ -50,21 +57,23 @@ setItem(attractionInfo.value)
             points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
           </polygon>
         </svg>
-        <!-- 찜 수 -->
-        <span class="ml-2">65</span>
-        <span class="mx-2">|</span>
-        <!-- 카테고리 -->
-        <span>{{ attractionItem.addr1 }} | {{ attractionItem.addr2 }}</span>
+        <p class="ml-2">65(찜수)</p>
       </div>
-      <!-- 설명 -->
-      <p class="text-sm">
-        {{ attractionItem.overview }}
-      </p>
+
+      <div class="flex items-center mt-2 mb-4">
+        <Score :score='score' />
+
+        <p style='margin-left: 10px;'> (4.23)평점 </p>
+      </div>
+
+
+      <!-- 카테고리 -->
+      <span>{{ attractionItem.addr1 }} {{ attractionItem.addr2 }}</span>
+
+
+
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
     </div>
-
-
-
-
 
   </RouterLink>
 </template>
