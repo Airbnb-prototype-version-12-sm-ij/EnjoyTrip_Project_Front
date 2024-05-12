@@ -29,16 +29,6 @@ const goToBoard = () => {
 }
 const router = useRouter()
 
-// 로그인 모달 관리
-// const isLoginModalOpen = ref(false)
-
-// const openLoginModal = () => {
-//   isLoginModalOpen.value = true
-// }
-// const closeLoginModal = () => {
-//   isLoginModalOpen.value = false
-// }
-
 // 마이 페이지 모달 관리
 const isMyInfoModalOpen = ref(false)
 
