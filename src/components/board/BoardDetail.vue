@@ -17,9 +17,11 @@ const props = defineProps({
   postId: Number
 })
 
-// const memberDto = sessionStorage.getItem('memberDto')
-// const userId = JSON.parse(memberDto).userId
-const userId = 'qq221qq';
+const userId = ref('')
+const memberDto = sessionStorage.getItem('memberDto')
+if (memberDto !== null) {
+  userId.value = JSON.parse(memberDto).userId
+}
 
 const board = ref({})
 const objBoard = ref('')

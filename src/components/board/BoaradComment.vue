@@ -3,11 +3,18 @@
 import client from '@/api/client';
 import BoardCommentItem from './BoardCommentItem.vue';
 import { ref, onMounted } from 'vue';
+import Swal from 'sweetalert2'
 
 const props = defineProps({
-    boardId: Number,
-    loginUser: String
+    boardId: Number
 })
+
+const userId = ref('')
+const memberDto = sessionStorage.getItem('memberDto')
+if (memberDto !== null) {
+    userId.value = JSON.parse(memberDto).userId
+}
+
 
 
 const commentList = ref([]);
@@ -25,12 +32,20 @@ const getCommentList = async () => {
 
 const postComment = async () => {
     try {
-        const response = await client.post('posting/comment/' + props.boardId, {
+        await client.post('posting/comment/' + props.boardId, {
             postId: props.boardId,
             comment: comment.value,
         });
-        console.log(response.data);
         comment.value = '';
+
+        Swal.fire({
+            icon: 'success',
+            title: '댓글이 등록되었습니다.',
+            showConfirmButton: true,
+            timer: 2000
+        })
+
+
         getCommentList();
 
     } catch {
@@ -52,8 +67,9 @@ onMounted(async () => {
 <template>
     <div class="grid gap-6">
 
+
         <BoardCommentItem v-for="comment in commentList" :key="comment.commentId" :comment="comment"
-            :loginUser='loginUser' />
+            :loginUser='loginUser' @delete-comment='getCommentList' />
 
 
         <div class="text-sm flex items-start gap-4">
