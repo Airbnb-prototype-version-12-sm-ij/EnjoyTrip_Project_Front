@@ -1,6 +1,6 @@
 <script setup>
 // import { ref } from 'vue'
-import LoginModal from '@/views/modal/LoginModal.vue'
+// import LoginModal from '@/views/modal/LoginModal.vue'
 
 // 로그인 모달 관리
 // const isLoginModalOpen = ref(false)
@@ -38,16 +38,7 @@ import LoginModal from '@/views/modal/LoginModal.vue'
 </script>
 
 <template>
-  <!-- Modal toggle -->
-  <button
-    data-modal-target="login-modal"
-    data-modal-toggle="login-modal"
-    class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-    type="button"
-  >
-    Toggle modal
-  </button>
-  <LoginModal />
+  <div></div>
 </template>
 
 <style scoped></style>
