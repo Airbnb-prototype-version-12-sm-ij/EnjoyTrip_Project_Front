@@ -175,6 +175,40 @@ const logout = async () => {
     console.error('로그아웃 에러: ', error)
   }
 }
+
+// 로그인
+const userId = ref('')
+const userPassword = ref('')
+
+const login = async () => {
+  try {
+    const response = await client.post('/members/login', {
+      userId: userId.value,
+      userPassword: userPassword.value
+    })
+
+    if (response.status !== 200) {
+      throw new Error('로그인 실패')
+    }
+
+    sessionStorage.setItem('memberDto', JSON.stringify(response.data))
+
+    Swal.fire({
+      title: '로그인성공',
+      icon: 'success',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: '확인'
+    }).then(() => {
+      router.go(0)
+    })
+  } catch (error) {
+    console.error('에러' + error)
+    Toast.fire({
+      icon: 'error',
+      title: '로그인 실패'
+    })
+  }
+}
 </script>
 
 <template>
@@ -268,6 +302,9 @@ const logout = async () => {
           >
             게시판
           </button>
+          <input type="text" placeholder="id" v-model="userId" />
+          <input type="text" placeholder="pwd" v-model="userPassword" />
+          <button class="bg-gray-500" @click="login">임시로그인</button>
           <!-- 로그인 버튼 -->
           <button
             v-if="!isLoggedIn"
