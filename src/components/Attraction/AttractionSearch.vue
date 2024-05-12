@@ -31,9 +31,6 @@ const attractionItems = ref([])
 
 const attractionSearch = async (e) => {
   e.preventDefault()
-  console.log(sido.value.sidoCode)
-  console.log(content.value.contentId)
-  console.log(title.value)
   try {
     const res = await client.get('/attractions/search', {
       params: {
