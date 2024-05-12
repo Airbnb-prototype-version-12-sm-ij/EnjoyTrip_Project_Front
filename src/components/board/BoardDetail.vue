@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router';
 import BoaradComment from './BoaradComment.vue';
 // import { useRoute } from 'vue-router'
@@ -75,6 +75,13 @@ onMounted(async () => {
     '/' + objBoard.value.fileInfo[0].saveFolder + '/' + objBoard.value.fileInfo[0].saveFile
 
 })
+
+
+const isImage = computed(() => {
+  const extension = imgPath.value.split('.').pop().toLowerCase();
+  return extension === 'jpg' || extension === 'jpeg' || extension === 'png' || extension === 'gif';
+});
+
 </script>
 
 <template>
@@ -110,8 +117,13 @@ onMounted(async () => {
       </div>
     </div>
 
-    <img :src="imgPath" alt="Autumn Leaves" width="1200" height="800"
+    <img v-if="isImage" :src="imgPath" alt="Autumn Leaves" width="1200" height="800"
       class="rounded-lg object-cover w-full aspect-[3/2]" />
+
+
+    <video v-if="!isImage" :src="imgPath" controls></video>
+
+
     <div class="prose prose-lg max-w-none">
       <p>
         {{ board.content }}

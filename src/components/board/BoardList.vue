@@ -20,6 +20,8 @@ const getBoardList = () => {
 }
 
 
+
+
 onMounted(() => {
     getBoardList();
 });

@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const router = useRouter()
 
@@ -22,6 +22,12 @@ const boardDetail = () => {
 	})
 }
 
+
+const isImage = computed(() => {
+	const extension = imgPath.value.split('.').pop().toLowerCase();
+	return extension === 'jpg' || extension === 'jpeg' || extension === 'png' || extension === 'gif';
+});
+
 </script>
 
 <template>
@@ -31,8 +37,13 @@ const boardDetail = () => {
 		<a @click="boardDetail" class="absolute inset-0 z-10">
 			<span class="sr-only">View</span>
 		</a>
-		<img :src="imgPath" alt="이미지 로드중" width="300" height="300" class="object-cover w-full h-60"
+
+		<img v-if="isImage" :src="imgPath" width="300" height="300" class="object-cover w-full h-60"
 			style="aspect-ratio: 300 / 300; object-fit: cover" />
+
+		<video v-if="!isImage" :src="imgPath" width="300" height="300" class="object-cover w-full h-60"
+			style="aspect-ratio: 300 / 300; object-fit: cover"></video>
+
 		<div class="bg-white p-4 dark:bg-gray-950">
 			<h3 class="font-semibold text-lg md:text-xl group-hover:underline dark:text-white">
 				{{ props.board.title }}
