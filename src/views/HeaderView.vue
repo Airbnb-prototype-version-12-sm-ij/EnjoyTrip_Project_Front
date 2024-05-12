@@ -12,62 +12,22 @@ import LogoutBtn from '@/components/Button/LogoutBtn.vue'
 import AttractionSearch from '@/components/Attraction/AttractionSearch.vue'
 
 // 알림창
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
+// const Toast = Swal.mixin({
+//   toast: true,
+//   position: 'top-end',
+//   showConfirmButton: false,
+//   timer: 3000,
+//   timerProgressBar: true,
+//   didOpen: (toast) => {
+//     toast.addEventListener('mouseenter', Swal.stopTimer)
+//     toast.addEventListener('mouseleave', Swal.resumeTimer)
+//   }
+// })
 // 게시판 이동
 const goToBoard = () => {
   router.push({ name: 'board' })
 }
 const router = useRouter()
-
-// 마이 페이지 모달 관리
-const isMyInfoModalOpen = ref(false)
-
-const openMyInfoModal = () => {
-  isMyInfoModalOpen.value = true
-}
-
-const closeMyInfoModal = () => {
-  isMyInfoModalOpen.value = false
-}
-
-// 회원 관리 모달 관리
-
-const isMemberModalOpen = ref(false)
-
-const isOpenMemberModal = () => {
-  isMyInfoModalOpen.value = false
-  isMemberModalOpen.value = true
-}
-
-const closeMemberModal = () => {
-  isMyInfoModalOpen.value = true
-  isMemberModalOpen.value = false
-}
-
-// 회원가입 모달 관리
-const isSiginUpModalOpen = ref(false)
-
-// const isOpenSignupModal = () => {
-//   console.log('회원가입 모달 열기')
-//   isLoginModalOpen.value = false // 로그인 모달 닫기
-//   isSiginUpModalOpen.value = true
-// }
-
-// const closeSignupModal = () => {
-//   console.log('회원가입 모달 닫기')
-//   isLoginModalOpen.value = true // 로그인 모달 닫기
-//   isSiginUpModalOpen.value = false
-// }
 
 // 세션에서 로그인 정보 가져오기
 const loadingState = ref({ isLoading: true })
@@ -184,15 +144,12 @@ const userInfo = computed(() => {
                 href="#"
                 class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 aria-current="page"
-                >Home</a
+                @click="goToBoard"
+                >게시판</a
               >
             </li>
             <li>
-              <a
-                href="#"
-                class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >About</a
-              >
+              <MyInfoModal />
             </li>
             <!-- <li>
               <a

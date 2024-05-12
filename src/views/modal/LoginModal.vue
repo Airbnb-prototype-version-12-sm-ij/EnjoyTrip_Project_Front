@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import SignupModal from '@/views/modal/SignupModal.vue'
 import Swal from 'sweetalert2'
 import client from '@/api/client'
 
@@ -138,9 +139,7 @@ const login = async () => {
             </button>
             <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
               Not registered?
-              <a href="#" class="text-blue-700 hover:underline dark:text-blue-500"
-                >Create account</a
-              >
+              <SignupModal />
             </div>
           </form>
         </div>

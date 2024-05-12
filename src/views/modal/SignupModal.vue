@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
 import client from '@/api/client'
@@ -19,24 +19,77 @@ const Toast = Swal.mixin({
   }
 })
 
+// 비밀번호 보이기
+const showPassword = ref(false)
+
+const passwordType = computed(() => {
+  return showPassword.value ? 'text' : 'password'
+})
+
+// 유효성 검사
+const userPattern = /^[A-Za-z0-9]{3,15}$/
+
+// 아이디 유효성 검사
+const isUserIdValid = computed(() => userPattern.test(userId.value))
+
+// 비밀번호 유효성 검사
+const isUserPasswordValid = computed(() => userPattern.test(userPassword.value))
+
+// 비밀번호 확인 유효성 검사
+const isConfirmPasswordValid = computed(() => userPassword.value === confirmPassword.value)
+
+// 이름 유효성 검사
+const userNamePattern = /^[가-힣]+$/
+const isUserNameValid = computed(() => userNamePattern.test(userName.value))
+
 const userId = ref('')
 const userPassword = ref('')
+const userName = ref('')
 
-const login = async () => {
+const confirmPassword = ref('')
+
+const signup = async (e) => {
+  e.preventDefault()
   try {
-    const response = await client.post('/members/login', {
+    if (userId.value === '' || userPassword.value === '' || userName.value === '') {
+      Swal.fire({
+        icon: 'warning',
+        title: '회원가입 실패',
+        text: '모든 항목을 입력해주세요.',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: '확인'
+      })
+      return
+    }
+
+    if (userPassword.value !== confirmPassword.value) {
+      Swal.fire({
+        icon: 'warning',
+        title: '회원가입 실패',
+        text: '비밀번호가 일치하지 않습니다.',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: '확인'
+      })
+      return
+    }
+
+    const response = await client.post('/members/join', {
       userId: userId.value,
-      userPassword: userPassword.value
+      userPassword: userPassword.value,
+      userName: userName.value
     })
 
     if (response.status !== 200) {
-      throw new Error('로그인 실패')
+      Swal.fire({
+        title: '회원가입 실패',
+        icon: 'error',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: '확인'
+      })
     }
 
-    sessionStorage.setItem('memberDto', JSON.stringify(response.data))
-
     Swal.fire({
-      title: '로그인성공',
+      title: '회원가입 성공',
       icon: 'success',
       confirmButtonColor: '#3085d6',
       confirmButtonText: '확인'
@@ -47,7 +100,7 @@ const login = async () => {
     console.error('에러' + error)
     Toast.fire({
       icon: 'error',
-      title: '로그인 실패'
+      title: '회원가입 실패'
     })
   }
 }
@@ -55,15 +108,15 @@ const login = async () => {
 
 <template>
   <button
-    data-modal-target="login-modal"
-    data-modal-toggle="login-modal"
+    data-modal-target="signup-modal"
+    data-modal-toggle="signup-modal"
     type="button"
-    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    class="text-blue-700 hover:underline dark:text-blue-500"
   >
-    Login
+    Create Account
   </button>
   <div
-    id="login-modal"
+    id="signup-modal"
     tabindex="-1"
     aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
@@ -75,11 +128,11 @@ const login = async () => {
         <div
           class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
         >
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Login</h3>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Sign up</h3>
           <button
             type="button"
             class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-            data-modal-hide="login-modal"
+            data-modal-hide="signup-modal"
           >
             <svg
               class="w-3 h-3"
@@ -99,49 +152,139 @@ const login = async () => {
             <span class="sr-only">Close modal</span>
           </button>
         </div>
-        <!-- Modal body -->
         <div class="p-4 md:p-5">
           <form class="space-y-4" action="#">
             <div>
+              <!-- 아이디 입력 -->
               <input
                 v-model="userId"
                 type="userId"
                 name="userId"
-                id="userId"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                id="new-userId"
+                :class="[
+                  'text-sm rounded-lg block w-full p-2.5',
+                  isUserIdValid
+                    ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
+                    : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                ]"
                 placeholder="ID"
                 required
               />
+              <div v-if="isUserIdValid">
+                <p class="mt-2 text-sm text-green-600 dark:text-green-500">
+                  <span class="font-medium">사용가능합니다!</span>
+                </p>
+              </div>
+              <div v-else>
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">(3-15자리) 영어와 숫자로 입력해주세요</span>
+                </p>
+              </div>
             </div>
+
             <div>
+              <!-- 비밀번호 입력 -->
               <input
                 v-model="userPassword"
-                type="password"
+                :type="passwordType"
                 name="userPassword"
-                id="userPassword"
+                id="new-userPassword"
                 placeholder="Password"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                :class="[
+                  'text-sm rounded-lg block w-full p-2.5',
+                  isUserPasswordValid
+                    ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
+                    : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                ]"
                 required
               />
+              <div v-if="isUserPasswordValid">
+                <p class="mt-2 text-sm text-green-600 dark:text-green-500">
+                  <span class="font-medium">사용가능합니다!</span>
+                </p>
+              </div>
+              <div v-else>
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">(3-15자리) 영어와 숫자로 입력해주세요</span>
+                </p>
+              </div>
             </div>
-            <div class="flex justify-between">
-              <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500"
-                >Lost Password?</a
+            <div>
+              <!-- 비밀번호 확인  -->
+              <input
+                v-model="confirmPassword"
+                :type="passwordType"
+                name="confirmPassword"
+                id="confirmPassword"
+                placeholder="Comfirm Password"
+                :class="[
+                  'text-sm rounded-lg block w-full p-2.5',
+                  isConfirmPasswordValid && confirmPassword !== ''
+                    ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
+                    : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                ]"
+                required
+              />
+              <!-- 비밀번호 확인 검증 -->
+              <div v-if="isConfirmPasswordValid && confirmPassword !== ''">
+                <p class="mt-2 text-sm text-green-600 dark:text-green-500">
+                  <span class="font-medium">일치합니다!</span>
+                </p>
+              </div>
+              <div v-else>
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">일치하지 않습니다</span>
+                </p>
+              </div>
+            </div>
+            <!-- 이름 -->
+            <div>
+              <input
+                v-model="userName"
+                type="text"
+                name="userName"
+                id="userName"
+                placeholder="Name"
+                :class="[
+                  'text-sm rounded-lg block w-full p-2.5',
+                  isUserNameValid
+                    ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
+                    : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                ]"
+                required
+              />
+              <!-- 이름 검증 -->
+              <div v-if="isUserNameValid">
+                <p class="mt-2 text-sm text-green-600 dark:text-green-500">
+                  <span class="font-medium">사용가능합니다!</span>
+                </p>
+              </div>
+              <div v-else>
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">한글만 입력해주세요</span>
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center mb-4">
+              <input
+                id="default-checkbox"
+                type="checkbox"
+                @click="showPassword = !showPassword"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="default-checkbox"
+                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Password Check</label
               >
             </div>
             <button
-              @click="login"
+              @click="signup"
               type="submit"
               class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Login
+              Sign up
             </button>
-            <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-              Not registered?
-              <a href="#" class="text-blue-700 hover:underline dark:text-blue-500"
-                >Create account</a
-              >
-            </div>
           </form>
         </div>
       </div>

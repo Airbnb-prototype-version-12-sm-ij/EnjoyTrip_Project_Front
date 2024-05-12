@@ -13,32 +13,14 @@ const grade = ref('')
 // 로그인 유저 정보 가져오기
 onMounted(() => {
   const memberDto = JSON.parse(sessionStorage.getItem('memberDto'))
-  if (memberDto === null) {
-    Swal.fire({
-      title: '로그인이 필요합니다',
-      icon: 'warning',
-      confirmButtonColor: '#3085d6',
-      confirmButtonText: '확인'
-    }).then(() => {
-      router.go(-1)
-    })
-  } else {
+  if (memberDto !== null) {
     userName.value = memberDto.userName
     userId.value = memberDto.userId
     grade.value = memberDto.grade
   }
 })
 
-// emit
-const emit = defineEmits(['close', 'isOpenMemberModal'])
-
-const close = () => {
-  emit('close')
-}
-
-const memberManage = () => {
-  emit('isOpenMemberModal')
-}
+const chgPwd = ref(false)
 
 // 비밀번호 보이기
 const showPassword = ref(false)
@@ -55,15 +37,9 @@ const userPassword = ref('')
 const confirmPassword = ref('')
 
 const isUserPasswordValid = computed(() => userPattern.test(userPassword.value))
-const passwordWarningMessage = computed(() =>
-  isUserPasswordValid.value ? '' : '비밀번호는 영어와 숫자를 함께 사용하여 3-15자리여야 합니다.'
-)
 
 // 비밀번호 확인 유효성 검사
 const isConfirmPasswordValid = computed(() => userPassword.value === confirmPassword.value)
-const confirmPasswordWarningMessage = computed(() =>
-  isConfirmPasswordValid.value ? '' : '비밀번호가 일치하지 않습니다.'
-)
 
 // 비밀번호 변경
 const modifyPassword = async () => {
@@ -115,6 +91,22 @@ const modifyPassword = async () => {
   }
 }
 
+const chkWithdraw = () => {
+  !Swal.fire({
+    icon: 'warning',
+    title: '진짜로 회원 탈퇴 하실껀가요?',
+    showCancelButton: 'true',
+    cancelButtonText: '취소',
+    cancelButtonColor: '#d20',
+    confirmButtonColor: '#3085d6',
+    confirmButtonText: '확인'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      withdraw()
+    }
+  })
+}
+
 // 회원 탈퇴
 const withdraw = async () => {
   try {
@@ -154,108 +146,141 @@ const withdraw = async () => {
 </script>
 
 <template>
-  <div
-    class="fixed z-10 inset-0 overflow-y-auto"
-    aria-labelledby="modal-title"
-    role="dialog"
-    aria-modal="true"
+  <button
+    data-modal-target="myinfo-modal"
+    data-modal-toggle="myinfo-modal"
+    type="button"
+    class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
   >
-    <div
-      class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
-    >
-      <div
-        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        aria-hidden="true"
-      ></div>
-      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true"
-        >&#8203;</span
-      >
-      <div
-        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-      >
-        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <h5 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">마이 페이지</h5>
-          <div class="mt-2">
-            <form id="MyPageForm" @submit.prevent="modifyPassword">
-              <!-- my page form이 들어가는 자리 -->
-              <div class="mb-3">이름: {{ userName }}</div>
-              <div class="mb-3">아이디: {{ userId }}</div>
-              <div class="mb-3">
-                <label for="newPassword" class="block text-sm font-medium text-gray-700"
-                  >새 비밀번호</label
-                >
-                <input
-                  :type="passwordType"
-                  class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  id="newPassword"
-                  v-model="userPassword"
-                />
-                <div class="text-red-300 text-xs" v-if="passwordWarningMessage">
-                  {{ passwordWarningMessage }}
-                </div>
-              </div>
-              <div class="mb-3">
-                <label for="confirmNewPassword" class="block text-sm font-medium text-gray-700"
-                  >새 비밀번호 확인</label
-                >
-                <input
-                  :type="passwordType"
-                  class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  id="confirmNewPassword"
-                  v-model="confirmPassword"
-                />
-                <div class="text-red-300 text-xs" v-if="confirmPasswordWarningMessage">
-                  {{ confirmPasswordWarningMessage }}
-                </div>
-              </div>
-              <div class="mb-3 flex items-center">
-                <input
-                  v-model="showPassword"
-                  type="checkbox"
-                  class="form-checkbox h-5 w-5 text-indigo-600"
-                  id="showNewPasswordCheckbox"
-                />
-                <label class="ml-2 block text-sm text-gray-900" for="showNewPasswordCheckbox"
-                  >비밀번호 보이기</label
-                >
-              </div>
-              <button
-                id="password-chg-btn"
-                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
-                type="submit"
-              >
-                비밀번호 변경
-              </button>
-            </form>
-          </div>
-        </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex">
+    마이 페이지
+  </button>
+  <div
+    id="myinfo-modal"
+    tabindex="-1"
+    aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+  >
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div
+          class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+        >
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">My info</h3>
           <button
-            v-if="grade === 'admin'"
-            id="Membership-Withdrawal-btn"
             type="button"
-            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-300 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-            @click="memberManage"
+            class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-hide="myinfo-modal"
           >
-            회원 관리
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Close modal</span>
           </button>
-          <div class="sm:ml-auto sm:flex sm:flex-row-reverse">
+        </div>
+        <div class="p-4 md:p-5">
+          <form class="space-y-4" action="#">
+            <div>이름 : {{ userName }}</div>
+            <div>아이디 : {{ userId }}</div>
+            <div v-if="chgPwd">
+              <div>
+                <!-- 비밀번호 입력 -->
+                <input
+                  v-model="userPassword"
+                  :type="passwordType"
+                  name="userPassword"
+                  id="chg-userPassword"
+                  placeholder="Password"
+                  :class="[
+                    'text-sm rounded-lg block w-full p-2.5',
+                    isUserPasswordValid
+                      ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
+                      : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                  ]"
+                />
+                <div v-if="isUserPasswordValid">
+                  <p class="mt-2 text-sm text-green-600 dark:text-green-500">
+                    <span class="font-medium">사용가능합니다!</span>
+                  </p>
+                </div>
+                <div v-else>
+                  <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                    <span class="font-medium">(3-15자리) 영어와 숫자로 입력해주세요</span>
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <!-- 비밀번호 확인  -->
+                <input
+                  v-model="confirmPassword"
+                  :type="passwordType"
+                  name="confirmPassword"
+                  id="chg-confirmPassword"
+                  placeholder="Comfirm Password"
+                  :class="[
+                    'text-sm rounded-lg block w-full p-2.5',
+                    isConfirmPasswordValid && confirmPassword !== ''
+                      ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
+                      : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                  ]"
+                />
+                <!-- 비밀번호 확인 검증 -->
+                <div v-if="isConfirmPasswordValid && confirmPassword !== ''">
+                  <p class="mt-2 text-sm text-green-600 dark:text-green-500">
+                    <span class="font-medium">일치합니다!</span>
+                  </p>
+                </div>
+                <div v-else>
+                  <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                    <span class="font-medium">일치하지 않습니다</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center mb-4">
+              <input
+                id="info-checkbox"
+                type="checkbox"
+                @click="chgPwd = !chgPwd"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="info-checkbox"
+                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Password Change</label
+              >
+              <div class="flex justify-end w-7/12">
+                <button
+                  type="button"
+                  class="text-sm justify-end text-red-500 hover:underline dark:text-red-500"
+                  @click="chkWithdraw"
+                >
+                  회원 탈퇴
+                </button>
+              </div>
+            </div>
             <button
-              id="Membership-Withdrawal-btn"
-              type="button"
-              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-              @click="withdraw"
+              @click="modifyPassword"
+              type="submit"
+              class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              탈퇴
+              비밀번호 변경
             </button>
-            <button
-              type="button"
-              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-              @click="close"
-            >
-              취소
-            </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
