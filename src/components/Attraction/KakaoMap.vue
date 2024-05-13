@@ -13,7 +13,7 @@ console.log(lat.value, lng.value)
 </script>
 
 <template>
-  <KakaoMap :lat="lat" :lng="lng" :draggable="true" :width="500">
+  <KakaoMap :lat="lat" :lng="lng" :draggable="true" width="80rem" height='30rem' level=2>
     <KakaoMapMarker :lat="lat" :lng="lng"></KakaoMapMarker>
   </KakaoMap>
 </template>

@@ -56,6 +56,7 @@ infoStore.setItem(props.attractionItem.value)
           ></polygon>
         </svg>
         <p class="ml-2">65(찜수)</p>
+        <p class="ml-2">조회수: {{ attractionInfo.readCount }}</p>
       </div>
 
       <div class="flex items-center mt-2 mb-4">
