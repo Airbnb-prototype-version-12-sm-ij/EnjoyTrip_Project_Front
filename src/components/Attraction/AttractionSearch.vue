@@ -3,10 +3,23 @@ import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAttractionStore } from '@/store/attrationStore'
 import client from '@/api/client'
+import Swal from 'sweetalert2'
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 // 관광지 검색
 const router = useRouter()
-const { setItems } = useAttractionStore()
+const store = useAttractionStore()
 
 const sido = ref({
   sidoCode: 0,
@@ -40,13 +53,14 @@ const attractionSearch = async (e) => {
       }
     })
     if (res.data.length === 0) {
-      // Toast.fire({
-      //   icon: 'error',
-      //   title: '검색 결과가 없습니다.'
-      // })
+      Toast.fire({
+        icon: 'error',
+        title: '검색 결과가 없습니다.'
+      })
     } else {
+      store.resetItems()
       attractionItems.value = res.data
-      setItems(attractionItems.value)
+      store.setItems(attractionItems.value)
       router.push({ name: 'search' })
     }
   } catch (error) {

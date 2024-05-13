@@ -7,7 +7,12 @@ export const useAttractionStore = defineStore('attraction', () => {
   const setItems = (items) => {
     attractionItems.value = items
   }
-  return { attractionItems, setItems }
+
+  const resetItems = () => {
+    attractionItems.value = []
+  }
+
+  return { attractionItems, setItems, resetItems }
 })
 
 export const useAttractionInfoStore = defineStore('attractionInfo', () => {

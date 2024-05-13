@@ -6,12 +6,11 @@ import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
-const attractionStore = useAttractionStore()
-const { attractionItems } = storeToRefs(attractionStore)
 const router = useRouter()
+const store = useAttractionStore()
 
 onMounted(() => {
-  if (!attractionItems.value.length) {
+  if (!storeToRefs(store).attractionItems.value.length) {
     router.push('/')
   }
 })
@@ -21,7 +20,7 @@ onMounted(() => {
   <div class="max-w-7xl mx-auto py-10">
     <div class="grid grid-cols-4 gap-8">
       <SideMenu />
-      <AttractionList :attractionItems="attractionItems" />
+      <AttractionList />
     </div>
   </div>
 </template>

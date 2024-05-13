@@ -1,10 +1,8 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import Swal from 'sweetalert2'
 
 import client from '@/api/client'
-import SignupModal from '@/views/modal/SignupModal.vue'
 import MyInfoModal from '@/views/modal/MyInfoModal.vue'
 import MemberModal from '@/views/modal/MemberModal.vue'
 import LoginModal from '@/views/modal/LoginModal.vue'
