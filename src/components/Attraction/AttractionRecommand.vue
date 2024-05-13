@@ -1,14 +1,14 @@
 <script setup></script>
 
 <template>
-  <div id="default-carousel" class="left-[20.85%] pt-40 relative w-7/12" data-carousel="slide">
+  <div id="default-carousel" class="mt-40 relative max-w-screen" data-carousel="slide">
     <!-- Carousel wrapper -->
-    <div class="relative overflow-hidden rounded-lg md:h-[700px]">
+    <div class="relative overflow-hidden rounded-lg md:h-[50vh] max-h-screen aspect-video">
       <!-- Item 1 -->
       <div class="hidden duration-700 ease-in-out" data-carousel-item>
         <img
           src="@/assets/attractionRecommand/서울.jpeg"
-          class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 aspect-[8/3]"
+          class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           alt="..."
         />
       </div>
