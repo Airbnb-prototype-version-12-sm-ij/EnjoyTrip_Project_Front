@@ -4,8 +4,10 @@ import Score from '../common/Score.vue';
 import ReviewPercentage from './ReviewPercentage.vue';
 import ReviewList from './ReviewList.vue';
 
-const reviewScore = 2.3;
 
+
+
+const reviewScore = 2.3;
 const reviewScoreCount = [5, 5, 21, 53, 18];
 const viewCount = 24;
 

@@ -1,9 +1,12 @@
 <script setup>
-import ReviewWriteAside from '@/components/Review/ReviewWriteAside.vue'
+import ReviewWriteAside from '@/components/Review/ReviewWriteForm.vue'
 import ReviewWriteAttraction from '@/components/Review/ReviewWriteAttraction.vue'
+
 </script>
 
+
 <template>
+  {{ attractionInfo }}
   <div class="container mx-auto px-4">
     <main class="flex mt-8">
       <ReviewWriteAttraction />
