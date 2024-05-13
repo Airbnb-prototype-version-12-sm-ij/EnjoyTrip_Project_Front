@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import SideMenu from '@/components/SideMenu.vue'
 import { useRouter } from 'vue-router'
 import KakaoMap from '@/components/Attraction/KakaoMap.vue'
-import AttractionDetailReviewList from '@/components/AttractionDetail/AttractionDetailReviewList.vue'
+import Review from '@/components/Review/Review.vue'
 import PhotoView from '@/views/PhotoView.vue'
 import Score from '@/components/common/Score.vue'
 import contentTypeName from '@/api/contentTypeName'
@@ -56,7 +56,7 @@ onMounted(() => {
     <div class="flex">
       <KakaoMap :lat="attractionInfo.latitude" :lon="attractionInfo.longitude" />
     </div>
-    <AttractionDetailReviewList />
+    <Review />
   </div>
 </template>
 

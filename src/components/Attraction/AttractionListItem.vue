@@ -43,8 +43,8 @@ setItem(attractionInfo.value)
     style='height:300px'>
     <!-- 이미지 -->
     <img :alt="attractionItem.title"
-      class="object-cover w-full rounded-t-lg h-full md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" :src="SRC_IMG"
-      style="width:40%; aspect-ratio: 140 / 140; object-fit: cover; height: 100% " />
+      class="object-cover w-full rounded-t-lg h-full md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
+      :src="attractionItem.firstImage" style="width:40%; aspect-ratio: 140 / 140; object-fit: cover; height: 100% " />
 
     <div class=" flex flex-col justify-between p-8 leading-normal">
       <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ attractionItem.title }}</h1>

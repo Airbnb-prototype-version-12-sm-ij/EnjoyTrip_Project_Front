@@ -17,7 +17,7 @@ const router = createRouter({
     {
       path: '/detail',
       name: 'detail',
-      component: () => import('@/components/AttractionDetail/ReviewDetail.vue'),
+      component: () => import('@/components/Attraction/AttractionDetail.vue'),
       props: true
     },
     {
