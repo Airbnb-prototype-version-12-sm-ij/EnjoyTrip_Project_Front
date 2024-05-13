@@ -81,7 +81,7 @@ const onSubmit = (e) => {
         showConfirmButton: false,
         // confirmButtonColor: '#4caf50',
         // confirmButtonText: '확인',
-        timer: 6000
+        timer: 6000,
       })
       router.push({ name: 'home' })
     })
@@ -102,7 +102,7 @@ const onSubmit = (e) => {
   <aside class="w-2/5">
     <div class="border p-8 rounded-md shadow-md mx-[-4rem] sm:mx-0">
       <h2 class="text-2xl font-bold mb-4">귀하의 경험에 대해 평가해주세요.</h2>
-      <form class="space-y-4" @submit.prevent='onSubmit'>
+      <form class="space-y-4" enctype="multipart/form-data" @submit.prevent='onSubmit'>
         <div>
           <div class="flex mt-4 space-x-2">
             <div v-for="i in 5" :key="i" class="w-8 h-8 rounded-full"
