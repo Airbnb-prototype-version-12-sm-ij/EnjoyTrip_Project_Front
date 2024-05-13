@@ -19,7 +19,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="col-span-3">
+  <div class="mt-[40px] col-span-3">
     <div class="space-y-8" v-for="attractionItem in attractionItems" :key="attractionItem.id">
       <AttractionListItem :attractionItem="attractionItem" />
     </div>

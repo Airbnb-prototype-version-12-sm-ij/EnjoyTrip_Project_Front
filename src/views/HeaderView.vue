@@ -3,8 +3,6 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 import client from '@/api/client'
-import MyInfoModal from '@/views/modal/MyInfoModal.vue'
-import MemberModal from '@/views/modal/MemberModal.vue'
 import LoginModal from '@/views/modal/LoginModal.vue'
 import AttractionSearch from '@/components/Attraction/AttractionSearch.vue'
 import UserDropdown from '@/views/dropdown/UserDropdown.vue'
@@ -21,10 +19,7 @@ import UserDropdown from '@/views/dropdown/UserDropdown.vue'
 //     toast.addEventListener('mouseleave', Swal.resumeTimer)
 //   }
 // })
-// 게시판 이동
-const goToBoard = () => {
-  router.push({ name: 'board' })
-}
+
 const router = useRouter()
 
 // 세션에서 로그인 정보 가져오기
@@ -69,12 +64,6 @@ client.get('/members/ping').then((res) => {
 const isLoggedIn = computed(() => {
   return sessionStorage.getItem('memberDto') !== null
 })
-
-// 세션에서 회원 정보 가져오기
-const userInfo = computed(() => {
-  const memberDto = sessionStorage.getItem('memberDto')
-  return memberDto ? JSON.parse(memberDto) : null
-})
 </script>
 
 <template>
@@ -82,7 +71,9 @@ const userInfo = computed(() => {
     <!-- 로딩 창 컴포넌트 또는 로딩 창에 대한 HTML을 여기에 추가하세요 -->
   </div>
   <div v-else>
-    <nav class="bg-white border-gray-200 dark:bg-gray-900">
+    <nav
+      class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600"
+    >
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <RouterLink :to="{ name: 'home' }" class="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
