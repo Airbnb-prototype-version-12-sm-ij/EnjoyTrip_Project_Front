@@ -42,7 +42,8 @@ const isUserPasswordValid = computed(() => userPattern.test(userPassword.value))
 const isConfirmPasswordValid = computed(() => userPassword.value === confirmPassword.value)
 
 // 비밀번호 변경
-const modifyPassword = async () => {
+const modifyPassword = async (e) => {
+  e.preventDefault()
   try {
     if (!isUserPasswordValid.value || userPassword.value === '') {
       Swal.fire({
@@ -78,7 +79,7 @@ const modifyPassword = async () => {
       confirmButtonColor: '#3085d6',
       confirmButtonText: '확인'
     }).then(() => {
-      close()
+      router.go(0)
     })
   } catch (error) {
     console.error('에러' + error)

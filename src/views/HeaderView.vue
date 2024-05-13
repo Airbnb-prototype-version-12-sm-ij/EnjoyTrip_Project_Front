@@ -41,7 +41,6 @@ onMounted(async () => {
       sessionStorage.removeItem('refreshed')
     }
   }
-
   try {
     const res = await client.get('/members/ping')
     if (res.status === 200) {
@@ -54,7 +53,6 @@ onMounted(async () => {
   } catch (error) {
     console.error(error)
   }
-
   loadingState.value.isLoading = false // 로딩이 완료되었음을 표시
 })
 // 로그인 정보 계속 확인용
@@ -151,14 +149,10 @@ const userInfo = computed(() => {
             <li>
               <MyInfoModal />
             </li>
-            <!-- <li>
-              <a
-                href="#"
-                class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >Services</a
-              >
+            <li v-if="userInfo !== null && userInfo.grade === 'admin'">
+              <MemberModal />
             </li>
-            <li>
+            <!-- <li>
               <a
                 href="#"
                 class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
