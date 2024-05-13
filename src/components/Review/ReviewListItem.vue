@@ -7,6 +7,13 @@ const props = defineProps({
   data: Object
 })
 
+
+
+let imgPath = ""
+if (props.data.fileInfo.length > 0) {
+  imgPath = "http://localhost/upload_img/" + props.data.fileInfo[0].saveFolder + '/' + props.data.fileInfo[0].saveFile;
+}
+
 </script>
 
 <template>
@@ -15,9 +22,9 @@ const props = defineProps({
       <!-- 유저 샘플 이미지 -->
       <img class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full mr-4" src="@/assets/sample.png" />
       <div class="flex-grow">
-        <p class="font-semibold">{{ data.userName }}</p>
+        <p class="font-semibold">{{ data.userId }}</p>
         <div>
-          <Score :score="data.reviewScore" />
+          <Score :score="data.rating" />
         </div>
       </div>
       <div class="flex-none">
@@ -29,18 +36,18 @@ const props = defineProps({
       </div>
     </div>
     <div class="flex items-center">
-      <img alt="Review Image" class="mr-4 rounded-md" height="100" src="@/assets/boardSample.jpg"
+      <img v-if="imgPath !== ''" alt="Review Image" class="mr-4 rounded-md" height="100" :src="imgPath"
         style="aspect-ratio: 100/100; object-fit: cover" width="100" />
 
       <div class="flex-grow">
         <p class="text-lg">
-          {{ data.reviewTitle }}
+          {{ data.title }}
         </p>
         <p class="text-sm- mt-1">
-          {{ data.reviewDate }}
+          {{ data.createdAt }}
         </p>
         <p class="text-sm- mt-2">
-          {{ data.reviewContent }}
+          {{ data.content }}
         </p>
       </div>
     </div>
