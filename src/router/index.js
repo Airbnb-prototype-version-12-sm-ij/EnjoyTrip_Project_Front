@@ -17,13 +17,13 @@ const router = createRouter({
     {
       path: '/detail',
       name: 'detail',
-      component: () => import('@/views/review/ReviewDetailView.vue'),
+      component: () => import('@/components/AttractionDetail/ReviewDetail.vue'),
       props: true
     },
     {
       path: '/review',
       name: 'review',
-      component: () => import('@/views/review/ReviewWriteView.vue')
+      component: () => import('@/components/Review/ReviewWriteView.vue')
     },
     {
       path: '/board/:boardId',

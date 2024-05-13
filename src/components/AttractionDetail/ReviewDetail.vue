@@ -5,8 +5,8 @@ import { storeToRefs } from 'pinia'
 import SideMenu from '@/components/SideMenu.vue'
 import { useRouter } from 'vue-router'
 import KakaoMap from '@/components/Attraction/KakaoMap.vue'
-import AttractionDetailReviewList from '@/components/attraction_detail/AttractionDetailReviewList.vue'
-import PhotoView from '../PhotoView.vue'
+import AttractionDetailReviewList from '@/components/AttractionDetail/AttractionDetailReviewList.vue'
+import PhotoView from '@/views/PhotoView.vue'
 import Score from '@/components/common/Score.vue'
 import contentTypeName from '@/api/contentTypeName'
 
@@ -30,19 +30,20 @@ onMounted(() => {
     </div>
 
 
+    <div class='flex flex-row'>
+      <Score :score='3' />
+      <p class='ml-3 mb-3'> 1,231건의 리뷰</p>
+      <p class='ml-3 mb-3'> {{ contentTypeName[attractionInfo.contentTypeId] }}</p>
+      <p class='ml-3 mb-3'> 조회수: {{ attractionInfo.readCount }}</p>
+    </div>
+
     <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl 
       dark:border-gray-700 dark:bg-gray-800 ">
-      <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-auto md:rounded-none md:rounded-s-lg"
-        :src="attractionInfo.firstImage" alt="">
-      <div class="flex flex-col justify-start p-4 leading-normal h-[30rem]">
-        <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ attractionInfo.title }}</h5>
-        <div class='flex flex-row justify-start'>
-          <Score :score='3' />
-          <p class='ml-3 mb-3'> 1,231건의 리뷰</p>
-          <p class='ml-3 mb-3'> {{ contentTypeName[attractionInfo.contentTypeId] }}</p>
-
-        </div>
-
+      <img class="object-cover w-full rounded-t-lg h-full md:h-auto md:w-auto md:rounded-none md:rounded-s-lg"
+        style='width:700px; object-fit: cover; height: 500px' :src="attractionInfo.firstImage" alt="">
+      <div class="flex flex-col justify-between p-4 leading-normal h-[30rem]">
+        <h5 class="mb-4 mt-5 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ attractionInfo.title }}
+        </h5>
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ attractionInfo.overview }}</p>
 
       </div>
@@ -53,7 +54,6 @@ onMounted(() => {
 
 
     <div class="flex">
-      <!-- <PhotoView :IMG_SRC="attractionInfo.firstImage" /> -->
       <KakaoMap :lat="attractionInfo.latitude" :lon="attractionInfo.longitude" />
     </div>
     <AttractionDetailReviewList />
