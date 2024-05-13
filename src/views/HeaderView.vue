@@ -144,7 +144,7 @@ const userInfo = computed(() => {
                 >게시판</a
               >
             </li>
-            <li>
+            <li v-if="userInfo !== null">
               <MyInfoModal />
             </li>
             <li v-if="userInfo !== null && userInfo.grade === 'admin'">
