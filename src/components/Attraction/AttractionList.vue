@@ -16,8 +16,6 @@ onMounted(() => {
     router.push('/')
   }
 })
-
-// console.log(attractionItems)
 </script>
 
 <template>

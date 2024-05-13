@@ -18,10 +18,8 @@ onMounted(() => {
 
 <template>
   <div class="max-w-7xl mx-auto py-10">
-    <div class="grid grid-cols-4 gap-8">
-      <SideMenu />
-      <AttractionList />
-    </div>
+    <SideMenu />
+    <AttractionList />
   </div>
 </template>
 
