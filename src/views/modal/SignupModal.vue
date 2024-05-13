@@ -165,7 +165,7 @@ const signup = async (e) => {
                   'text-sm rounded-lg block w-full p-2.5',
                   isUserIdValid
                     ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
-                    : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                    : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                 ]"
                 placeholder="ID"
                 required
@@ -176,7 +176,7 @@ const signup = async (e) => {
                 </p>
               </div>
               <div v-else>
-                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <p class="mt-2 text-sm text-gray-400 dark:text-gray-500">
                   <span class="font-medium">(3-15자리) 영어와 숫자로 입력해주세요</span>
                 </p>
               </div>
@@ -194,7 +194,7 @@ const signup = async (e) => {
                   'text-sm rounded-lg block w-full p-2.5',
                   isUserPasswordValid
                     ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
-                    : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                    : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                 ]"
                 required
               />
@@ -204,7 +204,7 @@ const signup = async (e) => {
                 </p>
               </div>
               <div v-else>
-                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <p class="mt-2 text-sm text-gray-400 dark:text-gray-500">
                   <span class="font-medium">(3-15자리) 영어와 숫자로 입력해주세요</span>
                 </p>
               </div>
@@ -221,7 +221,7 @@ const signup = async (e) => {
                   'text-sm rounded-lg block w-full p-2.5',
                   isConfirmPasswordValid && confirmPassword !== ''
                     ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
-                    : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                    : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                 ]"
                 required
               />
@@ -232,7 +232,7 @@ const signup = async (e) => {
                 </p>
               </div>
               <div v-else>
-                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <p class="mt-2 text-sm text-gray-400 dark:text-gray-500">
                   <span class="font-medium">일치하지 않습니다</span>
                 </p>
               </div>
@@ -249,7 +249,7 @@ const signup = async (e) => {
                   'text-sm rounded-lg block w-full p-2.5',
                   isUserNameValid
                     ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
-                    : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                    : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                 ]"
                 required
               />
@@ -260,7 +260,7 @@ const signup = async (e) => {
                 </p>
               </div>
               <div v-else>
-                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <p class="mt-2 text-sm text-gray-400 dark:text-gray-500">
                   <span class="font-medium">한글만 입력해주세요</span>
                 </p>
               </div>
