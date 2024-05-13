@@ -2,11 +2,11 @@
 import { onMounted } from 'vue'
 import { useAttractionInfoStore } from '@/store/attrationStore'
 import { storeToRefs } from 'pinia'
-import SideMenu from '@/components/SideMenu.vue'
+
 import { useRouter } from 'vue-router'
 import KakaoMap from '@/components/Attraction/KakaoMap.vue'
 import Review from '@/components/Review/Review.vue'
-import PhotoView from '@/views/PhotoView.vue'
+
 import Score from '@/components/common/Score.vue'
 import contentTypeName from '@/api/contentTypeName'
 
@@ -37,9 +37,14 @@ onMounted(() => {
     </div>
 
     <div
-      class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl dark:border-gray-700 dark:bg-gray-800">
-      <img class="object-cover w-full rounded-t-lg h-full md:h-auto md:w-auto md:rounded-none md:rounded-s-lg"
-        style="width: 700px; object-fit: cover; height: 500px" :src="attractionInfo.firstImage" alt="" />
+      class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl dark:border-gray-700 dark:bg-gray-800"
+    >
+      <img
+        class="object-cover w-full rounded-t-lg h-full md:h-auto md:w-auto md:rounded-none md:rounded-s-lg"
+        style="width: 700px; object-fit: cover; height: 500px"
+        :src="attractionInfo.firstImage"
+        alt=""
+      />
       <div class="flex flex-col justify-between p-4 leading-normal h-[30rem]">
         <h5 class="mb-4 mt-5 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
           {{ attractionInfo.title }}

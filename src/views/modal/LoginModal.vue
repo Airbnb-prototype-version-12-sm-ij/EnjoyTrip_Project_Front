@@ -23,7 +23,8 @@ const Toast = Swal.mixin({
 const userId = ref('')
 const userPassword = ref('')
 
-const login = async () => {
+const login = async (e) => {
+  e.preventDefault()
   try {
     const response = await client.post('/members/login', {
       userId: userId.value,
@@ -31,7 +32,10 @@ const login = async () => {
     })
 
     if (response.status !== 200) {
-      throw new Error('로그인 실패')
+      Toast.fire({
+        icon: 'error',
+        title: '로그인 실패'
+      })
     }
 
     sessionStorage.setItem('memberDto', JSON.stringify(response.data))
@@ -48,7 +52,7 @@ const login = async () => {
     console.error('에러' + error)
     Toast.fire({
       icon: 'error',
-      title: '로그인 실패'
+      title: error
     })
   }
 }
@@ -59,9 +63,23 @@ const login = async () => {
     data-modal-target="login-modal"
     data-modal-toggle="login-modal"
     type="button"
-    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
   >
-    Login
+    <svg
+      class="w-6 h-6 text-gray-800 dark:text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 18 16"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
+      />
+    </svg>
   </button>
   <div
     id="login-modal"
