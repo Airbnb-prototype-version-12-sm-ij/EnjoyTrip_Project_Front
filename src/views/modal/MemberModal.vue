@@ -1,7 +1,8 @@
 <script setup>
-import { defineEmits, onMounted } from 'vue'
+import { ref, defineEmits, onMounted } from 'vue'
 import client from '@/api/client'
 import Swal from 'sweetalert2'
+import router from '@/router'
 
 // 알림창
 const Toast = Swal.mixin({
@@ -16,124 +17,121 @@ const Toast = Swal.mixin({
   }
 })
 
-// emit
-const emit = defineEmits(['close'])
-
-const close = () => {
-  const memberList = document.getElementById('memberList')
-  memberList.innerHTML = ''
-  emit('close')
+const deleteMember = async (userId) => {
+  const response = await client.post('/members/delete', {
+    userId: userId
+  })
+  if (response.status === 200) {
+    Toast.fire({
+      icon: 'success',
+      title: '회원 삭제 성공'
+    })
+    document.getElementById('memberModal-btn').click()
+    document.getElementById('memberModal-btn').click()
+  }
 }
 
-// 멤버 리스트 얻기
-const memberList = async () => {
-  const response = await client.get('/members/info')
-  const memberItems = response.data
-  const memberList = document.getElementById('memberList')
-  memberItems.forEach((member) => {
-    const memberDiv = document.createElement('div')
-    memberDiv.classList.add('grid', 'grid-cols-5', 'gap-4', 'space-y-4')
-    const nameDiv = document.createElement('div')
-    nameDiv.classList.add('col-span-1', 'flex', 'justify-center', 'items-center', 'mt-4')
-    nameDiv.textContent = member.userName
-    const idDiv = document.createElement('div')
-    idDiv.classList.add('col-span-1', 'flex', 'justify-center', 'items-center')
-    idDiv.textContent = member.userId
-    const gradeDiv = document.createElement('div')
-    gradeDiv.classList.add('col-span-1', 'flex', 'justify-center', 'items-center')
-    gradeDiv.textContent = member.grade
-    const dateDiv = document.createElement('div')
-    dateDiv.classList.add('col-span-1', 'flex', 'justify-center', 'items-center')
-    dateDiv.textContent = member.registration_date
-    const deleteDiv = document.createElement('div')
-    deleteDiv.classList.add('col-span-1', 'flex', 'justify-center', 'items-center')
-    const deleteButton = document.createElement('button')
-    deleteButton.classList.add(
-      'bg-red-500',
-      'hover:bg-red-700',
-      'text-white',
-      'font-bold',
-      'py-2',
-      'px-4',
-      'rounded',
-      'focus:outline-none',
-      'focus:shadow-outline'
-    )
+const memberList = ref([])
 
-    // {
-    //   "userId": "userId_b224f657f36d"
-    // }
-    deleteButton.textContent = '삭제'
-    deleteButton.addEventListener('click', async () => {
-      const response = await client.post('/members/delete', {
-        userId: member.userId
-      })
-
-      if (response.status === 200) {
-        memberList.removeChild(memberDiv)
-        Toast.fire({
-          icon: 'success',
-          title: '회원 삭제 성공'
-        })
-      }
-    })
-
-    deleteDiv.appendChild(deleteButton)
-    memberDiv.appendChild(nameDiv)
-    memberDiv.appendChild(idDiv)
-    memberDiv.appendChild(gradeDiv)
-    memberDiv.appendChild(dateDiv)
-    memberDiv.appendChild(deleteDiv)
-    memberList.appendChild(memberDiv)
+// // 멤버 리스트 얻기
+const getMember = async () => {
+  await client.get('/members/info').then((res) => {
+    memberList.value = res.data
   })
 }
-// 마운트 될때
-onMounted(() => {
-  memberList()
-})
 </script>
 
 <template>
-  <div
-    class="fixed z-10 inset-0 overflow-y-auto"
-    aria-labelledby="modal-title"
-    role="dialog"
-    aria-modal="true"
+  <button
+    id="memberModal-btn"
+    @click="getMember"
+    data-modal-target="member-modal"
+    data-modal-toggle="member-modal"
+    class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
   >
-    <div
-      class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
-    >
-      <div
-        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        aria-hidden="true"
-      ></div>
-      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true"
-        >&#8203;</span
-      >
-      <div
-        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-      >
-        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <h5 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">회원 관리</h5>
-          <div class="mt-2">
-            <div class="grid grid-cols-5 gap-4">
-              <div class="col-span-1 flex justify-center items-center">이름</div>
-              <div class="col-span-1 flex justify-center items-center">아이디</div>
-              <div class="col-span-1 flex justify-center items-center">등급</div>
-              <div class="col-span-1 flex justify-center items-center">가입 일시</div>
-              <div class="col-span-1 flex justify-center items-center">회원 삭제</div>
-            </div>
-            <div id="memberList"></div>
-          </div>
-        </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+    회원 관리
+  </button>
+  <!-- 모달 -->
+  <div
+    id="member-modal"
+    tabindex="-1"
+    aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+  >
+    <div class="relative p-4 w-full max-w-xl max-h-full">
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div
+          class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+        >
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Members</h3>
           <button
-            @click="close"
             type="button"
-            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+            class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-hide="member-modal"
           >
-            취소
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Close modal</span>
           </button>
+        </div>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">Name</th>
+                <th scope="col" class="px-6 py-3">ID</th>
+                <th scope="col" class="px-6 py-3">Grade</th>
+                <th scope="col" class="px-6 py-3">Date</th>
+                <th scope="col" class="px-6 py-3 text-red-500">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="member in memberList"
+                :key="member.userId"
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              >
+                <th
+                  scope="row"
+                  class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  {{ member.userName }}
+                </th>
+                <td class="px-6 py-4">
+                  {{ member.userId }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ member.grade }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ member.registrationDate }}
+                </td>
+                <td class="px-6 py-4">
+                  <button
+                    @click="deleteMember(member.userId)"
+                    class="font-medium text-red-600 dark:text-red-500 hover:underline"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
