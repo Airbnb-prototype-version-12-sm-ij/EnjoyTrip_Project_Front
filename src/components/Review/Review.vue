@@ -2,17 +2,27 @@
 import Score from '../common/Score.vue'
 import ReviewPercentage from './ReviewPercentage.vue'
 import ReviewList from './ReviewList.vue'
-import { computed } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAttractionInfoStore } from '@/store/attrationStore'
 const attractionInfoStore = useAttractionInfoStore()
 const { attractionInfo } = storeToRefs(attractionInfoStore)
 
+const reviewScore = ref(0)
 
+watchEffect(() => {
+  const ratings = attractionInfo.value.rating
+  if (ratings && ratings.length > 0) {
+    const totalScore = ratings.reduce((total, count, index) => total + (index + 1) * count, 0)
+    const totalCount = ratings.reduce((total, count) => total + count, 0)
+    reviewScore.value = totalScore / totalCount
+  }
+})
+
+const viewCount = 24
 </script>
 
 <template>
-  {{ attractionInfo }}
   <div class="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-5xl mx-auto">
       <div class="flex flex-wrap items-center justify-between mb-8 gap-4">
@@ -26,9 +36,9 @@ const { attractionInfo } = storeToRefs(attractionInfoStore)
         <div class="flex flex-col md:flex-row mb-8">
           <div class="md:w-1/3 pr-8">
             <div class="flex items-center mb-4">
-              <h3 class="text-2xl font-medium mr-2">{{ reviewScore }}</h3>
+              <h3 class="text-2xl font-medium mr-2">{{ reviewScore.toFixed(1) }}</h3>
               <div class="flex">
-                <Score :score="reviewScore" />
+                <Score :score="reviewScore.toFixed(1)" />
               </div>
               <p class="text-sm text-gray-500 ml-4">{{ viewCount }} reviews</p>
             </div>
