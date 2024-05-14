@@ -14,7 +14,6 @@ const getReviewList = async () => {
   await client
     .get('/review/' + attractionInfo.value.contentId)
     .then((response) => {
-      console.log(response.data)
       datas.value = response.data
     })
     .catch(() => {

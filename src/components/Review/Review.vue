@@ -2,19 +2,11 @@
 import Score from '../common/Score.vue'
 import ReviewPercentage from './ReviewPercentage.vue'
 import ReviewList from './ReviewList.vue'
-
-
-
+import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAttractionInfoStore } from '@/store/attrationStore'
 const attractionInfoStore = useAttractionInfoStore()
 const { attractionInfo } = storeToRefs(attractionInfoStore)
-
-
-
-
-const reviewScore = 2.3
-const viewCount = 24
 
 
 </script>
