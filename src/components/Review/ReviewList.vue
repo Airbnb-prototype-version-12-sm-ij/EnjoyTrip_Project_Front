@@ -6,13 +6,12 @@ import client from '@/api/client'
 import { storeToRefs } from 'pinia'
 import { useAttractionInfoStore } from '@/store/attrationStore'
 const attractionInfoStore = useAttractionInfoStore()
-
 const { attractionInfo } = storeToRefs(attractionInfoStore)
 
 const datas = ref([])
 
-const getReviewList = () => {
-  client
+const getReviewList = async () => {
+  await client
     .get('/review/' + attractionInfo.value.contentId)
     .then((response) => {
       console.log(response.data)
@@ -23,19 +22,18 @@ const getReviewList = () => {
     })
 }
 
-onMounted(() => {
-  getReviewList()
+const ratings = ref([0, 0, 0, 0, 0]);
+onMounted(async () => {
+  await getReviewList()
+  for (let data of datas.value) {
+    ratings.value[data.rating - 1] += 1;
+  }
+
+  attractionInfo.value.rating = ratings;
 })
 
-// for (let i = 0; i < 5; i++) {
-//   datas.value.push({
-//     userName: '황성민',
-//     reviewTitle: '리뷰제목입니다.',
-//     reviewContent: '리뷰 내용입니다! 리뷰 내용입니다! 리뷰 내용입니다! 리뷰 내용입니다! 리뷰 내용입니다!',
-//     reviewDate: '2024년 4월',
-//     reviewScore: 2.3,
-//   })
-// }
+
+
 </script>
 
 <template>
