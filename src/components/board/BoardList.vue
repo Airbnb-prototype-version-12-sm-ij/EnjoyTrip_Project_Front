@@ -23,7 +23,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-4 md:p-6 mx-2 md:mx-6">
+  <section class="mt-[77px] grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-4 md:p-6 mx-2 md:mx-6">
     <BoardListItem v-for="board in boardList" :key="board.postId" :board="board" />
   </section>
   <div data-dial-init class="fixed bottom-6 right-10 group">
