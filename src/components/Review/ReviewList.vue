@@ -1,8 +1,7 @@
 <script setup>
-
 import { ref, onMounted } from 'vue'
-import ReviewListItem from './ReviewListItem.vue';
-import axios from 'axios';
+import ReviewListItem from './ReviewListItem.vue'
+import client from '@/api/client'
 
 import { storeToRefs } from 'pinia'
 import { useAttractionInfoStore } from '@/store/attrationStore'
@@ -10,26 +9,23 @@ const attractionInfoStore = useAttractionInfoStore()
 
 const { attractionInfo } = storeToRefs(attractionInfoStore)
 
-
 const datas = ref([])
 
-
 const getReviewList = () => {
-  axios.get('http://localhost/review/' + attractionInfo.value.contentId)
+  client
+    .get('/review/' + attractionInfo.value.contentId)
     .then((response) => {
-      datas.value = response.data;
+      console.log(response.data)
+      datas.value = response.data
     })
     .catch(() => {
-      alert('에러가 발생했습니다.');
-    });
+      alert('에러가 발생했습니다.')
+    })
 }
 
-
 onMounted(() => {
-  getReviewList();
-});
-
-
+  getReviewList()
+})
 
 // for (let i = 0; i < 5; i++) {
 //   datas.value.push({
@@ -40,11 +36,6 @@ onMounted(() => {
 //     reviewScore: 2.3,
 //   })
 // }
-
-
-
-
-
 </script>
 
 <template>
