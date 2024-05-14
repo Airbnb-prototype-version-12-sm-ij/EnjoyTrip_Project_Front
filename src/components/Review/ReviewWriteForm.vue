@@ -28,7 +28,7 @@ const scoreText = computed(() => {
   return ''
 })
 
-const together = ref('')
+const together = ref('단독')
 const score = ref(3)
 const content = ref('')
 const title = ref('')
@@ -72,7 +72,7 @@ const onSubmit = (e) => {
         // confirmButtonText: '확인',
         timer: 6000
       })
-      router.push({ name: 'home' })
+      router.go(-1)
     })
     .catch(() => {
       Swal.fire({
