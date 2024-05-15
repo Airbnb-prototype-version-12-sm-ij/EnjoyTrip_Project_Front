@@ -1,4 +1,5 @@
 <script setup>
+import Wish from '@/components/common/Wish.vue'
 import { onMounted } from 'vue'
 import { useAttractionInfoStore } from '@/store/attrationStore'
 import { storeToRefs } from 'pinia'
@@ -22,7 +23,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto py-10 flex flex-col">
+  <div class="max-w-7xl mx-auto py-10 flex flex-col mt-20">
     <div class="flex container">
       <div class="flex mr-auto">
         <!-- <SideMenu /> -->
@@ -38,20 +39,23 @@ onMounted(() => {
 
     <!-- 관광지 정보 -->
     <div
-      class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl dark:border-gray-700 dark:bg-gray-800 max-w-screen"
-    >
+      class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl dark:border-gray-700 dark:bg-gray-800 max-w-screen">
       <!-- 관광지 이미지 -->
       <img
         class="object-cover w-full rounded-t-lg h-full max-w-full max-h-full md:h-auto md:w-auto md:rounded-none md:rounded-s-lg"
-        style="width: 700px; object-fit: cover; height: 500px"
-        :src="attractionInfo.firstImage"
-        alt=""
-      />
+        style="width: 50%; object-fit: cover; height: 500px" :src="attractionInfo.firstImage" alt="" />
+
+
       <!-- 관광지 제목 및 설명 -->
-      <div class="flex flex-col justify-between p-4 leading-normal h-[30rem]">
-        <h5 class="mb-4 mt-5 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {{ attractionInfo.title }}
-        </h5>
+      <div class="flex flex-col justify-between p-4 leading-normal h-[30rem]" style='width: 50%'>
+
+        <div class='flex justify-between'>
+          <h5 class="mb-4 mt-5 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {{ attractionInfo.title }}
+          </h5>
+          <Wish />
+        </div>
+
         <p class="scrollBar overflow-auto mb-3 font-normal text-gray-700 dark:text-gray-400">
           {{ attractionInfo.overview }}
         </p>
