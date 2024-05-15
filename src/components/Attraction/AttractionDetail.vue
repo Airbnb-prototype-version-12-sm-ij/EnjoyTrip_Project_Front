@@ -24,6 +24,7 @@ onMounted(() => {
 </script>
 
 <template>
+  {{ attractionInfo }}
   <div class="max-w-7xl mx-auto py-10 flex flex-col mt-20">
     <div class="flex container">
       <div class="flex mr-auto">
@@ -54,8 +55,8 @@ onMounted(() => {
           <h5 class="mb-4 mt-5 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
             {{ attractionInfo.title }}
           </h5>
-          <Wish :contentId='attractionInfo.contentId' />
-          <Wished :contentId='attractionInfo.contentId' />
+          <Wish :contentId='attractionInfo.contentId' v-if="!attractionInfo.wishlistId" />
+          <Wished :contentId='attractionInfo.contentId' v-if="attractionInfo.wishlistId" />
 
         </div>
 

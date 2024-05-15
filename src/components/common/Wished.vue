@@ -3,6 +3,15 @@
 import client from '@/api/client';
 import Swal from 'sweetalert2'
 
+import { useAttractionStore } from '@/store/attrationStore'
+import { storeToRefs } from 'pinia'
+
+const store = useAttractionStore()
+
+const { attractionItems } = storeToRefs(store)
+
+
+
 const props = defineProps({
     contentId: Number
 })
@@ -14,12 +23,25 @@ const deleteWish = async (e) => {
         await client.delete('/attractions/wish', {
             data: { contentId: props.contentId }
         })
+
+
+        for (let i = 0; i < attractionItems.value.length; i++) {
+            if (attractionItems.value[i].contentId === props.contentId) {
+                attractionItems.value[i].wishlistId = null;
+
+            }
+        }
+
         Swal.fire({
             icon: 'success',
             title: '찜 목록에서 삭제되었습니다.',
             showConfirmButton: true,
             timer: 2000
         })
+
+
+
+
     } catch {
         alert('에러가 발생했습니다.')
     }

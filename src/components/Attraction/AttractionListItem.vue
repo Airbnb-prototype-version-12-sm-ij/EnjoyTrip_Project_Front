@@ -26,33 +26,24 @@ infoStore.setItem(props.attractionItem.value)
 
 <template>
   <div class="p-4 sm:ml-64">
-
-
-
     <RouterLink @click="infoStore.setItem(attractionItem)" :to="{ name: 'detail' }"
       class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 "
       style="height: 300px">
-
-
 
       <!-- 이미지 -->
       <img :alt="attractionItem.title"
         class="object-cover w-full rounded-t-lg h-full md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
         :src="attractionItem.firstImage" style="width: 40%; aspect-ratio: 140 / 140; object-fit: cover; height: 100%" />
 
-
       <div class="flex flex-col justify-between p-8 leading-normal w-120" style='width : 60%'>
 
-        <Wish class='justify-end' :contentId='attractionItem.contentId' />
-        <Wished class='justify-end' :contentId='attractionItem.contentId' />
+        <Wish class='justify-end' :contentId='attractionItem.contentId' v-if="!attractionItem.wishlistId" />
+        <Wished class='justify-end' :contentId='attractionItem.contentId' v-if="attractionItem.wishlistId" />
 
 
         <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           {{ attractionItem.title }}
         </h1>
-
-
-
 
         <!-- 찜 수 -->
         <div class="flex items-center mt-2 mb-4">
