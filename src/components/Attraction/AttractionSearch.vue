@@ -1,9 +1,10 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAttractionStore } from '@/store/attrationStore'
+import { useAttractionStore, useAttractionSearchStore } from '@/store/attrationStore'
 import client from '@/api/client'
 import Swal from 'sweetalert2'
+// import { storeToRefs } from 'pinia'
 
 const Toast = Swal.mixin({
   toast: true,
@@ -20,6 +21,7 @@ const Toast = Swal.mixin({
 // 관광지 검색
 const router = useRouter()
 const store = useAttractionStore()
+const searchStore = useAttractionSearchStore()
 
 const sido = ref({
   sidoCode: 0,
@@ -59,6 +61,11 @@ const attractionSearch = async (e) => {
       })
     } else {
       store.resetItems()
+      searchStore.setItem({
+        sidoCode: sido.value.sidoCode,
+        typeCode: content.value.contentId,
+        title: title.value
+      })
       attractionItems.value = res.data
       store.setItems(attractionItems.value)
       router.push({ name: 'search' })

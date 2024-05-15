@@ -31,3 +31,18 @@ export const useAttractionInfoStore = defineStore(
   },
   { persist: true }
 )
+
+export const useAttractionSearchStore = defineStore(
+  'attractionSearchInfo',
+  () => {
+    // title, content_id, sido_code
+    const attractionSearchInfo = ref({})
+
+    const setItem = (item) => {
+      attractionSearchInfo.value = item
+    }
+
+    return { attractionSearchInfo, setItem }
+  },
+  { persist: true }
+)
