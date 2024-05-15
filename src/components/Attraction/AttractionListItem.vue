@@ -3,6 +3,7 @@ import { defineProps, ref } from 'vue'
 import { useAttractionInfoStore } from '@/store/attrationStore'
 import Score from '../common/Score.vue'
 import Wish from '../common/Wish.vue';
+import Wished from '../common/Wished.vue';
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
@@ -42,7 +43,8 @@ infoStore.setItem(props.attractionItem.value)
 
       <div class="flex flex-col justify-between p-8 leading-normal w-120" style='width : 60%'>
 
-        <Wish class='justify-end' />
+        <Wish class='justify-end' :contentId='attractionItem.contentId' />
+        <Wished class='justify-end' :contentId='attractionItem.contentId' />
 
 
         <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

@@ -1,5 +1,6 @@
 <script setup>
 import Wish from '@/components/common/Wish.vue'
+import Wished from '../common/Wished.vue'
 import { onMounted } from 'vue'
 import { useAttractionInfoStore } from '@/store/attrationStore'
 import { storeToRefs } from 'pinia'
@@ -53,7 +54,9 @@ onMounted(() => {
           <h5 class="mb-4 mt-5 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
             {{ attractionInfo.title }}
           </h5>
-          <Wish />
+          <Wish :contentId='attractionInfo.contentId' />
+          <Wished :contentId='attractionInfo.contentId' />
+
         </div>
 
         <p class="scrollBar overflow-auto mb-3 font-normal text-gray-700 dark:text-gray-400">

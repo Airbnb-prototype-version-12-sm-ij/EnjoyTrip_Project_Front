@@ -7,17 +7,16 @@ const props = defineProps({
     contentId: Number
 })
 
-const addWish = async (e) => {
+const deleteWish = async (e) => {
     e.preventDefault();
-    console.log('찜하기');
+    console.log('찜삭제');
     try {
-        await client.post('/attractions/wish', {
-            contentId: props.contentId
+        await client.delete('/attractions/wish', {
+            data: { contentId: props.contentId }
         })
-
         Swal.fire({
             icon: 'success',
-            title: '찜 목록에 추가되었습니다.',
+            title: '찜 목록에서 삭제되었습니다.',
             showConfirmButton: true,
             timer: 2000
         })
@@ -29,9 +28,10 @@ const addWish = async (e) => {
 
 </script>
 
+
 <template>
-    <button @click='addWish' class="flex p-2 rounded-full transition-colors z-50">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" color='red'
+    <button @click='deleteWish' class="flex p-2 rounded-full transition-colors z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" color='red'
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7">
             <path
                 d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
