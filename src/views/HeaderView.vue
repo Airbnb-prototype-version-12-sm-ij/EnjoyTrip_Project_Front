@@ -7,19 +7,6 @@ import LoginModal from '@/views/modal/LoginModal.vue'
 import AttractionSearch from '@/components/Attraction/AttractionSearch.vue'
 import UserDropdown from '@/views/dropdown/UserDropdown.vue'
 
-// 알림창
-// const Toast = Swal.mixin({
-//   toast: true,
-//   position: 'top-end',
-//   showConfirmButton: false,
-//   timer: 3000,
-//   timerProgressBar: true,
-//   didOpen: (toast) => {
-//     toast.addEventListener('mouseenter', Swal.stopTimer)
-//     toast.addEventListener('mouseleave', Swal.resumeTimer)
-//   }
-// })
-
 const router = useRouter()
 
 // 세션에서 로그인 정보 가져오기
@@ -72,14 +59,11 @@ const isLoggedIn = computed(() => {
   </div>
   <div v-else>
     <nav
-      class="bg-white dark:bg-gray-900 fixed w-full z-50 top-0 start-0 border-b border-gray-200 dark:border-gray-600"
-    >
+      class="bg-white dark:bg-gray-900 fixed w-full z-50 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <RouterLink :to="{ name: 'home' }" class="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-            >방방 곡곡</span
-          >
+          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">방방 곡곡</span>
         </RouterLink>
         <!-- 검색 바 start -->
         <AttractionSearch />

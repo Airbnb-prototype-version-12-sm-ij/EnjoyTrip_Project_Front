@@ -45,7 +45,15 @@ const router = createRouter({
       path: '/board/:boardId',
       name: 'boardModify',
       component: () => import('@/views/board/BoardModifyView.vue')
+    },
+
+    {
+      path: '/wish',
+      name: 'wishList',
+      component: () => import('@/views/WishView.vue')
     }
+
+    
   ]
 })
 
