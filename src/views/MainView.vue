@@ -4,11 +4,9 @@ import BoardListView from '@/views/board/BoardListView.vue'
 
 import axios from 'axios'
 
-console.log(import.meta.env.VITE_WEATHER_API_KEY)
-
 const getWeather = async () => {
   console.log('날씨')
-  //  37.55382466, lon: 127.104871
+
   await axios
     .get(
       'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=37.55382466&lon=127.104871&units=metric&lang=kr&appid=' +

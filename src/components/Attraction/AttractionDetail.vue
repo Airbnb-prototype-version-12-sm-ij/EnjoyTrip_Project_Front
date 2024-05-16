@@ -37,9 +37,6 @@ onMounted(() => {
       <p class="ml-3 mb-3">{{ contentTypeName[attractionInfo.contentTypeId] }}</p>
       <p class="ml-3 mb-3">조회수: {{ attractionInfo.readCount }}</p>
     </div>
-
-    {{ attractionInfo }}
-
     <!-- 관광지 정보 -->
     <div
       class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl dark:border-gray-700 dark:bg-gray-800 max-w-screen"

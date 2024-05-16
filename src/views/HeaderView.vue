@@ -38,7 +38,9 @@ onMounted(async () => {
 // 로그인 정보 계속 확인용
 client.get('/members/ping').then((res) => {
   if (res.status === 200) {
-    if (res.data === '') {
+    if (res.data === '' || res.data === null) {
+      sessionStorage.removeItem('memberDto')
+      client.post('/members/logout')
       return
     }
     sessionStorage.setItem('memberDto', JSON.stringify(res.data))
@@ -59,11 +61,14 @@ const isLoggedIn = computed(() => {
   </div>
   <div v-else>
     <nav
-      class="bg-white dark:bg-gray-900 fixed w-full z-50 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+      class="bg-white dark:bg-gray-900 fixed w-full z-50 top-0 start-0 border-b border-gray-200 dark:border-gray-600"
+    >
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <RouterLink :to="{ name: 'home' }" class="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">방방 곡곡</span>
+          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
+            >방방 곡곡</span
+          >
         </RouterLink>
         <!-- 검색 바 start -->
         <AttractionSearch />
