@@ -1,6 +1,5 @@
 <script setup>
 
-import SideMenu from '@/components/SideMenu.vue'
 import client from '@/api/client';
 import WishListItem from './WishListItem.vue';
 import { ref, onMounted } from 'vue';
@@ -28,15 +27,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div class='flex'>
     <div class="mt-[100px] col-span-3">
-      <h1 style='margin-left:300px; font-size:40px'>찜 목록</h1>
-      <div class="ml-10" v-for="wish in wishList" :key="wish.id">
-        <WishListItem :wish="wish" />
-      </div>
-      <WishMap :wishList='wishList' />
+      <h1 style='margin-left:300px; font-size:36px'>찜 목록</h1>
+      <WishListItem :wish="wish" v-for="wish in wishList" :key="wish.id" />
     </div>
-
+    <WishMap :wishList='wishList' v-if="!wishList.value" />
   </div>
 </template>
 
