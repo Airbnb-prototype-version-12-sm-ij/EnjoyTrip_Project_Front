@@ -72,7 +72,6 @@ const attractionSearch = async (e) => {
       attractionItems.value = res.data
       store.setItems(attractionItems.value)
       router.push({ name: 'search' })
-      console.log(res.data)
     }
   } catch (error) {
     console.error('에러' + error)

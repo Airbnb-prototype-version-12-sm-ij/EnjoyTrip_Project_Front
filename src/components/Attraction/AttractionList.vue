@@ -25,7 +25,7 @@ const { attractionSearchInfo } = storeToRefs(searchStore)
 
 const addedItemIds = new Set()
 
-const pageNo = ref(1)
+const pageNo = ref(10)
 
 const store = useAttractionStore()
 
@@ -55,7 +55,7 @@ const scrollDownSearch = async () => {
       newItems.forEach((item) => addedItemIds.add(item.contentId))
       attractionItems.value = attractionItems.value.concat(newItems)
       store.setItems(attractionItems.value)
-      pageNo.value++
+      pageNo.value += 10
     }
   } catch (error) {
     console.error('에러' + error)
