@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div id="default-carousel" class="mt-40 relative max-w-screen" data-carousel="slide">
+  <div id="default-carousel" class="relative max-w-screen" data-carousel="slide">
     <!-- Carousel wrapper -->
     <div class="relative overflow-hidden rounded-lg md:h-[50vh] max-h-screen aspect-video">
       <!-- Item 1 -->

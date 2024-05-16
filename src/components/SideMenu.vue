@@ -65,6 +65,16 @@ const attractionSearch = async () => {
     console.error('에러' + error)
   }
 }
+
+const getWishList = async () => {
+  try {
+    const res = await client.get('/attractions/wishlist')
+    console.log(res.data)
+    // 추가 로직
+  } catch (error) {
+    console.error('에러' + error)
+  }
+}
 </script>
 
 <template>
@@ -549,7 +559,7 @@ const attractionSearch = async () => {
           <a
             href="#"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            @click="goWishList"
+            @click="getWishList"
           >
             <svg
               class="relative max-w-[24px]"

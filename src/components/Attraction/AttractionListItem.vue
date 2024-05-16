@@ -39,8 +39,16 @@ infoStore.setItem(props.attractionItem.value)
       />
 
       <div class="flex flex-col justify-between p-8 leading-normal w-120" style="width: 60%">
-        <Wish class="justify-end" :contentId="attractionItem.contentId" />
-        <Wished class="justify-end" :contentId="attractionItem.contentId" />
+        <Wish
+          class="justify-end"
+          :contentId="attractionItem.contentId"
+          v-if="!attractionItem.wishlistId"
+        />
+        <Wished
+          class="justify-end"
+          :contentId="attractionItem.contentId"
+          v-if="attractionItem.wishlistId"
+        />
 
         <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           {{ attractionItem.title }}
