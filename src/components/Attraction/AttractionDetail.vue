@@ -24,7 +24,6 @@ onMounted(() => {
 </script>
 
 <template>
-  {{ attractionInfo }}
   <div class="max-w-7xl mx-auto py-10 flex flex-col mt-20">
     <div class="flex container">
       <div class="flex mr-auto">

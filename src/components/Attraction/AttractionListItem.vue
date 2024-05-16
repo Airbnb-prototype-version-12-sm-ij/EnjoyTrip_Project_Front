@@ -11,7 +11,10 @@ import Wished from '../common/Wished.vue'
 const infoStore = useAttractionInfoStore()
 
 const props = defineProps({
-  attractionItem: Object
+  attractionItem: {
+    type: Object, // 객체(Object) 유형으로 지정
+    required: true // 필수 prop으로 지정 (선택적인 경우 필요에 따라 변경)
+  }
 })
 
 const score = ref(3)

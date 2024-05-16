@@ -1,13 +1,9 @@
 <script setup>
-
-
-import BoardList from '@/components/board/BoardList.vue';
-
-
+import BoardList from '@/components/board/BoardList.vue'
 </script>
 
 <template>
-    <BoardList />
+  <BoardList />
 </template>
 
 <style scoped></style>

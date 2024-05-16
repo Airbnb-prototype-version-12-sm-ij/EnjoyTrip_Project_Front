@@ -76,7 +76,7 @@ const isImage = computed(() => {
 </script>
 
 <template>
-  <div v-if="!isLoading" class="grid gap-8 max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+  <div v-if="!isLoading" class="grid gap-8 max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8 mt-[70px]">
     <div class="grid gap-2">
       <h1 class="text-3xl font-bold">{{ board.title }}</h1>
       <div class="flex justify-between items-center gap-4 text-sm text-gray-500">
