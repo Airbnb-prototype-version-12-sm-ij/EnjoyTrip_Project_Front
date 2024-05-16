@@ -4,6 +4,7 @@ import SideMenu from '@/components/SideMenu.vue'
 import client from '@/api/client';
 import WishListItem from './WishListItem.vue';
 import { ref, onMounted } from 'vue';
+import WishMap from './WishMap.vue';
 
 
 
@@ -33,6 +34,7 @@ onMounted(() => {
       <div class="ml-10" v-for="wish in wishList" :key="wish.id">
         <WishListItem :wish="wish" />
       </div>
+      <WishMap :wishList='wishList' />
     </div>
 
   </div>

@@ -10,7 +10,6 @@ import WishMap from '@/components/Attraction/WishMap.vue'
   <div>
     <SideMenu />
     <wishList />
-    <WishMap />
   </div>
 </template>
 
