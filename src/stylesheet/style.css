@@ -1,3 +1,15 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+    format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Pretendard-Regular';
+}
+
 /* 아래의 모든 코드는 영역::코드로 사용 */
 .scrollBar::-webkit-scrollbar {
   width: 10px; /* 스크롤바의 너비 */
@@ -12,12 +24,4 @@
 
 .scrollBar::-webkit-scrollbar-track {
   background: rgba(110, 110, 110, 0.1); /*스크롤바 뒷 배경 색상*/
-}
-
-@font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
-    format('woff');
-  font-weight: 900;
-  font-style: normal;
 }
