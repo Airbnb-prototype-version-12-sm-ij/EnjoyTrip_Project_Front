@@ -1,19 +1,17 @@
 <script setup>
 import { KakaoMap } from 'vue3-kakao-maps';
 import { ref, computed, watchEffect } from 'vue';
+import OpenAI from "openai";
+
 
 const props = defineProps({
   wishList: Array
 })
 
 
+
 const map = ref();
 
-// const markerInfoList = [
-//   { key: 1, lat: 33.452278, lng: 126.567803 },
-//   { key: 2, lat: 33.452671, lng: 126.574792 },
-//   { key: 3, lat: 33.451744, lng: 126.572441 }
-// ];
 
 const markerInfoList = computed(() => {
   return props.wishList.map((item, index) => {
@@ -65,5 +63,4 @@ watchEffect(() => {
 <template>
 
   <KakaoMap :lat="0" :lng="0" @onLoadKakaoMap="onLoadKakaoMap" width='1000' class='mt-40' />
-
 </template>
