@@ -1,14 +1,14 @@
 <script setup>
+import client from '@/api/client'
 import BoardListItem from '@/components/board/BoardListItem.vue'
-import axios from 'axios'
-
+import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 
 const boardList = ref([])
 
 const getBoardList = () => {
-  axios
-    .get('http://localhost/posting/')
+  client
+    .get('/posting/')
     .then((response) => {
       boardList.value = response.data
     })
@@ -16,6 +16,22 @@ const getBoardList = () => {
       alert('에러가 발생했습니다.')
     })
 }
+
+const router = useRouter()
+
+const nowRoute = router.currentRoute.value.name
+
+// 로그인 정보 계속 확인용
+client.get('/members/ping').then((res) => {
+  if (res.status === 200) {
+    if (res.data === '') {
+      return
+    }
+    sessionStorage.setItem('memberDto', JSON.stringify(res.data))
+  } else {
+    router.go(0)
+  }
+})
 
 onMounted(() => {
   getBoardList()
@@ -26,7 +42,8 @@ onMounted(() => {
   <section class="mt-[77px] grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-4 md:p-6 mx-2 md:mx-6">
     <BoardListItem v-for="board in boardList" :key="board.postId" :board="board" />
   </section>
-  <div data-dial-init class="fixed bottom-6 right-10 group">
+
+  <div v-if="nowRoute !== 'home'" class="fixed bottom-6 right-10 group">
     <button
       @click="$router.push({ name: 'boardWrite' })"
       aria-controls="speed-dial-menu-dropdown-alternative"
