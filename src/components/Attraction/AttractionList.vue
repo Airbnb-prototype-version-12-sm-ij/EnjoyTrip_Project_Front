@@ -62,23 +62,22 @@ const scrollDownSearch = async () => {
   }
 }
 
-onMounted(() => {
-  window.addEventListener('scroll', (e) => {
-    e.preventDefault()
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      scrollDownSearch()
-    }
-  })
-})
+const handleScroll = (e) => {
+  e.preventDefault()
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+    scrollDownSearch()
+  }
+}
 
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll')
+  window.removeEventListener('scroll', handleScroll)
 })
 
 onMounted(() => {
   if (!attractionItems.value.length) {
     router.push('/')
   }
+  window.addEventListener('scroll', handleScroll)
 })
 </script>
 
