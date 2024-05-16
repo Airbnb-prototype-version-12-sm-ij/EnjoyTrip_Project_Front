@@ -51,7 +51,9 @@ const attractionSearch = async (e) => {
       params: {
         sidoCode: sido.value.sidoCode,
         typeCode: content.value.contentId,
-        title: title.value
+        title: title.value,
+        page: 0,
+        size: 10
       }
     })
     if (res.data.length === 0) {

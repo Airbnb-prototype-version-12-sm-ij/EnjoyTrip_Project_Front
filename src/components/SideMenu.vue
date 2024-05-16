@@ -42,7 +42,9 @@ const attractionSearch = async () => {
       params: {
         sidoCode: attractionSearchInfo.value.sidoCode,
         typeCode: ContentType.value.typeCode,
-        title: attractionSearchInfo.value.title
+        title: attractionSearchInfo.value.title,
+        page: 1,
+        size: 11
       }
     })
     if (res.data.length === 0) {
