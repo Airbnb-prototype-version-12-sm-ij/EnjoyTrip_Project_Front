@@ -3,58 +3,77 @@ import AttractionListItem from './AttractionListItem.vue'
 import { useAttractionStore, useAttractionSearchStore } from '@/store/attrationStore'
 import client from '@/api/client'
 import { storeToRefs } from 'pinia'
-import { onMounted, ref } from 'vue'
+import Swal from 'sweetalert2'
+import { onMounted, ref, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 
-const loading = ref(false)
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 const searchStore = useAttractionSearchStore()
 
 const { attractionSearchInfo } = storeToRefs(searchStore)
 
-const attractionSearch = async () => {
-  if (loading.value) return
-  loading.value = true
+const addedItemIds = new Set()
 
-  try {
-    const res = await client.get('/attractions/search', {
-      params: {
-        sidoCode: attractionSearchInfo.value.sidoCode,
-        typeCode: attractionSearchInfo.value.contentId,
-        title: attractionSearchInfo.value,
-        page: attractionSearchInfo.value,
-        size: attractionSearchInfo.value
-      }
-    })
-    if (res.data.length === 0) {
-      Toast.fire({
-        icon: 'error',
-        title: '검색 결과가 없습니다.'
-      })
-    } else {
-      attractionItems.value = [...attractionItems.value, ...res.data]
-      page.value++
-    }
-  } catch (error) {
-    console.error('에러' + error)
-  } finally {
-    loading.value = false
-  }
-}
-
-const checkBottom = () => {
-  const { innerHeight } = window
-  const { scrollHeight, scrollTop } = document.documentElement
-  if (scrollHeight - innerHeight - scrollTop < 500) {
-    attractionSearch()
-  }
-}
+const pageNo = ref(1)
 
 const store = useAttractionStore()
 
 const { attractionItems } = storeToRefs(store)
 
 const router = useRouter()
+
+// 스크롤 다운 검색
+const scrollDownSearch = async () => {
+  try {
+    const res = await client.get('/attractions/search', {
+      params: {
+        sidoCode: attractionSearchInfo.value.sidoCode,
+        typeCode: attractionSearchInfo.value.typeCode,
+        title: attractionSearchInfo.value.title,
+        page: pageNo.value,
+        size: 10
+      }
+    })
+    if (res.data.length < 10) {
+      Toast.fire({
+        icon: 'success',
+        title: '검색 결과가 모두 로드되었습니다.'
+      })
+    } else {
+      const newItems = res.data.filter((item) => !addedItemIds.has(item.contentId))
+      newItems.forEach((item) => addedItemIds.add(item.contentId))
+      attractionItems.value = attractionItems.value.concat(newItems)
+      store.setItems(attractionItems.value)
+      pageNo.value++
+    }
+  } catch (error) {
+    console.error('에러' + error)
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', (e) => {
+    e.preventDefault()
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      scrollDownSearch()
+    }
+  })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll')
+})
 
 onMounted(() => {
   if (!attractionItems.value.length) {
