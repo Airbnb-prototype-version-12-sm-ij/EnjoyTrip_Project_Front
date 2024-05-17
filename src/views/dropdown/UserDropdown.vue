@@ -11,6 +11,10 @@ const goToBoard = () => {
   router.push({ name: 'board' })
 }
 
+const goTowishList = () => {
+  router.push({ name: 'wishList' })
+}
+
 // 세션에서 회원 정보 가져오기
 const userInfo = computed(() => {
   const memberDto = sessionStorage.getItem('memberDto')
@@ -53,6 +57,14 @@ const userInfo = computed(() => {
           href="#"
           class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
           >게시판</a
+        >
+      </li>
+      <li>
+        <a
+          @click="goTowishList"
+          href="#"
+          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          >찜 목록</a
         >
       </li>
       <li v-if="userInfo !== null && userInfo.grade === 'admin'">

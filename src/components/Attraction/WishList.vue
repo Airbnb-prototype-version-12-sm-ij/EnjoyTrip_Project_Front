@@ -57,14 +57,11 @@ const getTripRoute = async () => {
     max_tokens: 2000
   })
 
-
-  console.log(response.choices[0].message.content)
   result.value = response.choices[0].message.content
   response.choices[0].message.content.replace(/`/g, '').replace('javascript', '')
   wishList.value = eval(
     response.choices[0].message.content.replace(/`/g, '').replace('javascript', '')
   )
-
   await getExplanation()
   isLoading.value = false
 }
@@ -80,7 +77,7 @@ const getExplanation = async () => {
       {
         role: 'user',
         content:
-          '해당 여행 경로에 대한 설명, 여행 경로 순서를 정한 이유, 예상 소요시간, 경비등의 이유를 문단 사이에 띄어쓰기를 하여 마크다운 형식으로 번호로 분류하여 사용자 친화적으로 제공하시오  그리고 그 외의 답변은 허용하지 않습니다'
+          '해당 여행 경로에 대한 설명, 여행 경로 순서를 정한 이유, 예상 소요시간, 경비등의 이유를 문단 사이에 띄어쓰기를 하여 마크다운 형식으로 분류별로 사용자 친화적으로 제공하시오  그리고 그 외의 답변은 허용하지 않습니다'
       }
     ],
     model: 'gpt-3.5-turbo',
@@ -101,9 +98,7 @@ const getExplanation = async () => {
     <div class="flex-col">
       <WishMap :wishList="wishList" v-if="wishList" />
 
-
-
-      <div class="flex items-start justify-start h-3/4 bg-gray-900">
+      <div class="flex items-start justify-start h-3/4 bg-gray-900 max-w-[1000px]">
         <div class="flex flex-col">
           <div @click="getTripRoute" style="width: 300px"
             class="flex mt-5 ml-5 px-6 py-3 rounded-md bg-gray-50 text-gray-900 font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
@@ -113,7 +108,7 @@ const getExplanation = async () => {
             </a>
           </div>
 
-          <div role="status" class="max-w-2xl animate-pulse ml-10 mt-20" style="width: 1500px" v-show="isLoading">
+          <div role="status" class="max-w-2xl animate-pulse mx-10 mt-20" style="width: 1500px" v-show="isLoading">
             <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
             <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-4"></div>
             <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
