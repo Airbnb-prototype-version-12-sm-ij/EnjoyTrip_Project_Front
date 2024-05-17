@@ -98,7 +98,7 @@ const getExplanation = async () => {
     <div class="flex-col">
       <WishMap :wishList="wishList" v-if="wishList" />
 
-      <div class="flex items-start justify-start h-3/4 bg-gray-900">
+      <div class="flex items-start justify-start h-3/4 bg-gray-900 max-w-[1000px]">
         <div class="flex flex-col">
           <div
             @click="getTripRoute"
@@ -113,7 +113,7 @@ const getExplanation = async () => {
 
           <div
             role="status"
-            class="max-w-2xl animate-pulse ml-10 mt-20"
+            class="max-w-2xl animate-pulse mx-10 mt-20"
             style="width: 1500px"
             v-show="isLoading"
           >
