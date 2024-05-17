@@ -16,8 +16,7 @@ const URL = 'https://apis-navi.kakaomobility.com/v1/waypoints/directions'
 console.log(REST_API_KEY, 'API키')
 
 // 커스텀 오버레이
-const content = (info) => `
-      <div
+const content = (info) => `<div
         style="
           padding: 10px;
           background-color: white;
@@ -29,16 +28,6 @@ const content = (info) => `
         "
       >
         <div style="font-weight: bold; margin-bottom: 5px">${info}</div>
-        <div style="display: flex">
-          <div style="margin-right: 10px">
-            <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumnail.png" width="73" height="70" />
-          </div>
-          <div style="display: flex; flex-direction: column; align-items: flex-start">
-            <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">제주특별자치도 제주시 첨단로 242</div>
-            <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">(우) 63309 (지번) 영평동 2181</div>
-            <div><a href="https://www.kakaocorp.com/main" target="_blank" style="color: blue">홈페이지</a></div>
-          </div>
-        </div>
       </div>`
 
 const onClickKakaoMapMarker = (item) => {
@@ -202,6 +191,7 @@ watchEffect(() => {
         :lat="item.lat"
         :lng="item.lng"
         :clickable="true"
+        :zIndex="3"
         @onClickKakaoMapMarker="onClickKakaoMapMarker(item)"
       />
       <KakaoMapCustomOverlay
