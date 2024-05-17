@@ -1,15 +1,15 @@
 <script setup>
+import client from '@/api/client'
+import WishListItem from './WishListItem.vue'
+import { ref, onMounted } from 'vue'
+import WishMap from './WishMap.vue'
+import OpenAI from 'openai'
 
-import client from '@/api/client';
-import WishListItem from './WishListItem.vue';
-import { ref, onMounted } from 'vue';
-import WishMap from './WishMap.vue';
-import OpenAI from "openai";
-
+const wishList = ref([])
 
 const getWishList = async () => {
   try {
-    const res = await client.get('/attractions/wishList',)
+    const res = await client.get('/attractions/wishList')
     wishList.value = res.data
     console.log(res.data)
   } catch (error) {
@@ -17,33 +17,28 @@ const getWishList = async () => {
   }
 }
 
-const wishList = ref([])
-
-let text = "";
 onMounted(async () => {
   await getWishList()
-  text = wishList.value
 })
 
-
 const result = ref('')
-
 
 const openai = new OpenAI({
   apiKey: import.meta.env.VITE_OPENAI_API_KEY,
   dangerouslyAllowBrowser: true
-});
+})
 
 const getResponse = async () => {
-  console.log(wishList.value);
+  console.log(wishList.value)
   const response = await openai.chat.completions.create({
     messages: [
       {
-        role: "assistant",
-        content: "당신은 한국의 여행관련 웹 사이트에서 여행 경로를 추천해주는 사람입니다. 제가 자바 스크립트 여행 정보 객체 리스트를 입력하면 리스트 요소를 보고 모든 여행지에 대한 여행 순서를 정해야 합니다.  해당 여행 경로에 대한 설명, 여행 경로 순서를 정한 이유와 예상 소요시간 및 경비에 대한 요약을 한국인을 대상으로 정성스럽게 작성하여  HTML문서의 Body 형식으로 제공하시오  그리고 그 외의 답변은 허용하지 않습니다",
+        role: 'assistant',
+        content:
+          '당신은 한국의 여행관련 웹 사이트에서 여행 경로를 추천해주는 사람입니다. 제가 자바 스크립트 여행 정보 객체 리스트를 입력하면 리스트 요소를 보고 모든 여행지에 대한 여행 순서를 정해야 합니다.  해당 여행 경로에 대한 설명, 여행 경로 순서를 정한 이유와 예상 소요시간 및 경비에 대한 요약을 한국인을 대상으로 정성스럽게 작성하여  HTML문서의 Body 형식으로 제공하시오  그리고 그 외의 답변은 허용하지 않습니다'
       },
       {
-        role: "user",
+        role: 'user',
         content: `[
     {
         "readcount": 69245,
@@ -147,29 +142,27 @@ const getResponse = async () => {
         "first_image2": "http://tong.visitkorea.or.kr/cms/resource/10/1923610_image2_1.jpg",
         "longitude": 126.8863708
     }
-]`,
-      },
+]`
+      }
     ],
-    model: "gpt-3.5-turbo",
-    max_tokens: 2000,
-  });
+    model: 'gpt-3.5-turbo',
+    max_tokens: 2000
+  })
 
-  console.log(response.choices[0].message);
-  result.value = response.choices[0].message;
+  console.log(response.choices[0].message)
+  result.value = response.choices[0].message
 }
-
-
 </script>
 
 <template>
-  <div class='flex'>
+  <div class="flex">
     <div class="mt-[100px] col-span-3">
-      <h1 style='margin-left:300px; font-size:36px'>찜 목록</h1>
+      <h1 style="margin-left: 300px; font-size: 36px">찜 목록</h1>
       <WishListItem :wish="wish" v-for="wish in wishList" :key="wish.id" />
     </div>
-    <div class='flex-col'>
-      <WishMap :wishList='wishList' v-if="!wishList.value" />
-      <button @click='getResponse'>여행경로 추천 받기 </button>
+    <div class="flex-col">
+      <WishMap :wishList="wishList" v-if="!wishList.value" />
+      <button @click="getResponse">여행경로 추천 받기</button>
 
       <p v-html="result.content"></p>
     </div>
