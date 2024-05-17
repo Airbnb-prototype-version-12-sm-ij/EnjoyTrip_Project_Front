@@ -57,15 +57,13 @@ const getResponse = async () => {
 </script>
 
 <template>
-  <div class="flex">
-    <div class="mt-[100px] col-span-3">
-      <h1 style="margin-left: 300px; font-size: 36px">찜 목록</h1>
-      <WishListItem :wish="wish" v-for="wish in wishList" :key="wish.id" />
-    </div>
-    <div class="flex-col">
-      <WishMap :wishList="wishList" v-if="!wishList.value" />
-      <button @click="getResponse">여행경로 추천 받기</button>
-    </div>
+  <div class="fixed -mt-16 col-span-3 min-w-[500px]">
+    <h1 style="margin-left: 300px; font-size: 36px">찜 목록</h1>
+    <WishListItem :wish="wish" v-for="wish in wishList" :key="wish.id" />
+  </div>
+  <div class="ml-[850px]">
+    <WishMap :wishList="wishList" v-if="!wishList.value" />
+    <button @click="getResponse">여행경로 추천 받기</button>
   </div>
 </template>
 
