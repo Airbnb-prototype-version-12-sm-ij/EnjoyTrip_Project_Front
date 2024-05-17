@@ -5,26 +5,28 @@ import WishListItem from './WishListItem.vue'
 import { ref, onMounted } from 'vue'
 import WishMap from './WishMap.vue'
 import OpenAI from 'openai'
+import Draggable from "vue3-draggable";
 
 const markdown = new MarkdownIt()
+
+const isInit = ref(false)
+
+const wishList = ref([])
 
 const getWishList = async () => {
   try {
     const res = await client.get('/attractions/wishList')
     wishList.value = res.data
-    console.log(res.data)
   } catch (error) {
     console.error('에러' + error)
   }
+  isInit.value = true
 }
 
-const wishList = ref([])
 
 let text = ref('')
 
-onMounted(async () => {
-  await getWishList()
-})
+
 
 const isLoading = ref(false)
 
@@ -33,13 +35,13 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true
 })
 
+
 const result = ref({
   content: ''
 })
 const getTripRoute = async () => {
   isLoading.value = true
   text.value = wishList.value
-  console.log(wishList.value)
   console.log('API 호출')
   console.log(JSON.stringify(text.value))
   const response = await openai.chat.completions.create({
@@ -58,10 +60,11 @@ const getTripRoute = async () => {
   })
 
   result.value = response.choices[0].message.content
-  response.choices[0].message.content.replace(/`/g, '').replace('javascript', '')
+  console.log(response.choices[0].message.content.replace(/`/g, '').replace('javascript', ''))
   wishList.value = eval(
     response.choices[0].message.content.replace(/`/g, '').replace('javascript', '')
   )
+
   await getExplanation()
   isLoading.value = false
 }
@@ -87,14 +90,33 @@ const getExplanation = async () => {
   console.log(response.choices[0].message)
   result.value = response.choices[0].message
 }
+
+
+onMounted(async () => {
+  await getWishList()
+})
 </script>
 
 <template>
+
+
   <div class="flex">
-    <div class="mt-[100px] col-span-3">
+
+    <div class="mt-[100px] col-span-3" v-if="wishList">
       <h1 style="margin-left: 300px; font-size: 36px">찜 목록</h1>
-      <WishListItem :wish="wish" v-for="wish in wishList" :key="wish.id" />
+      <!-- <WishListItem :wish="wish" v-for="wish in wishList" :key="wish.id" />
+      <h1 style="margin-left: 300px; font-size: 36px">테스트테스트테스트</h1> -->
+      <draggable v-model="wishList" v-if="isInit">
+        <template v-slot:item="{ item }">
+          <div>
+            <WishListItem :wish="item" />
+          </div>
+        </template>
+      </draggable>
     </div>
+
+
+
     <div class="flex-col">
       <WishMap :wishList="wishList" v-if="wishList" />
 
@@ -127,6 +149,7 @@ const getExplanation = async () => {
           <p v-html="markdown.render(result.content)" style="color: white" class="ml-14 mt-14"></p>
         </div>
       </div>
+
     </div>
   </div>
 </template>
