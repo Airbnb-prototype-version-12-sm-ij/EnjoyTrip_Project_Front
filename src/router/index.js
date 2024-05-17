@@ -52,8 +52,6 @@ const router = createRouter({
       name: 'wishList',
       component: () => import('@/views/WishView.vue')
     }
-
-    
   ]
 })
 

@@ -1,66 +1,62 @@
 <script setup>
-import { KakaoMap } from 'vue3-kakao-maps';
-import { ref, computed, watchEffect } from 'vue';
-import OpenAI from "openai";
-
+import { KakaoMap } from 'vue3-kakao-maps'
+import { ref, computed, watchEffect } from 'vue'
+import KakaoMobility from '@/components/Attraction/KakaoMobility.vue'
+// import OpenAI from 'openai'
 
 const props = defineProps({
   wishList: Array
 })
 
-
-
-const map = ref();
-
+const map = ref()
 
 const markerInfoList = computed(() => {
   return props.wishList.map((item, index) => {
     return {
       key: index + 1,
       lat: item.latitude,
-      lng: item.longitude
+      lng: item.longitude,
+      title: item.title,
+      addr: item.addr
     }
   })
 })
 
-
-let bounds;
+let bounds
 
 const onLoadKakaoMap = (mapRef) => {
-  map.value = mapRef;
-  bounds = new kakao.maps.LatLngBounds();
-  let marker;
-  let point;
+  map.value = mapRef
+  bounds = new kakao.maps.LatLngBounds()
+  let marker
+  let point
 
   markerInfoList.value.forEach((markerInfo) => {
-    point = new kakao.maps.LatLng(markerInfo.lat, markerInfo.lng);
+    point = new kakao.maps.LatLng(markerInfo.lat, markerInfo.lng)
 
-    marker = new kakao.maps.Marker({ position: point });
+    marker = new kakao.maps.Marker({ position: point })
     if (map.value !== undefined) {
-      marker.setMap(map.value);
+      marker.setMap(map.value)
     }
 
-    bounds.extend(point);
-  });
-};
+    bounds.extend(point)
+  })
+}
 
 const setBounds = () => {
   if (map.value !== undefined) {
-    map.value.setBounds(bounds);
+    map.value.setBounds(bounds)
   }
-};
+}
 
 watchEffect(() => {
   if (props.wishList.length > 0) {
-    onLoadKakaoMap(map.value);
+    onLoadKakaoMap(map.value)
   }
-  setBounds();
-});
-
+  setBounds()
+})
 </script>
 
-
 <template>
-
-  <KakaoMap :lat="0" :lng="0" @onLoadKakaoMap="onLoadKakaoMap" width='1000' class='mt-40' />
+  <KakaoMobility />
+  <KakaoMap :lat="0" :lng="0" @onLoadKakaoMap="onLoadKakaoMap" width="1000" class="mt-40" />
 </template>

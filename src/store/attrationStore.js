@@ -46,3 +46,29 @@ export const useAttractionSearchStore = defineStore(
   },
   { persist: true }
 )
+
+export const useWishList = defineStore(
+  'wishListItems',
+  () => {
+    const wishListItems = ref([])
+    const addToWishList = (item) => {
+      wishListItems.value.push(item)
+    }
+
+    const setWishList = (items) => {
+      wishListItems.value = items
+    }
+
+    const removeFromWishList = (item) => {
+      const index = wishListItems.value.findIndex((i) => i.id === item.id)
+      if (index !== -1) {
+        wishListItems.value.splice(index, 1)
+      }
+    }
+    const clearWishList = () => {
+      wishListItems.value = []
+    }
+    return { wishListItems, setWishList, addToWishList, removeFromWishList, clearWishList }
+  },
+  { persist: true }
+)

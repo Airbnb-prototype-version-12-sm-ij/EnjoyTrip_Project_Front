@@ -1,7 +1,6 @@
 <script setup>
 import AttractionRecommand from '@/components/Attraction/AttractionRecommand.vue'
 import BoardListView from '@/views/board/BoardListView.vue'
-import KakaoMobility from '@/components/Attraction/KakaoMobility.vue'
 import axios from 'axios'
 
 const getWeather = async () => {
@@ -24,9 +23,6 @@ const getWeather = async () => {
 <template>
   <div class="flex">
     <button class="z-50" @click="getWeather">날씨</button>
-  </div>
-  <div class="mt-40 z-50">
-    <KakaoMobility />
   </div>
   <div class="flex -mt-[100px] -mb-[200px] justify-center items-center h-screen max-w-screen">
     <AttractionRecommand />
