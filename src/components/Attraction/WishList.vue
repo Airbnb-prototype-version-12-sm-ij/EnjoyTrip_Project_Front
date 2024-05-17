@@ -57,11 +57,14 @@ const getTripRoute = async () => {
     max_tokens: 2000
   })
 
+
+  console.log(response.choices[0].message.content)
   result.value = response.choices[0].message.content
   response.choices[0].message.content.replace(/`/g, '').replace('javascript', '')
   wishList.value = eval(
     response.choices[0].message.content.replace(/`/g, '').replace('javascript', '')
   )
+
   await getExplanation()
   isLoading.value = false
 }
@@ -77,7 +80,7 @@ const getExplanation = async () => {
       {
         role: 'user',
         content:
-          '해당 여행 경로에 대한 설명, 여행 경로 순서를 정한 이유, 예상 소요시간, 경비등의 이유를 문단 사이에 띄어쓰기를 하여 마크다운 형식으로 분류별로 사용자 친화적으로 제공하시오  그리고 그 외의 답변은 허용하지 않습니다'
+          '해당 여행 경로에 대한 설명, 여행 경로 순서를 정한 이유, 예상 소요시간, 경비등의 이유를 문단 사이에 띄어쓰기를 하여 마크다운 형식으로 번호로 분류하여 사용자 친화적으로 제공하시오  그리고 그 외의 답변은 허용하지 않습니다'
       }
     ],
     model: 'gpt-3.5-turbo',
@@ -97,6 +100,8 @@ const getExplanation = async () => {
     </div>
     <div class="flex-col">
       <WishMap :wishList="wishList" v-if="wishList" />
+
+
 
       <div class="flex items-start justify-start h-3/4 bg-gray-900">
         <div class="flex flex-col">
