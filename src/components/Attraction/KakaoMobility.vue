@@ -1,14 +1,23 @@
 <script setup>
 import axios from 'axios'
-import { ref } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 import { KakaoMap, KakaoMapPolyline, KakaoMapMarker, KakaoMapCustomOverlay } from 'vue3-kakao-maps'
+import { useWishList } from '@/store/attrationStore'
+
+const wishStore = useWishList()
+
+const wishList = ref(wishStore.wishListItems)
+
+console.log(wishList.value, '위시리스트')
 
 const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY
 const URL = 'https://apis-navi.kakaomobility.com/v1/waypoints/directions'
-console.log(REST_API_KEY)
+
+console.log(REST_API_KEY, 'API키')
 
 // 커스텀 오버레이
-const content = (info) => ` <div
+const content = (info) => `
+      <div
         style="
           padding: 10px;
           background-color: white;
@@ -38,7 +47,6 @@ const onClickKakaoMapMarker = (item) => {
 }
 
 // 마커 정보 배열
-const markerInfoList = ref([])
 const markerList = ref([])
 
 // 폴리 라인 그리는 배열
@@ -51,30 +59,32 @@ const lng = ref(0)
 // 거리 계산
 const distance = ref(0)
 
-const wayBody = {
-  // 출발지
-  origin: {
-    x: '127.11024293202674',
-    y: '37.394348634049784'
-  },
-  // 목적지
-  destination: {
-    x: '127.10860518470294',
-    y: '37.401999820065534'
-  },
-  // 경유지
-  waypoints: [
-    {
-      name: 'name0',
-      x: 127.11341936045922,
-      y: 37.39639094915999
-    }
-  ],
-  priority: 'RECOMMEND',
-  car_fuel: 'GASOLINE',
-  car_hipass: false,
-  alternatives: false,
-  road_details: false
+// 카카오 지도 경유지 설정
+let wayBody = {}
+if (Array.isArray(wishList.value) && wishList.value.length > 0) {
+  wayBody = {
+    // 출발지
+    origin: {
+      x: wishList.value[0].longitude,
+      y: wishList.value[0].latitude
+    },
+    // 목적지
+    destination: {
+      x: wishList.value[wishList.value.length - 1].longitude,
+      y: wishList.value[wishList.value.length - 1].latitude
+    },
+    // 경유지
+    waypoints: wishList.value.slice(1, -1).map((item, index) => ({
+      name: 'name' + index,
+      x: item.longitude,
+      y: item.latitude
+    })),
+    priority: 'RECOMMEND',
+    car_fuel: 'GASOLINE',
+    car_hipass: false,
+    alternatives: false,
+    road_details: false
+  }
 }
 
 // 카카오 지도 경로
@@ -87,7 +97,7 @@ const getKakaoMap = async () => {
       }
     })
 
-    markerInfoList.value = []
+    distance.value = 0
     latLngList.value = []
     markerList.value = []
 
@@ -97,18 +107,20 @@ const getKakaoMap = async () => {
       distance.value += e.distance
 
       e.guides.forEach((e) => {
-        if (e.name !== '' && markerInfoList.value.some((item) => item.name === e.name)) return
-        if (e.name === '출발지' || e.name === '경유지' || e.name === '목적지') {
-          markerInfoList.value.push({
-            name: e.name,
-            x: e.x,
-            y: e.y
-          })
-        }
         latLngList.value.push({
           lat: e.y,
           lng: e.x
         })
+        console.log(e.name, 'e')
+        if (e.name === '') return
+        if (e.name === '출발지' || e.name === '경유지' || e.name === '목적지') {
+          markerList.value.push({
+            lat: e.y,
+            lng: e.x,
+            name: e.name,
+            visible: false
+          })
+        }
       })
     })
 
@@ -117,18 +129,6 @@ const getKakaoMap = async () => {
 
     console.log(lat.value, 'lat')
     console.log(lng.value, 'lng')
-
-    markerInfoList.value.forEach((e) => {
-      if (e.name === '') {
-        return
-      }
-      markerList.value.push({
-        lat: e.y,
-        lng: e.x,
-        name: e.name,
-        visible: false
-      })
-    })
 
     console.log(distance.value, '거리')
 
@@ -139,19 +139,63 @@ const getKakaoMap = async () => {
     console.error('에러' + error)
   }
 }
+
+onMounted(async () => {
+  await getKakaoMap()
+})
+
+let bounds
+
+const map = ref()
+
+const onLoadKakaoMap = (mapRef) => {
+  map.value = mapRef
+  // eslint-disable-next-line no-undef
+  bounds = new kakao.maps.LatLngBounds()
+  let marker
+  let point
+
+  markerList.value.forEach((markerInfo) => {
+    // eslint-disable-next-line no-undef
+    point = new kakao.maps.LatLng(markerInfo.lat, markerInfo.lng)
+    // eslint-disable-next-line no-undef
+    marker = new kakao.maps.Marker({ position: point })
+    if (map.value !== undefined) {
+      marker.setMap(map.value)
+    }
+
+    bounds.extend(point)
+  })
+}
+
+const setBounds = () => {
+  if (map.value !== undefined) {
+    map.value.setBounds(bounds)
+  }
+}
+
+watchEffect(() => {
+  try {
+    if (wishList.value.length > 0) {
+      onLoadKakaoMap(map.value)
+    }
+    setBounds()
+  } catch (error) {
+    console.error('에러' + error)
+  }
+})
 </script>
 
 <template>
-  <div>
-    <button @click="getKakaoMap">카카오 지도</button>
+  <div class="mt-20">
     <div v-if="distance > 1000">
-      <p>거리: {{ distance / 1000 }}km</p>
+      <h1>거리: {{ distance / 1000 }}km</h1>
     </div>
     <div v-else>
-      <p>거리: {{ distance }}m</p>
+      <h1>거리: {{ distance }}m</h1>
     </div>
 
-    <KakaoMap :lat="lat" :lng="lng">
+    <KakaoMap :lat="lat" :lng="lng" width="1000" @onLoadKakaoMap="onLoadKakaoMap">
       <KakaoMapMarker
         v-for="item in markerList"
         :key="item.name"
@@ -169,7 +213,14 @@ const getKakaoMap = async () => {
         :visible="item.visible"
         :yAnchor="1.4"
       />
-      <KakaoMapPolyline :latLngList="latLngList" :end-arrow="true" />
+      <KakaoMapPolyline
+        :latLngList="latLngList"
+        :end-arrow="true"
+        strokeWeight="9"
+        strokeColor="#0066FF"
+        strokeOpacity="0.9"
+        strokeStyle="dashed"
+      />
     </KakaoMap>
   </div>
 </template>
