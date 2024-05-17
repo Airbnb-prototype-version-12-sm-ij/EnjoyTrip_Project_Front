@@ -105,7 +105,7 @@ const getExplanation = async () => {
 
 
 
-      <div class="flex items-start justify-start h-3/4 bg-gray-900 ">
+      <div class="flex items-start justify-start h-3/4 bg-gray-900 " style="width: 1000px; height: 800px;">
         <div class='flex flex-col'>
           <div @click='getTripRoute' style='width: 300px;'
             class='flex mt-5 ml-5 px-6 py-3 rounded-md bg-gray-50 text-gray-900 font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'>
