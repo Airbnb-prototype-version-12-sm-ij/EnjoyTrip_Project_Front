@@ -11,7 +11,7 @@ const markdown = new MarkdownIt();
 
 const getWishList = async () => {
   try {
-    const res = await client.get('/attractions/wishList',)
+    const res = await client.get('/attractions/wishList')
     wishList.value = res.data
     console.log(res.data)
   } catch (error) {
@@ -28,13 +28,12 @@ onMounted(async () => {
   await getWishList()
 })
 
-
 const isLoading = ref(false)
 
 const openai = new OpenAI({
   apiKey: import.meta.env.VITE_OPENAI_API_KEY,
   dangerouslyAllowBrowser: true
-});
+})
 
 const result = ref({
   content: ""
@@ -52,9 +51,9 @@ const getTripRoute = async () => {
         content: import.meta.env.VITE_PROMPT,
       },
       {
-        role: "user",
-        content: JSON.stringify(text.value),
-      },
+        role: 'user',
+        content: JSON.stringify(text.value)
+      }
     ],
     model: "gpt-3.5-turbo",
     max_tokens: 2000,
@@ -96,9 +95,9 @@ const getExplanation = async () => {
 </script>
 
 <template>
-  <div class='flex'>
+  <div class="flex">
     <div class="mt-[100px] col-span-3">
-      <h1 style='margin-left:300px; font-size:36px'>찜 목록</h1>
+      <h1 style="margin-left: 300px; font-size: 36px">찜 목록</h1>
       <WishListItem :wish="wish" v-for="wish in wishList" :key="wish.id" />
     </div>
     <div class='flex-col'>
