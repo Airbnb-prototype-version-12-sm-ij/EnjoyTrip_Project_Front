@@ -6,6 +6,9 @@ import { ref, onMounted } from 'vue'
 import OpenAI from 'openai'
 import Draggable from 'vue3-draggable'
 import KakaoMobility from './KakaoMobility.vue'
+import { useWishList } from '@/store/attrationStore'
+
+const wishStore = useWishList()
 
 const markdown = new MarkdownIt()
 
@@ -16,7 +19,9 @@ const wishList = ref([])
 const getWishList = async () => {
   try {
     const res = await client.get('/attractions/wishList')
+    wishStore.clearWishList()
     wishList.value = res.data
+    wishStore.setWishList(wishList.value)
   } catch (error) {
     console.error('에러' + error)
   }
