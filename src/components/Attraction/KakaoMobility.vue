@@ -14,11 +14,19 @@ const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY
 const URL = 'https://apis-navi.kakaomobility.com/v1/waypoints/directions'
 
 // 커스텀 오버레이
-const content = (info) => `
-  <div style="padding: 10px; background-color: white; border: 1px solid #ccc; border-radius: 5px;">
-    <div style="font-weight: bold; margin-bottom: 5px">${info}</div>
-    <div>...</div>
-  </div>`
+const content = (info) => `<div
+        style="
+          padding: 10px;
+          background-color: white;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        "
+      >
+        <div style="font-weight: bold; margin-bottom: 5px">${info}</div>
+      </div>`
 
 const markerList = ref([])
 const latLngList = ref([])
