@@ -2,7 +2,7 @@
 import client from '@/api/client'
 import MarkdownIt from 'markdown-it'
 import WishListItem from './WishListItem.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 import OpenAI from 'openai'
 import Draggable from 'vue3-draggable'
 import KakaoMobility from './KakaoMobility.vue'
@@ -40,6 +40,7 @@ const openai = new OpenAI({
 const result = ref({
   content: ''
 })
+
 const getTripRoute = async () => {
   isLoading.value = true
   text.value = wishList.value
@@ -92,6 +93,13 @@ const getExplanation = async () => {
   result.value = response.choices[0].message
 }
 
+// watchEffect(() => {
+//   console.log(wishList.value)
+//   wishStore.clearWishList()
+//   wishStore.setWishList(wishList.value)
+// })
+
+
 onMounted(async () => {
   await getWishList()
 })
@@ -99,7 +107,7 @@ onMounted(async () => {
 
 <template>
   <div class="flex">
-    <div class="mt-[100px] col-span-3" v-if="wishList">
+    <div class="mt-[100px] col-span-3">
       <h1 style="margin-left: 300px; font-size: 36px">찜 목록</h1>
       <!-- <WishListItem :wish="wish" v-for="wish in wishList" :key="wish.id" />
       <h1 style="margin-left: 300px; font-size: 36px">테스트테스트테스트</h1> -->
@@ -113,7 +121,7 @@ onMounted(async () => {
     </div>
 
     <div class="flex-col">
-      <KakaoMobility />
+      <KakaoMobility :wishList='wishList' v-if="isInit" />
 
       <div class="flex items-start justify-start h-3/4 bg-gray-900 max-w-[1000px]">
         <div class="flex flex-col">
