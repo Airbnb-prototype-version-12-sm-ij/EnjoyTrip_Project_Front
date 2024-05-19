@@ -1,8 +1,14 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineProps } from 'vue'
+import { useRoute } from 'vue-router'
 import axios from 'axios'
 
+const route = useRoute()
+
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY
+
+let latt = ref(null)
+let lonn = ref(null)
 
 const props = defineProps({
   lat: {
@@ -14,9 +20,8 @@ const props = defineProps({
     required: true
   }
 })
-
-const lat = props.lat
-const lon = props.lon
+latt.value = props.lat
+lonn.value = props.lon
 
 const weather = ref('')
 const temp = ref('')
@@ -25,10 +30,10 @@ const iconURL = ref('')
 
 const getWeather = async () => {
   console.log('날씨')
-  console.log(lat, lon)
+  console.log(latt, lonn)
   await axios
     .get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=kr`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${latt.value}&lon=${lonn.value}&appid=${API_KEY}&units=metric&lang=kr`
     )
     .then((response) => {
       weather.value = response.data.weather[0].description
@@ -43,7 +48,9 @@ const getWeather = async () => {
 }
 
 onMounted(async () => {
-  await getWeather()
+  if (route.path !== '/') {
+    await getWeather()
+  }
 })
 </script>
 
