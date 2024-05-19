@@ -110,7 +110,7 @@ onMounted(async () => {
       <h1 style="margin-left: 300px; font-size: 36px">찜 목록</h1>
       <!-- <WishListItem :wish="wish" v-for="wish in wishList" :key="wish.id" />
       <h1 style="margin-left: 300px; font-size: 36px">테스트테스트테스트</h1> -->
-      <draggable v-model="wishList" v-if="isInit">
+      <draggable v-model="wishList" v-if="isInit" :key="JSON.stringify(wishList)">
         <template v-slot:item="{ item }">
           <div>
             <WishListItem :wish="item" />
