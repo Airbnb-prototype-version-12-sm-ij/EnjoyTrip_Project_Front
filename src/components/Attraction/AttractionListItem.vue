@@ -43,17 +43,33 @@ const instagram = 'https://www.instagram.com/explore/tags/' + props.attractionIt
 
       <div class="flex flex-col justify-between p-8 leading-normal w-120" style="width: 60%">
 
-        <Wish class="justify-end" :contentId="attractionItem.contentId" v-if="!attractionItem.wishlistId && userInfo" />
-        <Wished class="justify-end" :contentId="attractionItem.contentId"
-          v-if="attractionItem.wishlistId && userInfo" />
-        <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <div class='flex flex-row
+         justify-end mb-5'>
+          <!-- 인스타 태그 검색 -->
+          <a :href="instagram" target="_blank" class="pt-1.5 max-w-[31px] mr-3" @click.stop>
+            <img alt="인스타그램 태그 검색" src="../../assets/pngwing.com.png" style="width: 28px" />
+          </a>
+
+          <a :href='"https://www.youtube.com/results?search_query=" + attractionItem.title' target="_blank" @click.stop
+            class='mr-1'>
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0 0 48 48">
+              <path fill="#FF3D00"
+                d="M43.2,33.9c-0.4,2.1-2.1,3.7-4.2,4c-3.3,0.5-8.8,1.1-15,1.1c-6.1,0-11.6-0.6-15-1.1c-2.1-0.3-3.8-1.9-4.2-4C4.4,31.6,4,28.2,4,24c0-4.2,0.4-7.6,0.8-9.9c0.4-2.1,2.1-3.7,4.2-4C12.3,9.6,17.8,9,24,9c6.2,0,11.6,0.6,15,1.1c2.1,0.3,3.8,1.9,4.2,4c0.4,2.3,0.9,5.7,0.9,9.9C44,28.2,43.6,31.6,43.2,33.9z">
+              </path>
+              <path fill="#FFF" d="M20 31L20 17 32 24z"></path>
+            </svg>
+          </a>
+
+          <Wish :contentId="attractionItem.contentId" v-if="!attractionItem.wishlistId && userInfo" />
+          <Wished :contentId="attractionItem.contentId" v-if="attractionItem.wishlistId && userInfo" />
+        </div>
+
+
+        <h1 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
           {{ attractionItem.title }}
         </h1>
 
-        <!-- 인스타 태그 검색 -->
-        <a :href="instagram" target="_blank" class="flex max-w-[31px]" @click.stop>
-          <img alt="인스타그램 태그 검색" src="../../assets/pngwing.com.png" style="width: 30px" />
-        </a>
+
 
         <!-- https://www.instagram.com/explore/tags/%EC%A0%9C%EC%A3%BC%EB%8F%84/ -->
         <!-- 찜 수 -->

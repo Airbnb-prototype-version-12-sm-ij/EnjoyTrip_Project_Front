@@ -87,13 +87,34 @@ onMounted(() => {
           <h5 class="mb-4 mt-5 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
             {{ attractionInfo.title }}
           </h5>
-          <Wish :contentId="attractionInfo.contentId" v-if="!attractionInfo.wishlistId && userInfo" />
-          <Wished :contentId="attractionInfo.contentId" v-if="attractionInfo.wishlistId && userInfo" />
+
+
+          <div class='flex gap-3'>
+            <!-- 인스타 태그 검색 -->
+            <a :href="instagram" target="_blank" class="flex max-w-[31px] mr-2 mt-2">
+              <img alt="인스타그램 태그 검색" src="../../assets/pngwing.com.png" style="width: 26px; height: 26px;" />
+            </a>
+
+            <a :href='"https://www.youtube.com/results?search_query=" + attractionInfo.title' target="_blank"
+              class='mt-1'>
+              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="35" height="35" viewBox="0 0 48 48">
+                <path fill="#FF3D00"
+                  d="M43.2,33.9c-0.4,2.1-2.1,3.7-4.2,4c-3.3,0.5-8.8,1.1-15,1.1c-6.1,0-11.6-0.6-15-1.1c-2.1-0.3-3.8-1.9-4.2-4C4.4,31.6,4,28.2,4,24c0-4.2,0.4-7.6,0.8-9.9c0.4-2.1,2.1-3.7,4.2-4C12.3,9.6,17.8,9,24,9c6.2,0,11.6,0.6,15,1.1c2.1,0.3,3.8,1.9,4.2,4c0.4,2.3,0.9,5.7,0.9,9.9C44,28.2,43.6,31.6,43.2,33.9z">
+                </path>
+                <path fill="#FFF" d="M20 31L20 17 32 24z"></path>
+              </svg>
+            </a>
+
+
+            <Wish :contentId="attractionInfo.contentId" v-if="!attractionInfo.wishlistId && userInfo" />
+            <Wished :contentId="attractionInfo.contentId" v-if="attractionInfo.wishlistId && userInfo" />
+          </div>
+
+
         </div>
-        <!-- 인스타 태그 검색 -->
-        <a :href="instagram" target="_blank" class="flex max-w-[31px]">
-          <img alt="인스타그램 태그 검색" src="../../assets/pngwing.com.png" style="width: 30px" />
-        </a>
+
+
+
         <getWeagtherInfo :lat="lat" :lon="lon" />
         <p class="scrollBar overflow-auto mb-3 font-normal text-gray-700 dark:text-gray-400">
           {{ attractionInfo.overview }}
