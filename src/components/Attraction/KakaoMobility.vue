@@ -149,14 +149,15 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="mt-20">
+  <div class="mt-20 w-full max-w-[640px]">
     <div v-if="distance > 1000">
       <h1>거리: {{ distance / 1000 }}km</h1>
     </div>
     <div v-else>
       <h1>거리: {{ distance }}m</h1>
     </div>
-    <KakaoMap :lat="lat" :lng="lng" width="1000" @onLoadKakaoMap="onLoadKakaoMap">
+
+    <KakaoMap :lat="lat" :lng="lng" @onLoadKakaoMap="onLoadKakaoMap">
       <KakaoMapMarker
         v-for="item in markerList"
         :key="item.name"
