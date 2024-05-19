@@ -1,29 +1,11 @@
 <script setup>
 import AttractionRecommand from '@/components/Attraction/AttractionRecommand.vue'
 import BoardListView from '@/views/board/BoardListView.vue'
-import axios from 'axios'
-
-const getWeather = async () => {
-  console.log('날씨')
-
-  await axios
-    .get(
-      'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=37.55382466&lon=127.104871&units=metric&lang=kr&appid=' +
-        import.meta.env.VITE_WEATHER_API_KEY
-    )
-    .then((response) => {
-      console.log(response.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-}
+import getWeagtherInfo from '@/components/getWeatherInfo.vue'
 </script>
 
 <template>
-  <div class="flex">
-    <button class="z-50" @click="getWeather">날씨</button>
-  </div>
+  <getWeagtherInfo />
   <div class="flex -mt-[100px] -mb-[200px] justify-center items-center h-screen max-w-screen">
     <AttractionRecommand />
   </div>
