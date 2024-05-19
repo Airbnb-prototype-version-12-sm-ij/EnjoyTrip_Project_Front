@@ -4,7 +4,7 @@ import Wished from '../common/Wished.vue'
 import { onMounted } from 'vue'
 import { useAttractionInfoStore } from '@/store/attrationStore'
 import { storeToRefs } from 'pinia'
-
+import getWeagtherInfo from '@/components/getWeatherInfo.vue'
 import { useRouter } from 'vue-router'
 import KakaoMap from '@/components/Attraction/KakaoMap.vue'
 import Review from '@/components/Review/Review.vue'
@@ -18,6 +18,9 @@ const { attractionInfo } = storeToRefs(attractionInfoStore)
 
 const instagram = 'https://www.instagram.com/explore/tags/' + attractionInfo.value.title
 
+const lat = attractionInfo.value.latitude
+const lon = attractionInfo.value.longitude
+
 onMounted(() => {
   if (!attractionInfo.value.title) {
     router.push('/')
@@ -27,11 +30,11 @@ onMounted(() => {
 
 <template>
   <div class="max-w-7xl mx-auto py-10 flex flex-col mt-20">
-    <div class="flex container">
+    <!-- <div class="flex container">
       <div class="flex mr-auto">
-        <!-- <SideMenu /> -->
+        <SideMenu />
       </div>
-    </div>
+    </div> -->
 
     <div class="flex flex-row">
       <Score :score="3" />
@@ -64,7 +67,7 @@ onMounted(() => {
         <a :href="instagram" target="_blank" class="flex max-w-[31px]">
           <img alt="인스타그램 태그 검색" src="../../assets/pngwing.com.png" style="width: 30px" />
         </a>
-
+        <getWeagtherInfo :lat="lat" :lon="lon" />
         <p class="scrollBar overflow-auto mb-3 font-normal text-gray-700 dark:text-gray-400">
           {{ attractionInfo.overview }}
         </p>
