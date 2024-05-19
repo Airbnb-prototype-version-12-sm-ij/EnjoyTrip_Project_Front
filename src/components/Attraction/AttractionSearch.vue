@@ -5,8 +5,6 @@ import { useAttractionStore, useAttractionSearchStore } from '@/store/attrationS
 import client from '@/api/client'
 import Swal from 'sweetalert2'
 
-// import { storeToRefs } from 'pinia'
-
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -70,6 +68,7 @@ const attractionSearch = async (e) => {
         title: title.value
       })
       attractionItems.value = res.data
+      console.log('검색 결과 ', attractionItems.value)
       store.setItems(attractionItems.value)
       router.push({ name: 'search' })
     }
