@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref } from 'vue'
+import { defineProps } from 'vue'
 import { useAttractionInfoStore } from '@/store/attrationStore'
 import Score from '../common/Score.vue'
 import Wish from '../common/Wish.vue'
@@ -16,8 +16,6 @@ const props = defineProps({
     required: true // 필수 prop으로 지정 (선택적인 경우 필요에 따라 변경)
   }
 })
-
-const score = ref(3)
 
 // eslint-disable-next-line vue/no-mutating-props
 props.attractionItem.firstImage = props.attractionItem.firstImage || 'src/assets/noImg.png'
@@ -83,14 +81,14 @@ const instagram = 'https://www.instagram.com/explore/tags/' + props.attractionIt
               points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
             ></polygon>
           </svg>
-          <p class="ml-2">65(찜수)</p>
+          <p class="ml-2">{{ attractionItem.wishCount }} (찜수)</p>
           <p class="ml-2">조회수: {{ attractionItem.readCount }}</p>
         </div>
 
         <div class="flex items-center mt-2 mb-4">
-          <Score :score="score" />
+          <Score :score="attractionItem.reviewCount" />
 
-          <p style="margin-left: 10px">(4.23)평점</p>
+          <p style="margin-left: 10px">({{ attractionItem.reviewCount }})평점</p>
         </div>
 
         <!-- 카테고리 -->

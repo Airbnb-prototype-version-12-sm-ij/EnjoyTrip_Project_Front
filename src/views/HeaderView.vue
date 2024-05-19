@@ -16,7 +16,7 @@ onMounted(async () => {
   if (sessionStorage.getItem('memberDto') !== null) {
     if (!sessionStorage.getItem('refreshed')) {
       sessionStorage.setItem('refreshed', 'true')
-      await router.go(0)
+      router.replace({ name: 'home' })
     } else {
       sessionStorage.removeItem('refreshed')
     }
@@ -28,7 +28,7 @@ onMounted(async () => {
         sessionStorage.setItem('memberDto', JSON.stringify(res.data))
       }
     } else {
-      await router.go(0)
+      router.replace({ name: 'home' })
     }
   } catch (error) {
     console.error(error)
@@ -41,7 +41,7 @@ client.get('/members/ping').then((res) => {
     if (res.data === '' || res.data === null) {
       sessionStorage.removeItem('memberDto')
       client.post('/members/logout')
-      router.push({ name: 'home' })
+      router.replace({ name: 'home' })
       return
     }
     sessionStorage.setItem('memberDto', JSON.stringify(res.data))

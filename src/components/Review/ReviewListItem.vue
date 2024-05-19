@@ -59,12 +59,14 @@ if (props.data.fileInfo.length > 0) {
       />
 
       <div class="flex-grow">
-        <p class="text-lg">
-          {{ data.title }}
-        </p>
-        <p class="text-sm- mt-1">
-          {{ data.createdAt }}
-        </p>
+        <div class="flex justify-between">
+          <p class="text-lg">
+            {{ data.title }}
+          </p>
+          <p class="text-sm mt-1">
+            {{ data.createdAt }}
+          </p>
+        </div>
         <p class="text-sm- mt-2">
           {{ data.content }}
         </p>
