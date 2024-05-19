@@ -157,33 +157,13 @@ onMounted(async () => {
       <h1>거리: {{ distance }}m</h1>
     </div>
 
-    <KakaoMap :lat="lat" :lng="lng" @onLoadKakaoMap="onLoadKakaoMap">
-      <KakaoMapMarker
-        v-for="item in markerList"
-        :key="item.name"
-        :lat="item.lat"
-        :lng="item.lng"
-        :clickable="true"
-        :zIndex="5"
-        @onClickKakaoMapMarker="onClickKakaoMapMarker(item)"
-      />
-      <KakaoMapCustomOverlay
-        v-for="item in markerList"
-        :key="item.name"
-        :lat="item.lat"
-        :lng="item.lng"
-        :content="content(item.name)"
-        :visible="item.visible"
-        :yAnchor="1.4"
-      />
-      <KakaoMapPolyline
-        :latLngList="latLngList"
-        :end-arrow="true"
-        strokeWeight="9"
-        strokeColor="#0066FF"
-        strokeOpacity="0.9"
-        strokeStyle="solid"
-      />
+    <KakaoMap :lat="lat" :lng="lng" @onLoadKakaoMap="onLoadKakaoMap" class='rounded-xl'>
+      <KakaoMapMarker v-for="item in markerList" :key="item.name" :lat="item.lat" :lng="item.lng" :clickable="true"
+        :zIndex="5" @onClickKakaoMapMarker="onClickKakaoMapMarker(item)" />
+      <KakaoMapCustomOverlay v-for="item in markerList" :key="item.name" :lat="item.lat" :lng="item.lng"
+        :content="content(item.name)" :visible="item.visible" :yAnchor="1.4" />
+      <KakaoMapPolyline :latLngList="latLngList" :end-arrow="true" strokeWeight="9" strokeColor="#0066FF"
+        strokeOpacity="0.9" strokeStyle="solid" />
     </KakaoMap>
   </div>
 </template>
