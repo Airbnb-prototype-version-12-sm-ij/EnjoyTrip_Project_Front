@@ -91,7 +91,8 @@ onMounted(() => {
 
           <div class='flex gap-3'>
             <!-- 인스타 태그 검색 -->
-            <a :href="instagram" target="_blank" class="flex max-w-[31px] mr-2 mt-2">
+            <a :href="'https://www.instagram.com/explore/tags/' + attractionInfo.title.replace(' ', '')" target="_blank"
+              class="flex max-w-[31px] mr-2 mt-2">
               <img alt="인스타그램 태그 검색" src="../../assets/pngwing.com.png" style="width: 26px; height: 26px;" />
             </a>
 

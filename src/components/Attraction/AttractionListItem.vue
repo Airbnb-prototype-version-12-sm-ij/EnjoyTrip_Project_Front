@@ -28,7 +28,6 @@ props.attractionItem.firstImage = props.attractionItem.firstImage || 'src/assets
 
 infoStore.setItem(props.attractionItem.value)
 
-const instagram = 'https://www.instagram.com/explore/tags/' + props.attractionItem.title
 </script>
 
 <template>
@@ -43,10 +42,12 @@ const instagram = 'https://www.instagram.com/explore/tags/' + props.attractionIt
 
       <div class="flex flex-col justify-between p-8 leading-normal w-120" style="width: 60%">
 
+
         <div class='flex flex-row
          justify-end mb-5'>
           <!-- 인스타 태그 검색 -->
-          <a :href="instagram" target="_blank" class="pt-1.5 max-w-[31px] mr-3" @click.stop>
+          <a :href="'https://www.instagram.com/explore/tags/' + attractionItem.title.replace(' ', '')" target="_blank"
+            class="pt-1.5 max-w-[31px] mr-3" @click.stop>
             <img alt="인스타그램 태그 검색" src="../../assets/pngwing.com.png" style="width: 28px" />
           </a>
 
