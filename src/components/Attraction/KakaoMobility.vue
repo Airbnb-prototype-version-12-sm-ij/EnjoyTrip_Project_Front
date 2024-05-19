@@ -30,6 +30,9 @@ const onClickKakaoMapMarker = (item) => {
   item.visible = !item.visible
 }
 
+
+const mapMarkers = ref([])
+
 const markerList = ref([])
 const latLngList = ref([])
 const lat = ref(0)
@@ -37,6 +40,9 @@ const lng = ref(0)
 const distance = ref(0)
 
 const getKakaoMap = async () => {
+  mapMarkers.value.forEach(marker => marker.setMap(null))
+  mapMarkers.value = []
+
   if (props.wishList.length < 2) {
     console.error('최소 두 개의 경유지가 필요합니다.')
     return
@@ -123,6 +129,7 @@ const setBounds = () => {
       const marker = new kakao.maps.Marker({ position: point })
       marker.setMap(map.value)
       bounds.extend(point)
+      mapMarkers.value.push(marker)
     })
     map.value.setBounds(bounds)
   }
