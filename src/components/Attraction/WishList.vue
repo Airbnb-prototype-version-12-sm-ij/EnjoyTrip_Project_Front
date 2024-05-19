@@ -93,11 +93,14 @@ const getExplanation = async () => {
   result.value = response.choices[0].message
 }
 
-// watchEffect(() => {
-//   console.log(wishList.value)
-//   wishStore.clearWishList()
-//   wishStore.setWishList(wishList.value)
-// })
+const handleDelete = (wishToDelete) => {
+  console.log("에밋")
+  const index = wishList.value.findIndex(wish => wish === wishToDelete);
+  if (index !== -1) {
+    wishList.value.splice(index, 1);
+  }
+};
+
 
 onMounted(async () => {
   await getWishList()
@@ -108,12 +111,11 @@ onMounted(async () => {
   <div class="flex">
     <div class="mt-[100px] col-span-3 min-w-[100vh]">
       <h1 style="margin-left: 260px; font-size: 36px">찜 목록</h1>
-      <!-- <WishListItem :wish="wish" v-for="wish in wishList" :key="wish.id" />
-      <h1 style="margin-left: 300px; font-size: 36px">테스트테스트테스트</h1> -->
+
       <draggable v-model="wishList" v-if="isInit" :key="JSON.stringify(wishList)">
         <template v-slot:item="{ item }">
           <div>
-            <WishListItem :wish="item" />
+            <WishListItem :wish="item" @delete="handleDelete" />
           </div>
         </template>
       </draggable>
