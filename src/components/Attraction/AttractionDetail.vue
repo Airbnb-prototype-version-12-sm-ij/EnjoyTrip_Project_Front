@@ -31,23 +31,27 @@ onMounted(() => {
       </div>
     </div>
 
-    <div class="flex flex-row">
-      <Score :score="3" />
-      <p class="ml-3 mb-3">1,231건의 리뷰</p>
-      <p class="ml-3 mb-3">{{ contentTypeName[attractionInfo.contentTypeId] }}</p>
-      <p class="ml-3 mb-3">조회수: {{ attractionInfo.readCount }}</p>
+
+    <div class='flex justify-between'>
+      <div class="flex py-3 text-lg">
+        <Score :score="3" />
+        <p class="ml-5">1,231건의 리뷰</p>
+        <p class="ml-5">{{ contentTypeName[attractionInfo.contentTypeId] }}</p>
+        <p class="ml-5">조회수: {{ attractionInfo.readCount }}</p>
+      </div>
+
+      <div class='pb-4'>
+        <button type="button" @click="router.go(-1)"
+          class="flex whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-gray-300 hover:text-accent-foreground h-10 px-4 py-2">뒤로가기</button>
+      </div>
     </div>
     <!-- 관광지 정보 -->
     <div
-      class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl dark:border-gray-700 dark:bg-gray-800 max-w-screen"
-    >
+      class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl dark:border-gray-700 dark:bg-gray-800 max-w-screen">
       <!-- 관광지 이미지 -->
       <img
         class="object-cover w-full rounded-t-lg h-full max-w-full max-h-full md:h-auto md:w-auto md:rounded-none md:rounded-s-lg"
-        style="width: 50%; object-fit: cover; height: 500px"
-        :src="attractionInfo.firstImage"
-        alt=""
-      />
+        style="width: 50%; object-fit: cover; height: 500px" :src="attractionInfo.firstImage" alt="" />
 
       <!-- 관광지 제목 및 설명 -->
       <div class="flex flex-col justify-between p-4 leading-normal h-[30rem]" style="width: 50%">
