@@ -4,6 +4,10 @@ import BoardListItem from '@/components/board/BoardListItem.vue'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 
+const props = defineProps({
+  latest: Boolean
+})
+
 const boardList = ref([])
 
 const getBoardList = () => {
@@ -39,7 +43,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="mt-[77px] grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-4 md:p-6 mx-2 md:mx-6">
+  <section class="mt-[20px] grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-4 md:p-6 mx-2 md:mx-6"
+    v-show="props.latest">
+    <BoardListItem v-for="board in boardList.slice(0, 4)" :key="board.postId" :board="board" />
+  </section>
+
+
+  <section class="mt-[80px] grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-4 md:p-6 mx-2 md:mx-6"
+    v-show="!props.latest">
     <BoardListItem v-for="board in boardList" :key="board.postId" :board="board" />
   </section>
 

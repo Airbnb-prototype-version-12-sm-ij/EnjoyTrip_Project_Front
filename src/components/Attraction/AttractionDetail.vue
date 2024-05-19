@@ -11,6 +11,8 @@ import Review from '@/components/Review/Review.vue'
 
 import Score from '@/components/common/Score.vue'
 import contentTypeName from '@/api/contentTypeName'
+import client from '@/api/client'
+
 
 const router = useRouter()
 const attractionInfoStore = useAttractionInfoStore()
@@ -22,6 +24,17 @@ const lat = attractionInfo.value.latitude
 const lon = attractionInfo.value.longitude
 
 onMounted(() => {
+
+  attractionInfo.value.readCount++;
+  client.post(`/attractions/addViewCount/${attractionInfo.value.contentId}`)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
+
   if (!attractionInfo.value.title) {
     router.push('/')
   }
@@ -43,6 +56,7 @@ onMounted(() => {
         <p class="ml-5">1,231건의 리뷰</p>
         <p class="ml-5">{{ contentTypeName[attractionInfo.contentTypeId] }}</p>
         <p class="ml-5">조회수: {{ attractionInfo.readCount }}</p>
+
       </div>
 
       <div class='pb-4'>
