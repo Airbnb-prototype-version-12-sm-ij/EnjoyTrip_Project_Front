@@ -23,6 +23,8 @@ const score = ref(3)
 props.attractionItem.firstImage = props.attractionItem.firstImage || 'src/assets/noImg.png'
 
 infoStore.setItem(props.attractionItem.value)
+
+const instagram = 'https://www.instagram.com/explore/tags/' + props.attractionItem.title
 </script>
 
 <template>
@@ -57,6 +59,12 @@ infoStore.setItem(props.attractionItem.value)
           {{ attractionItem.title }}
         </h1>
 
+        <!-- 인스타 태그 검색 -->
+        <a :href="instagram" target="_blank" class="flex max-w-[31px]" @click.stop>
+          <img alt="인스타그램 태그 검색" src="../../assets/pngwing.com.png" style="width: 30px" />
+        </a>
+
+        <!-- https://www.instagram.com/explore/tags/%EC%A0%9C%EC%A3%BC%EB%8F%84/ -->
         <!-- 찜 수 -->
         <div class="flex items-center mt-2 mb-4">
           <svg

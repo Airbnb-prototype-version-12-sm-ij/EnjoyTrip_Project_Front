@@ -2,13 +2,11 @@
 import axios from 'axios'
 import { ref, onMounted, watch } from 'vue'
 import { KakaoMap, KakaoMapPolyline, KakaoMapMarker, KakaoMapCustomOverlay } from 'vue3-kakao-maps'
-import { useWishList } from '@/store/attrationStore'
+// import { useWishList } from '@/store/attrationStore'
 
 const props = defineProps({
   wishList: Object
 })
-
-
 
 const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY
 const URL = 'https://apis-navi.kakaomobility.com/v1/waypoints/directions'
@@ -27,6 +25,10 @@ const content = (info) => `<div
       >
         <div style="font-weight: bold; margin-bottom: 5px">${info}</div>
       </div>`
+
+const onClickKakaoMapMarker = (item) => {
+  item.visible = !item.visible
+}
 
 const markerList = ref([])
 const latLngList = ref([])
@@ -112,9 +114,12 @@ const onLoadKakaoMap = (mapRef) => {
 
 const setBounds = () => {
   if (map.value !== undefined) {
+    // eslint-disable-next-line no-undef
     bounds = new kakao.maps.LatLngBounds()
     markerList.value.forEach((markerInfo) => {
+      // eslint-disable-next-line no-undef
       const point = new kakao.maps.LatLng(markerInfo.lat, markerInfo.lng)
+      // eslint-disable-next-line no-undef
       const marker = new kakao.maps.Marker({ position: point })
       marker.setMap(map.value)
       bounds.extend(point)
@@ -127,19 +132,16 @@ watch([latLngList, markerList], () => {
   if (map.value !== undefined) {
     setBounds()
   }
-},
-  {
-    deep: true
-  }
+})
+
+watch(
+  () => [...props.wishList],
+  async () => {
+    console.log('wishList 변경')
+    await getKakaoMap()
+  },
+  { deep: true }
 )
-
-watch(() => [...props.wishList], async () => {
-  console.log('wishList 변경')
-  await getKakaoMap()
-}, { deep: true }
-)
-
-
 
 onMounted(async () => {
   await getKakaoMap()
@@ -155,12 +157,32 @@ onMounted(async () => {
       <h1>거리: {{ distance }}m</h1>
     </div>
     <KakaoMap :lat="lat" :lng="lng" width="1000" @onLoadKakaoMap="onLoadKakaoMap">
-      <KakaoMapMarker v-for="item in markerList" :key="item.name" :lat="item.lat" :lng="item.lng" :clickable="true"
-        @onClickKakaoMapMarker="onClickKakaoMapMarker(item)" />
-      <KakaoMapCustomOverlay v-for="item in markerList" :key="item.name" :lat="item.lat" :lng="item.lng"
-        :content="content(item.name)" :visible="item.visible" :yAnchor="1.4" />
-      <KakaoMapPolyline :latLngList="latLngList" :end-arrow="true" strokeWeight="9" strokeColor="#0066FF"
-        strokeOpacity="0.9" strokeStyle="solid" />
+      <KakaoMapMarker
+        v-for="item in markerList"
+        :key="item.name"
+        :lat="item.lat"
+        :lng="item.lng"
+        :clickable="true"
+        :zIndex="5"
+        @onClickKakaoMapMarker="onClickKakaoMapMarker(item)"
+      />
+      <KakaoMapCustomOverlay
+        v-for="item in markerList"
+        :key="item.name"
+        :lat="item.lat"
+        :lng="item.lng"
+        :content="content(item.name)"
+        :visible="item.visible"
+        :yAnchor="1.4"
+      />
+      <KakaoMapPolyline
+        :latLngList="latLngList"
+        :end-arrow="true"
+        strokeWeight="9"
+        strokeColor="#0066FF"
+        strokeOpacity="0.9"
+        strokeStyle="solid"
+      />
     </KakaoMap>
   </div>
 </template>

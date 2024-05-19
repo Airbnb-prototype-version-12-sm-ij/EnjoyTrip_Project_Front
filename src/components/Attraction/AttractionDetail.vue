@@ -16,6 +16,8 @@ const router = useRouter()
 const attractionInfoStore = useAttractionInfoStore()
 const { attractionInfo } = storeToRefs(attractionInfoStore)
 
+const instagram = 'https://www.instagram.com/explore/tags/' + attractionInfo.value.title
+
 onMounted(() => {
   if (!attractionInfo.value.title) {
     router.push('/')
@@ -58,6 +60,10 @@ onMounted(() => {
           <Wish :contentId="attractionInfo.contentId" v-if="!attractionInfo.wishlistId" />
           <Wished :contentId="attractionInfo.contentId" v-if="attractionInfo.wishlistId" />
         </div>
+        <!-- 인스타 태그 검색 -->
+        <a :href="instagram" target="_blank" class="flex max-w-[31px]">
+          <img alt="인스타그램 태그 검색" src="../../assets/pngwing.com.png" style="width: 30px" />
+        </a>
 
         <p class="scrollBar overflow-auto mb-3 font-normal text-gray-700 dark:text-gray-400">
           {{ attractionInfo.overview }}

@@ -2,7 +2,7 @@
 import client from '@/api/client'
 import MarkdownIt from 'markdown-it'
 import WishListItem from './WishListItem.vue'
-import { ref, onMounted, watchEffect } from 'vue'
+import { ref, onMounted } from 'vue'
 import OpenAI from 'openai'
 import Draggable from 'vue3-draggable'
 import KakaoMobility from './KakaoMobility.vue'
@@ -99,7 +99,6 @@ const getExplanation = async () => {
 //   wishStore.setWishList(wishList.value)
 // })
 
-
 onMounted(async () => {
   await getWishList()
 })
@@ -121,19 +120,27 @@ onMounted(async () => {
     </div>
 
     <div class="flex-col">
-      <KakaoMobility :wishList='wishList' v-if="isInit" />
+      <KakaoMobility :wishList="wishList" v-if="isInit" />
 
       <div class="flex items-start justify-start h-3/4 bg-gray-900 max-w-[1000px]">
         <div class="flex flex-col">
-          <div @click="getTripRoute" style="width: 300px"
-            class="flex mt-5 ml-5 px-6 py-3 rounded-md bg-gray-50 text-gray-900 font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+          <div
+            @click="getTripRoute"
+            style="width: 300px"
+            class="flex mt-5 ml-5 px-6 py-3 rounded-md bg-gray-50 text-gray-900 font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+          >
             <img src="@/assets/GPT.png" width="60px" />
             <a class="flex items-center justify-center ml-5">
               여행경로 추천 받기 {{ isLoading }}
             </a>
           </div>
 
-          <div role="status" class="max-w-2xl animate-pulse mx-10 mt-20" style="width: 1500px" v-show="isLoading">
+          <div
+            role="status"
+            class="max-w-2xl animate-pulse mx-10 mt-20"
+            style="width: 1500px"
+            v-show="isLoading"
+          >
             <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
             <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-4"></div>
             <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
