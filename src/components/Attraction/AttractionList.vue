@@ -4,7 +4,7 @@ import { useAttractionStore, useAttractionSearchStore } from '@/store/attrationS
 import client from '@/api/client'
 import { storeToRefs } from 'pinia'
 import Swal from 'sweetalert2'
-import { onMounted, ref, onBeforeUnmount } from 'vue'
+import { onMounted, ref, onBeforeUnmount, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 const Toast = Swal.mixin({
@@ -30,6 +30,36 @@ const pageNo = ref(10)
 const store = useAttractionStore()
 
 const { attractionItems } = storeToRefs(store)
+
+// 정렬 순서
+const orderBy = ref('nameUp')
+
+console.log('attractionItems.value', attractionItems.value)
+
+// 정렬 순서 변경
+watch(orderBy, async (newVal) => {
+  console.log(newVal)
+  switch (newVal) {
+    case 'nameUp':
+      attractionItems.value.sort((a, b) => a.title.localeCompare(b.title))
+      break
+    case 'viewUp':
+      attractionItems.value.sort((a, b) => b.readCount - a.readCount)
+      break
+    case 'nameDown':
+      attractionItems.value.sort((a, b) => b.title.localeCompare(a.title))
+      break
+    case 'viewDown':
+      attractionItems.value.sort((a, b) => a.readCount - b.readCount)
+      break
+    // case 'scoreUp':
+    //   attractionItems.value.sort((a, b) => b.score - a.score)
+    //   break
+    // case 'likeUp':
+    //   attractionItems.value.sort((a, b) => b.like - a.like)
+    //   break
+  }
+})
 
 const router = useRouter()
 
@@ -83,6 +113,23 @@ onMounted(() => {
 
 <template>
   <div class="mt-[40px] col-span-3">
+    <form class="max-w-sm mx-auto">
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >정렬 순서</label
+      >
+      <select
+        v-model="orderBy"
+        id="countries"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      >
+        <option value="nameUp">이름 ㄱ - ㅎ</option>
+        <option value="nameDown">이름 ㅎ - ㄱ</option>
+        <option value="viewUp">조회수 높은 순</option>
+        <option value="viewDown">조회수 낮은 순</option>
+        <!--  <option value="scoreUp">평점 높은 순</option>
+        <option value="likeUp">찜 많은 수</option> -->
+      </select>
+    </form>
     <div class="space-y-8" v-for="attractionItem in attractionItems" :key="attractionItem.id">
       <AttractionListItem :attractionItem="attractionItem" />
     </div>
