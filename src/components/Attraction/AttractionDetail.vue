@@ -1,7 +1,7 @@
 <script setup>
 import Wish from '@/components/common/Wish.vue'
 import Wished from '../common/Wished.vue'
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useAttractionInfoStore } from '@/store/attrationStore'
 import { storeToRefs } from 'pinia'
 import getWeagtherInfo from '@/components/getWeatherInfo.vue'
@@ -13,6 +13,10 @@ import Score from '@/components/common/Score.vue'
 import contentTypeName from '@/api/contentTypeName'
 import client from '@/api/client'
 
+const userInfo = computed(() => {
+  const memberDto = sessionStorage.getItem('memberDto')
+  return memberDto ? JSON.parse(memberDto) : null
+})
 
 const router = useRouter()
 const attractionInfoStore = useAttractionInfoStore()
@@ -83,8 +87,8 @@ onMounted(() => {
           <h5 class="mb-4 mt-5 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
             {{ attractionInfo.title }}
           </h5>
-          <Wish :contentId="attractionInfo.contentId" v-if="!attractionInfo.wishlistId" />
-          <Wished :contentId="attractionInfo.contentId" v-if="attractionInfo.wishlistId" />
+          <Wish :contentId="attractionInfo.contentId" v-if="!attractionInfo.wishlistId && userInfo" />
+          <Wished :contentId="attractionInfo.contentId" v-if="attractionInfo.wishlistId && userInfo" />
         </div>
         <!-- 인스타 태그 검색 -->
         <a :href="instagram" target="_blank" class="flex max-w-[31px]">

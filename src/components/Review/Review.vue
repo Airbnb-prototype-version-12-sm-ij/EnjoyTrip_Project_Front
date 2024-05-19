@@ -2,11 +2,16 @@
 import Score from '../common/Score.vue'
 import ReviewPercentage from './ReviewPercentage.vue'
 import ReviewList from './ReviewList.vue'
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAttractionInfoStore } from '@/store/attrationStore'
 const attractionInfoStore = useAttractionInfoStore()
 const { attractionInfo } = storeToRefs(attractionInfoStore)
+
+const userInfo = computed(() => {
+  const memberDto = sessionStorage.getItem('memberDto')
+  return memberDto ? JSON.parse(memberDto) : null
+})
 
 const reviewScore = ref(0)
 watchEffect(() => {
@@ -23,7 +28,7 @@ watchEffect(() => {
   <div class="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-5xl mx-auto">
       <div class="flex flex-wrap items-center justify-between mb-8 gap-4">
-        <RouterLink :to="{ name: 'review' }"
+        <RouterLink :to="{ name: 'review' }" v-show="userInfo"
           class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
           리뷰 작성하기
         </RouterLink>

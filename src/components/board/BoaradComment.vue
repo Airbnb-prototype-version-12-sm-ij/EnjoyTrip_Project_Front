@@ -71,7 +71,7 @@ onMounted(async () => {
     <BoardCommentItem v-for="comment in commentList" :key="comment.commentId" :comment="comment" :loginUser="loginUser"
       @delete-comment="getCommentList" />
 
-    <div class="text-sm flex items-start gap-4">
+    <div class="text-sm flex items-start gap-4" v-show="userId">
       <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
         <img class="aspect-square h-full w-full" alt="@shadcn" src="@/assets/sample.png" />
       </span>
