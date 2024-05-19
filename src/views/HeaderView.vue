@@ -41,6 +41,7 @@ client.get('/members/ping').then((res) => {
     if (res.data === '' || res.data === null) {
       sessionStorage.removeItem('memberDto')
       client.post('/members/logout')
+      router.push({ name: 'home' })
       return
     }
     sessionStorage.setItem('memberDto', JSON.stringify(res.data))
