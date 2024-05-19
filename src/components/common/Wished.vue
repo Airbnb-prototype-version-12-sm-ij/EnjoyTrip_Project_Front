@@ -10,6 +10,7 @@ const store = useAttractionStore()
 const { attractionItems } = storeToRefs(store)
 
 const props = defineProps({
+
   contentId: Number
 })
 

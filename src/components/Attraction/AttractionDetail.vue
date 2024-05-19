@@ -23,6 +23,7 @@ const instagram = 'https://www.instagram.com/explore/tags/' + attractionInfo.val
 const lat = attractionInfo.value.latitude
 const lon = attractionInfo.value.longitude
 
+
 onMounted(() => {
 
   attractionInfo.value.readCount++;
@@ -34,10 +35,11 @@ onMounted(() => {
       console.error(error);
     });
 
-
   if (!attractionInfo.value.title) {
     router.push('/')
   }
+
+
 })
 </script>
 
@@ -52,8 +54,11 @@ onMounted(() => {
 
     <div class='flex justify-between'>
       <div class="flex py-3 text-lg">
-        <Score :score="3" />
-        <p class="ml-5">1,231건의 리뷰</p>
+
+        <Score :score="attractionInfo.rating && attractionInfo.rating.length > 0
+          ? attractionInfo.rating.reduce((a, b, i) => a + b * (i + 1), 0) / attractionInfo.rating.reduce((a, b) => a + b, 0)
+          : 0" />
+        <p class="ml-5">{{ attractionInfo.rating ? attractionInfo.rating.reduce((a, b) => a + b, 0) : 0 }} 건의 리뷰</p>
         <p class="ml-5">{{ contentTypeName[attractionInfo.contentTypeId] }}</p>
         <p class="ml-5">조회수: {{ attractionInfo.readCount }}</p>
 
