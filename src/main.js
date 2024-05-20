@@ -6,7 +6,7 @@ import App from './App.vue'
 import router from './router'
 import { createPersistedState } from 'pinia-plugin-persistedstate'
 
-useKakao('c9c4977a5d4ddc19f25aa9b22c1e264a')
+useKakao('c9c4977a5d4ddc19f25aa9b22c1e264a', ['services'])
 
 const app = createApp(App)
 const pinia = createPinia()

@@ -2,7 +2,7 @@
 import client from '@/api/client'
 import BoardListItem from '@/components/board/BoardListItem.vue'
 import { useRouter } from 'vue-router'
-import { ref, onMounted, watchEffect } from 'vue'
+import { ref, onMounted, watchEffect, computed, watch } from 'vue'
 import regionData from '@/api/regionData'
 
 
@@ -19,6 +19,9 @@ watchEffect(() => {
   }
 })
 
+watch(sidoCode, () => {
+  gugunCode.value = 0
+})
 
 
 
@@ -39,6 +42,10 @@ const getBoardList = () => {
     })
 }
 
+
+
+
+
 const router = useRouter()
 
 const nowRoute = router.currentRoute.value.name
@@ -58,10 +65,26 @@ client.get('/members/ping').then((res) => {
 onMounted(() => {
   getBoardList()
 })
+
+
+const showList = computed(() => {
+  if (sidoCode.value === 0 && gugunCode.value === 0) {
+    return boardList.value;
+  } else {
+    return boardList.value.filter((board) => {
+      return (
+        (sidoCode.value === 0 || board.sidoCode === sidoCode.value) &&
+        (gugunCode.value === 0 || board.gugunCode === gugunCode.value)
+      );
+    });
+  }
+});
+
 </script>
 
-<template>
 
+
+<template>
 
   <div class="flex ml-[120px] mt-[120px]" v-show="!props.latest">
     <div>
@@ -77,19 +100,18 @@ onMounted(() => {
 
     <div>
       <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><strong>구군</strong>
-        <Select id="gugunCode" name="gugunCode" v-model="gugunCode"
+        <select id="gugunCode" name="gugunCode" v-model="gugunCode"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           <option value="0" v-if="gugunData.length < 1">전체 </option>
           <option v-for="item in gugunData" :key="item.id" :value="item.id">
-            {{ item.name }} {{ item }}
+            {{ item.name }}
           </option>
         </Select>
       </label>
     </div>
   </div>
 
-  <div class='ml-[150px]'>{{ sidoCode }}
-    {{ gugunCode }} {{ gugunData }}</div>
+
   <section class="mt-[20px] grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-4 md:p-6 mx-2 md:mx-6"
     v-show="props.latest">
     <BoardListItem v-for="board in boardList.slice(0, 4)" :key="board.postId" :board="board" />
@@ -97,7 +119,7 @@ onMounted(() => {
 
   <section class="mt-[25px] grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-4 md:p-6 mx-2 md:mx-6"
     v-show="!props.latest">
-    <BoardListItem v-for="board in boardList" :key="board.postId" :board="board" />
+    <BoardListItem v-for="board in showList" :key="board.postId" :board="board" />
   </section>
 
   <div v-if="nowRoute !== 'home'" class="fixed bottom-6 right-10 group">

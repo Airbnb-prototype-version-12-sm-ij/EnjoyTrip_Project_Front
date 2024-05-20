@@ -118,7 +118,8 @@ onMounted(() => {
     </div>
 
     <div class="flex">
-      <KakaoMap :lat="attractionInfo.latitude" :lon="attractionInfo.longitude" />
+      <KakaoMap :lat="attractionInfo.latitude" :lon="attractionInfo.longitude" :sidoCode='attractionInfo.sidoCode'
+        :gugunCode='attractionInfo.gugunCode' />
     </div>
     <Review />
   </div>
