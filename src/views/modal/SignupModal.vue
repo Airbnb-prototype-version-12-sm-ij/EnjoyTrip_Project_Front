@@ -29,10 +29,13 @@ const passwordType = computed(() => {
 // 유효성 검사
 const userPattern = /^[A-Za-z0-9]{3,15}$/
 
+// 이메일 유효성 검사
+const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+const isEmailValid = computed(() => emailPattern.test(email.value))
+
 // 아이디 유효성 검사
 const isUserIdValid = computed(() => userPattern.test(userId.value))
-
-
 
 // 비밀번호 유효성 검사
 const isUserPasswordValid = computed(() => userPattern.test(userPassword.value))
@@ -54,7 +57,12 @@ const confirmPassword = ref('')
 const signup = async (e) => {
   e.preventDefault()
   try {
-    if (userId.value === '' || userPassword.value === '' || userName.value === '' || email.value === '') {
+    if (
+      userId.value === '' ||
+      userPassword.value === '' ||
+      userName.value === '' ||
+      email.value === ''
+    ) {
       Swal.fire({
         icon: 'warning',
         title: '회원가입 실패',
@@ -155,12 +163,23 @@ const signup = async (e) => {
                 </p>
               </div>
 
-
               <!-- 이메일 입력 -->
-              <input v-model="email" type="email" name="email" id="email"
-                class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                placeholder="E-mail" required />
-
+              <input v-model="email" type="email" name="email" id="email" :class="[
+                'text-sm rounded-lg block w-full p-2.5 mt-2',
+                isEmailValid
+                  ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
+                  : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+              ]" placeholder="E-mail" required />
+              <div v-if="isEmailValid">
+                <p class="mt-2 text-sm text-green-600 dark:text-green-500">
+                  <span class="font-medium">사용가능합니다!</span>
+                </p>
+              </div>
+              <div v-else>
+                <p class="mt-2 text-sm text-gray-400 dark:text-gray-500">
+                  <span class="font-medium">이메일 형식으로 입력해주세요! (example123@naver.com)</span>
+                </p>
+              </div>
             </div>
 
             <div>
