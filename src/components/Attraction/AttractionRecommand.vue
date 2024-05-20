@@ -1,64 +1,68 @@
 <script setup>
-import { ref, onActivated, nextTick, onMounted } from 'vue'
+import { ref, onUpdated, onMounted, nextTick } from 'vue'
 import { useAttractionInfoStore } from '@/store/attrationStore'
+import { useRouter } from 'vue-router'
 import client from '@/api/client'
 
 const attractions = ref([])
-const carouselKey = ref(0)
-const loading = ref(true) // 로딩 상태 추가
-
+const loading = ref(true)
+const carousel = ref(0)
 const infoStore = useAttractionInfoStore()
+const router = useRouter()
+
+const loadImage = (src) => {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.src = src
+    img.onload = resolve
+    img.onerror = (err) => {
+      console.error(`이미지 로드 실패: ${img.src}`, err)
+      reject(err)
+    }
+  })
+}
 
 const getCarousel = async () => {
   try {
-    console.log('carousel 데이터 로드 중...') // 추가된 디버깅 메시지
+    loading.value = true
+    attractions.value = []
     const res = await client.get('/attractions/recommand')
-    console.log('추천 관광지 데이터:', res.data)
 
-    // 이미지 사전 로드
-    const images = res.data.map((attraction) => {
-      return new Promise((resolve, reject) => {
-        const img = new Image()
-        img.src = attraction.firstImage
-        img.onload = resolve
-        img.onerror = (err) => {
-          console.error(`이미지 로드 실패: ${img.src}`, err)
-          reject(err)
-        }
-      })
-    })
+    const images = res.data.map((attraction) => loadImage(attraction.firstImage))
 
-    await Promise.all(images) // 모든 이미지가 로드될 때까지 대기
-
+    await Promise.all(images)
+    await nextTick()
     attractions.value = res.data
-    await nextTick() // nextTick으로 변경사항 반영 후
-    carouselKey.value += 1 // carouselKey 값 증가
-    loading.value = false // 로딩 상태 변경
+    console.log('attractions:', attractions.value)
   } catch (err) {
     console.error('Carousel 데이터 로드 실패:', err)
+  } finally {
+    loading.value = false
   }
 }
 
-onMounted(getCarousel)
-onActivated(getCarousel)
+onMounted(() => {
+  console.log('onMounted 실행됨.')
+  getCarousel()
+})
 </script>
 
 <template>
-  <keep-alive>
+  <KeepAlive>
     <div v-if="!loading && attractions.length">
       <div
-        :key="carouselKey"
+        :key="carousel"
         id="default-carousel"
         class="relative max-w-screen"
         data-carousel="slide"
       >
-        <!-- Carousel wrapper -->
         <div class="relative overflow-hidden rounded-lg md:h-[50vh] max-h-screen aspect-video">
           <div
             v-for="attraction in attractions"
             :key="attraction.contentId"
             class="hidden duration-700 ease-in-out"
             data-carousel-item
+            v-show="true"
           >
             <RouterLink @click="infoStore.setItem(attraction)" :to="{ name: 'detail' }">
               <img
@@ -69,7 +73,6 @@ onActivated(getCarousel)
             </RouterLink>
           </div>
         </div>
-        <!-- Slider indicators -->
         <div
           class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse"
         >
@@ -83,7 +86,6 @@ onActivated(getCarousel)
             :data-carousel-slide-to="index"
           ></button>
         </div>
-        <!-- Slider controls -->
         <button
           type="button"
           class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
@@ -140,7 +142,6 @@ onActivated(getCarousel)
     </div>
     <div v-else>
       <!-- 로딩 중일 때 표시할 내용 -->
-
       <div role="status">
         <svg
           aria-hidden="true"
@@ -161,7 +162,7 @@ onActivated(getCarousel)
         <span class="sr-only">Loading...</span>
       </div>
     </div>
-  </keep-alive>
+  </KeepAlive>
 </template>
 
 <style scoped></style>

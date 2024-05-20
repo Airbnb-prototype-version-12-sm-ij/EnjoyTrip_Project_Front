@@ -1,11 +1,10 @@
 <script setup>
 import AttractionRecommand from '@/components/Attraction/AttractionRecommand.vue'
 import BoardListView from '@/views/board/BoardListView.vue'
-import getWeagtherInfo from '@/components/getWeatherInfo.vue'
 </script>
 
 <template>
-  <getWeagtherInfo />
+  <h1 class="ml-12 mt-44 -mb-44 text-center text-4xl font-bold text-blue-500 ml-5">인기 관광지</h1>
   <div class="flex -mt-[50px] -mb-[200px] justify-center items-center h-screen max-w-screen">
     <AttractionRecommand />
   </div>
