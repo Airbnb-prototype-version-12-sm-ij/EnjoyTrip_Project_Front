@@ -23,56 +23,67 @@ const getReviewList = async () => {
     })
 }
 
-const ratings = ref([0, 0, 0, 0, 0]);
+const ratings = ref([0, 0, 0, 0, 0])
 onMounted(async () => {
   await getReviewList()
   for (let data of datas.value) {
-    ratings.value[data.rating - 1] += 1;
+    ratings.value[data.rating - 1] += 1
   }
 
-  attractionInfo.value.rating = ratings;
+  attractionInfo.value.rating = ratings
 })
 
-
-watch(() => filtering.value, async (newValue) => {
-  if (newValue === '최신순') {
-    datas.value.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-  } else if (newValue === '오래된순') {
-    datas.value.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-  } else if (newValue === '리뷰 높은 순') {
-    datas.value.sort((a, b) => b.rating - a.rating)
-  } else if (newValue === '리뷰 낮은 순') {
-    datas.value.sort((a, b) => a.rating - b.rating)
+watch(
+  () => filtering.value,
+  async (newValue) => {
+    if (newValue === '최신순') {
+      datas.value.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    } else if (newValue === '오래된순') {
+      datas.value.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+    } else if (newValue === '리뷰 높은 순') {
+      datas.value.sort((a, b) => b.rating - a.rating)
+    } else if (newValue === '리뷰 낮은 순') {
+      datas.value.sort((a, b) => a.rating - b.rating)
+    }
   }
-})
-
-
+)
 </script>
 
 <template>
   <div class="flex flex-col md:flex-row items-center mb-4 gap-4">
     <div>
       <div class="flex space-x-2">
-        <button @click.prevent="filtering = '최신순'" :class="{ 'border-black': filtering === '최신순' }"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2">
+        <button
+          @click.prevent="filtering = '최신순'"
+          :class="{ 'border-black': filtering === '최신순' }"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2"
+        >
           최신순
         </button>
-        <button @click.prevent="filtering = '오래된순'" :class="{ 'border-black': filtering === '오래된순' }"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2">
+        <button
+          @click.prevent="filtering = '오래된순'"
+          :class="{ 'border-black': filtering === '오래된순' }"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2"
+        >
           오래된 순
         </button>
-        <button @click.prevent="filtering = '리뷰 높은 순'" :class="{ 'border-black': filtering === '리뷰 높은 순' }"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2">
+        <button
+          @click.prevent="filtering = '리뷰 높은 순'"
+          :class="{ 'border-black': filtering === '리뷰 높은 순' }"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2"
+        >
           리뷰 높은 순
         </button>
-        <button @click.prevent="filtering = '리뷰 낮은 순'" :class="{ 'border-black': filtering === '리뷰 낮은 순' }"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2">
+        <button
+          @click.prevent="filtering = '리뷰 낮은 순'"
+          :class="{ 'border-black': filtering === '리뷰 낮은 순' }"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2"
+        >
           리뷰 낮은 순
         </button>
       </div>
     </div>
   </div>
-
 
   <ReviewListItem v-for="(data, index) in datas" :key="index" :data="data" />
 </template>

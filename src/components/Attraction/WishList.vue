@@ -55,7 +55,6 @@ const loading = () => {
   <div class="flex">
     <div class="mt-[100px] col-span-3 min-w-[100vh]">
       <h1 style="margin-left: 260px; font-size: 36px">찜 목록</h1>
-
       <draggable v-model="wishList" v-if="isInit" :key="JSON.stringify(wishList)">
         <template v-slot:item="{ item }">
           <div>
@@ -78,7 +77,7 @@ const loading = () => {
           :wishList="wishList"
           @loading="loading"
           v-if="isInit"
-          class="rounded-xl"
+          class="rounded-xl width-[100vw] height-[100vh]"
           :load="load"
         />
         <div v-if="!gptloading">

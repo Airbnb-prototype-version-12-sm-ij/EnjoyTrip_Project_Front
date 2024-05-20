@@ -135,7 +135,7 @@ const getExplanation = async () => {
       <p
         v-html="markdown.render(result.content)"
         style="color: black"
-        class="mx-14 mt-14"
+        class="mx-14 mt-14 overflow-y-scroll"
         v-show="!isLoading"
       ></p>
     </div>
