@@ -1,14 +1,13 @@
 <script setup>
-import { ref, onUpdated, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick, watch } from 'vue'
 import { useAttractionInfoStore } from '@/store/attrationStore'
-import { useRouter } from 'vue-router'
 import client from '@/api/client'
+import { initFlowbite, initCarousels } from 'flowbite'
 
 const attractions = ref([])
 const loading = ref(true)
-const carousel = ref(0)
 const infoStore = useAttractionInfoStore()
-const router = useRouter()
+const carouselRef = ref(null)
 
 const loadImage = (src) => {
   return new Promise((resolve, reject) => {
@@ -25,34 +24,41 @@ const loadImage = (src) => {
 const getCarousel = async () => {
   try {
     loading.value = true
-    attractions.value = []
     const res = await client.get('/attractions/recommand')
-
-    const images = res.data.map((attraction) => loadImage(attraction.firstImage))
+    const images = res.data.map((attraction) => {
+      loadImage(attraction.firstImage)
+    })
 
     await Promise.all(images)
     await nextTick()
     attractions.value = res.data
     console.log('attractions:', attractions.value)
+    loading.value = false
   } catch (err) {
     console.error('Carousel 데이터 로드 실패:', err)
-  } finally {
-    loading.value = false
   }
 }
+
+watch(carouselRef, (newVal) => {
+  console.log(carouselRef.value)
+  if (newVal) {
+    initCarousels()
+  }
+})
 
 onMounted(() => {
   console.log('onMounted 실행됨.')
   getCarousel()
+  initFlowbite()
 })
 </script>
 
 <template>
   <KeepAlive>
-    <div v-if="!loading && attractions.length">
+    <div v-if="!isloading && attractions.length > 0">
       <div
-        :key="carousel"
-        id="default-carousel"
+        id="animation-carousel"
+        ref="carouselRef"
         class="relative max-w-screen"
         data-carousel="slide"
       >
@@ -62,10 +68,10 @@ onMounted(() => {
             :key="attraction.contentId"
             class="hidden duration-700 ease-in-out"
             data-carousel-item
-            v-show="true"
           >
             <RouterLink @click="infoStore.setItem(attraction)" :to="{ name: 'detail' }">
               <img
+                v-if="attraction.firstImage"
                 :src="attraction.firstImage"
                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                 :alt="attraction.title"
