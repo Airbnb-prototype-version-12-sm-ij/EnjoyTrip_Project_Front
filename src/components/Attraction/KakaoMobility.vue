@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios'
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, defineEmits } from 'vue'
 
 import { KakaoMap, KakaoMapPolyline, KakaoMapMarker, KakaoMapCustomOverlay } from 'vue3-kakao-maps'
 // import { useWishList } from '@/store/attrationStore'
@@ -8,6 +8,8 @@ import { KakaoMap, KakaoMapPolyline, KakaoMapMarker, KakaoMapCustomOverlay } fro
 const props = defineProps({
   wishList: Object
 })
+
+const emit = defineEmits(['loading'])
 
 const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY
 const URL = 'https://apis-navi.kakaomobility.com/v1/waypoints/directions'
@@ -107,6 +109,7 @@ const getKakaoMap = async () => {
 
     setBounds()
     loading.value = false
+    emit('loading', false)
   } catch (error) {
     console.error('에러' + error)
   }
