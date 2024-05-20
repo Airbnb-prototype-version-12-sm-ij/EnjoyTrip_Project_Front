@@ -20,6 +20,7 @@ const getWishList = async () => {
     const res = await client.get('/attractions/wishList')
     wishStore.clearWishList()
     wishList.value = res.data
+
     wishStore.setWishList(wishList.value)
   } catch (error) {
     console.error('에러' + error)
@@ -54,7 +55,6 @@ const loading = () => {
   <div class="flex">
     <div class="mt-[100px] col-span-3 min-w-[100vh]">
       <h1 style="margin-left: 260px; font-size: 36px">찜 목록</h1>
-
       <draggable v-model="wishList" v-if="isInit" :key="JSON.stringify(wishList)">
         <template v-slot:item="{ item }">
           <div>
@@ -63,23 +63,31 @@ const loading = () => {
         </template>
       </draggable>
     </div>
-
-    <!-- 경로 및 chatgpt -->
-    <div class="flex-col">
-      <KakaoMobility
-        :wishList="wishList"
-        @loading="loading"
-        v-if="isInit"
-        class="rounded-xl"
-        :load="load"
-      />
-      <div v-if="!gptloading">
-        <ChatGpt
+    <div v-if="wishList.length < 2" class="mt-40 text-[18px]">
+      찜 목록이 1개 이하입니다.
+      <br />
+      2개 이상 부터 경로 및 챗봇을 이용할 수 있습니다.
+      <br />
+      😓
+    </div>
+    <div v-else>
+      <!-- 경로 및 chatgpt -->
+      <div class="flex-col">
+        <KakaoMobility
           :wishList="wishList"
-          @update-wishlist="updateWishList"
+          @loading="loading"
           v-if="isInit"
-          class="rounded-xl"
+          class="rounded-xl width-[100vw] height-[100vh]"
+          :load="load"
         />
+        <div v-if="!gptloading">
+          <ChatGpt
+            :wishList="wishList"
+            @update-wishlist="updateWishList"
+            v-if="isInit"
+            class="rounded-xl"
+          />
+        </div>
       </div>
     </div>
   </div>

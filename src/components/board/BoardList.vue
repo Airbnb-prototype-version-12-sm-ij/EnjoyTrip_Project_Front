@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router'
 import { ref, onMounted, watchEffect, computed, watch } from 'vue'
 import regionData from '@/api/regionData'
 
-
 const sidoCode = ref(0)
 const gugunCode = ref(0)
 const gugunData = ref([])
@@ -86,6 +85,7 @@ const showList = computed(() => {
 
 <template>
 
+
   <div class="flex ml-[120px] mt-[120px]" v-show="!props.latest">
     <div>
       <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><strong>시도</strong>
@@ -106,7 +106,7 @@ const showList = computed(() => {
           <option v-for="item in gugunData" :key="item.id" :value="item.id">
             {{ item.name }}
           </option>
-        </Select>
+        </select>
       </label>
     </div>
   </div>

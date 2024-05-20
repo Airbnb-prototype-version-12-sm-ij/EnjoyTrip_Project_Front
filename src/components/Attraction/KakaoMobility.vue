@@ -161,7 +161,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="mt-20 w-full max-w-[640px]">
+  <div class="mt-20 w-full">
     <div v-if="distance > 1000">
       <h1>거리: {{ distance / 1000 }}km</h1>
     </div>
