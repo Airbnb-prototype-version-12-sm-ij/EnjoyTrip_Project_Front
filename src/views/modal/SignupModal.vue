@@ -119,47 +119,24 @@ const signup = async (e) => {
 </script>
 
 <template>
-  <button
-    data-modal-target="signup-modal"
-    data-modal-toggle="signup-modal"
-    type="button"
-    class="text-blue-700 hover:underline dark:text-blue-500"
-  >
+  <button data-modal-target="signup-modal" data-modal-toggle="signup-modal" type="button"
+    class="text-blue-700 hover:underline dark:text-blue-500">
     Create Account
   </button>
-  <div
-    id="signup-modal"
-    tabindex="-1"
-    aria-hidden="true"
-    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
-  >
+  <div id="signup-modal" tabindex="-1" aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-md max-h-full">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
         <!-- Modal header -->
-        <div
-          class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
-        >
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Sign up</h3>
-          <button
-            type="button"
+          <button type="button"
             class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-            data-modal-hide="signup-modal"
-          >
-            <svg
-              class="w-3 h-3"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 14"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-              />
+            data-modal-hide="signup-modal">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
             </svg>
             <span class="sr-only">Close modal</span>
           </button>
@@ -168,20 +145,12 @@ const signup = async (e) => {
           <form class="space-y-4" action="#">
             <div>
               <!-- 아이디 입력 -->
-              <input
-                v-model="userId"
-                type="userId"
-                name="userId"
-                id="new-userId"
-                :class="[
-                  'text-sm rounded-lg block w-full p-2.5',
-                  isUserIdValid
-                    ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
-                    : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                ]"
-                placeholder="ID"
-                required
-              />
+              <input v-model="userId" type="userId" name="userId" id="new-userId" :class="[
+                'text-sm rounded-lg block w-full p-2.5',
+                isUserIdValid
+                  ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
+                  : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+              ]" placeholder="ID" required />
 
               <div v-if="isUserIdValid">
                 <p class="mt-2 text-sm text-green-600 dark:text-green-500">
@@ -195,20 +164,12 @@ const signup = async (e) => {
               </div>
 
               <!-- 이메일 입력 -->
-              <input
-                v-model="email"
-                type="email"
-                name="email"
-                id="email"
-                :class="[
-                  'text-sm rounded-lg block w-full p-2.5 mt-2',
-                  isEmailValid
-                    ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
-                    : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                ]"
-                placeholder="E-mail"
-                required
-              />
+              <input v-model="email" type="email" name="email" id="email" :class="[
+                'text-sm rounded-lg block w-full p-2.5 mt-2',
+                isEmailValid
+                  ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
+                  : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+              ]" placeholder="E-mail" required />
               <div v-if="isEmailValid">
                 <p class="mt-2 text-sm text-green-600 dark:text-green-500">
                   <span class="font-medium">사용가능합니다!</span>
@@ -216,29 +177,20 @@ const signup = async (e) => {
               </div>
               <div v-else>
                 <p class="mt-2 text-sm text-gray-400 dark:text-gray-500">
-                  <span class="font-medium"
-                    >이메일 형식으로 입력해주세요! (example123@naver.com)</span
-                  >
+                  <span class="font-medium">이메일 형식으로 입력해주세요! (example123@naver.com)</span>
                 </p>
               </div>
             </div>
 
             <div>
               <!-- 비밀번호 입력 -->
-              <input
-                v-model="userPassword"
-                :type="passwordType"
-                name="userPassword"
-                id="new-userPassword"
-                placeholder="Password"
-                :class="[
+              <input v-model="userPassword" :type="passwordType" name="userPassword" id="new-userPassword"
+                placeholder="Password" :class="[
                   'text-sm rounded-lg block w-full p-2.5',
                   isUserPasswordValid
                     ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
                     : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                ]"
-                required
-              />
+                ]" required />
               <div v-if="isUserPasswordValid">
                 <p class="mt-2 text-sm text-green-600 dark:text-green-500">
                   <span class="font-medium">사용가능합니다!</span>
@@ -252,20 +204,13 @@ const signup = async (e) => {
             </div>
             <div>
               <!-- 비밀번호 확인  -->
-              <input
-                v-model="confirmPassword"
-                :type="passwordType"
-                name="confirmPassword"
-                id="confirmPassword"
-                placeholder="Comfirm Password"
-                :class="[
+              <input v-model="confirmPassword" :type="passwordType" name="confirmPassword" id="confirmPassword"
+                placeholder="Comfirm Password" :class="[
                   'text-sm rounded-lg block w-full p-2.5',
                   isConfirmPasswordValid && confirmPassword !== ''
                     ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
                     : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                ]"
-                required
-              />
+                ]" required />
               <!-- 비밀번호 확인 검증 -->
               <div v-if="isConfirmPasswordValid && confirmPassword !== ''">
                 <p class="mt-2 text-sm text-green-600 dark:text-green-500">
@@ -280,20 +225,12 @@ const signup = async (e) => {
             </div>
             <!-- 이름 -->
             <div>
-              <input
-                v-model="userName"
-                type="text"
-                name="userName"
-                id="userName"
-                placeholder="Name"
-                :class="[
-                  'text-sm rounded-lg block w-full p-2.5',
-                  isUserNameValid
-                    ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
-                    : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                ]"
-                required
-              />
+              <input v-model="userName" type="text" name="userName" id="userName" placeholder="Name" :class="[
+                'text-sm rounded-lg block w-full p-2.5',
+                isUserNameValid
+                  ? 'bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500'
+                  : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+              ]" required />
               <!-- 이름 검증 -->
               <div v-if="isUserNameValid">
                 <p class="mt-2 text-sm text-green-600 dark:text-green-500">
@@ -307,23 +244,13 @@ const signup = async (e) => {
               </div>
             </div>
             <div class="flex items-center mb-4">
-              <input
-                id="default-checkbox"
-                type="checkbox"
-                @click="showPassword = !showPassword"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <label
-                for="default-checkbox"
-                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Password Check</label
-              >
+              <input id="default-checkbox" type="checkbox" @click="showPassword = !showPassword"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+              <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Password
+                Check</label>
             </div>
-            <button
-              @click="signup"
-              type="submit"
-              class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
+            <button @click="signup" type="submit"
+              class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               Sign up
             </button>
           </form>
