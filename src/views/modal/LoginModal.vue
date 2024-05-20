@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import SignupModal from '@/views/modal/SignupModal.vue'
 import Swal from 'sweetalert2'
 import client from '@/api/client'
+import FindPwd from '@/views/modal/FindPwd.vue'
 
 const router = useRouter()
 
@@ -145,9 +146,7 @@ const login = async (e) => {
                 />
               </div>
               <div class="flex justify-between">
-                <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500"
-                  >Lost Password?</a
-                >
+                <FindPwd />
               </div>
               <button
                 @click="login"
