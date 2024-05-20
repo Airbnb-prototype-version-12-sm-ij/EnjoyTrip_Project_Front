@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-
+import { initFlowbite } from 'flowbite'
 import client from '@/api/client'
 import LoginModal from '@/views/modal/LoginModal.vue'
 import AttractionSearch from '@/components/Attraction/AttractionSearch.vue'
@@ -34,6 +34,7 @@ onMounted(async () => {
     console.error(error)
   }
   loadingState.value.isLoading = false // 로딩이 완료되었음을 표시
+  initFlowbite()
 })
 // 로그인 정보 계속 확인용
 client.get('/members/ping').then((res) => {
