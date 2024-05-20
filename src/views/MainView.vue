@@ -5,7 +5,7 @@ import BoardListView from '@/views/board/BoardListView.vue'
 
 <template>
   <h1 class="ml-12 mt-44 -mb-44 text-center text-4xl font-bold text-blue-500 ml-5">인기 관광지</h1>
-  <div class="flex -mt-[50px] -mb-[200px] justify-center items-center h-screen max-w-screen">
+  <div class="flex -mb-[200px] justify-center items-center h-screen w-full">
     <AttractionRecommand />
   </div>
 

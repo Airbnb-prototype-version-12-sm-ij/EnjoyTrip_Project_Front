@@ -32,7 +32,6 @@ const getCarousel = async () => {
     await Promise.all(images)
     await nextTick()
     attractions.value = res.data
-    console.log('attractions:', attractions.value)
     loading.value = false
   } catch (err) {
     console.error('Carousel 데이터 로드 실패:', err)
@@ -40,14 +39,12 @@ const getCarousel = async () => {
 }
 
 watch(carouselRef, (newVal) => {
-  console.log(carouselRef.value)
   if (newVal) {
     initCarousels()
   }
 })
 
 onMounted(() => {
-  console.log('onMounted 실행됨.')
   getCarousel()
   initFlowbite()
 })
@@ -62,7 +59,7 @@ onMounted(() => {
         class="relative max-w-screen"
         data-carousel="slide"
       >
-        <div class="relative overflow-hidden rounded-lg md:h-[50vh] max-h-screen aspect-video">
+        <div class="relative overflow-hidden rounded-lg h-[65vh] aspect-auto w-[120vh]">
           <div
             v-for="attraction in attractions"
             :key="attraction.contentId"
