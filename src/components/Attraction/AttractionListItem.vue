@@ -46,8 +46,9 @@ infoStore.setItem(props.attractionItem.value)
         <div class='flex flex-row
          justify-end mb-5'>
           <!-- 인스타 태그 검색 -->
-          <a :href="'https://www.instagram.com/explore/tags/' + attractionItem.title.replace(' ', '')" target="_blank"
-            class="pt-1.5 max-w-[31px] mr-3" @click.stop>
+          {{ attractionItem.title.replace(/[^\w\s]|_/g, '').replace(/\s+/g, '') }}
+          <a :href="'https://www.instagram.com/explore/tags/' + attractionItem.title.replace(/[^\wㄱ-ㅎ가-힣ㅏ-ㅣ]|_/g, '').replace(/\s+/g, '')"
+            target="_blank" class="pt-1.5 max-w-[31px] mr-3" @click.stop>
             <img alt="인스타그램 태그 검색" src="../../assets/pngwing.com.png" style="width: 28px" />
           </a>
 

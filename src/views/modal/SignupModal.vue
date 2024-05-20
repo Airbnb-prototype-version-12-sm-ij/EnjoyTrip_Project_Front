@@ -88,7 +88,7 @@ const signup = async (e) => {
       userId: userId.value,
       userPassword: userPassword.value,
       userName: userName.value,
-      email: email.value
+      userEmail: email.value
     })
 
     if (response.status !== 200) {
