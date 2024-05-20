@@ -2,7 +2,25 @@
 import client from '@/api/client'
 import BoardListItem from '@/components/board/BoardListItem.vue'
 import { useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
+import regionData from '@/api/regionData'
+
+
+const sidoCode = ref(0)
+const gugunCode = ref(0)
+const gugunData = ref([])
+
+watchEffect(() => {
+  const selectedSido = regionData[sidoCode.value]
+  if (selectedSido && selectedSido.children) {
+    gugunData.value = selectedSido.children
+  } else {
+    gugunData.value = []
+  }
+})
+
+
+
 
 const props = defineProps({
   latest: Boolean
@@ -43,13 +61,41 @@ onMounted(() => {
 </script>
 
 <template>
+
+
+  <div class="flex ml-[120px] mt-[120px]" v-show="!props.latest">
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><strong>시도</strong>
+        <select id="sidoCode" name="sidoCode" v-model="sidoCode"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option v-for="item in regionData" :key="item.id" :value="item.id">
+            {{ item.name }}
+          </option>
+        </select>
+      </label>
+    </div>
+
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><strong>구군</strong>
+        <Select id="gugunCode" name="gugunCode" v-model="gugunCode"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option value="0" v-if="gugunData.length < 1">전체 </option>
+          <option v-for="item in gugunData" :key="item.id" :value="item.id">
+            {{ item.name }} {{ item }}
+          </option>
+        </Select>
+      </label>
+    </div>
+  </div>
+
+  <div class='ml-[150px]'>{{ sidoCode }}
+    {{ gugunCode }} {{ gugunData }}</div>
   <section class="mt-[20px] grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-4 md:p-6 mx-2 md:mx-6"
     v-show="props.latest">
     <BoardListItem v-for="board in boardList.slice(0, 4)" :key="board.postId" :board="board" />
   </section>
 
-
-  <section class="mt-[80px] grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-4 md:p-6 mx-2 md:mx-6"
+  <section class="mt-[25px] grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-4 md:p-6 mx-2 md:mx-6"
     v-show="!props.latest">
     <BoardListItem v-for="board in boardList" :key="board.postId" :board="board" />
   </section>
