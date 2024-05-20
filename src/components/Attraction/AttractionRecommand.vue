@@ -52,7 +52,7 @@ onMounted(() => {
 
 <template>
   <KeepAlive>
-    <div v-if="!isloading && attractions.length > 0">
+    <div v-if="!loading && attractions.length > 0">
       <div
         id="animation-carousel"
         ref="carouselRef"

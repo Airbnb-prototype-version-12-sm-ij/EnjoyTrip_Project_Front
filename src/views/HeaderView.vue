@@ -24,6 +24,8 @@ onMounted(async () => {
     }
   } catch (error) {
     console.error(error)
+    sessionStorage.removeItem('memberDto')
+    router.replace({ name: 'home' })
   }
   loadingState.value.isLoading = false // 로딩이 완료되었음을 표시
   initFlowbite()
