@@ -13,14 +13,6 @@ const router = useRouter()
 const loadingState = ref({ isLoading: true })
 
 onMounted(async () => {
-  if (sessionStorage.getItem('memberDto') !== null) {
-    if (!sessionStorage.getItem('refreshed')) {
-      sessionStorage.setItem('refreshed', 'true')
-      router.replace({ name: 'home' })
-    } else {
-      sessionStorage.removeItem('refreshed')
-    }
-  }
   try {
     const res = await client.get('/members/ping')
     if (res.status === 200) {
@@ -47,7 +39,7 @@ client.get('/members/ping').then((res) => {
     }
     sessionStorage.setItem('memberDto', JSON.stringify(res.data))
   } else {
-    router.go(0)
+    router.replace({ name: 'home' })
   }
 })
 
