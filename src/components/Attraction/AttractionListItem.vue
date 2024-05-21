@@ -5,6 +5,9 @@ import Score from '../common/Score.vue'
 import Wish from '../common/Wish.vue'
 import Wished from '../common/Wished.vue'
 
+import userImgData from '@/api/userImgData'
+
+
 // import { useRouter } from 'vue-router'
 // const router = useRouter()
 

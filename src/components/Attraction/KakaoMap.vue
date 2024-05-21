@@ -20,11 +20,11 @@ const lng = ref(props.lon)
 const map = ref();
 const markerList = ref([]);
 const colorMap = {
-  전기차충전소: "orange",
-  주유소: "red",
-  주차장: "yellow",
-  맛집: "green",
-  병원: "purple"
+  전기차충전소: "yellow",
+  주유소: "orange",
+  주차장: "red",
+  맛집: "purple",
+  병원: "green"
 };
 const markerColor = ref("");
 
@@ -85,30 +85,27 @@ const onClickMapMarker = (markerItem) => {
       <strong class='font-xl'>주변 시설 검색</strong>
     </label>
     <div class="flex space-x-2">
-      <button @click.prevent="show('전기차충전소')" :class="{ 'border-black': type === '전기차충전소' }"
+      <button @click.prevent="show('전기차충전소')" :class="{ 'border-black bg-yellow-200': type === '전기차충전소' }"
         class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2">
         전기차충전소
       </button>
-      <button @click.prevent="show('주유소')" :class="{ 'border-black': type === '주유소' }"
+      <button @click.prevent="show('주유소')" :class="{ 'border-black bg-orange-400': type === '주유소' }"
         class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2">
         주유소
       </button>
-      <button @click.prevent="show('주차장')" :class="{ 'border-black': type === '주차장' }"
+      <button @click.prevent="show('주차장')" :class="{ 'border-black bg-red-500': type === '주차장' }"
         class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2">
         주차장
       </button>
-      <button @click.prevent="show('맛집')" :class="{ 'border-black': type === '맛집' }"
+      <button @click.prevent="show('맛집')" :class="{ 'border-black bg-purple-400': type === '맛집' }"
         class="inline-flex items-center justify-center type-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2">
         맛집
       </button>
-      <button @click.prevent="show('병원')" :class="{ 'border-black': type === '병원' }"
+      <button @click.prevent="show('병원')" :class="{ 'border-black bg-green-500': type === '병원' }"
         class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-gray-200 h-10 px-4 py-2 border-2">
         병원
       </button>
     </div>
-    {{ regionData[props.sidoCode]["name"] + " " + regionData[props.sidoCode]["children"][props.gugunCode]["name"] + " "
-      + type }}
-
 
     <KakaoMap :lat="lat" :lng="lng" :draggable="true" width="80rem" height='30rem' level=2 class='mt-5'>
       <KakaoMapMarker v-for="(marker, index) in markerList" :key="marker.key === undefined ? index : marker.key" :image="{

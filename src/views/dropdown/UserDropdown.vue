@@ -4,6 +4,7 @@ import MyInfoModal from '@/views/modal/MyInfoModal.vue'
 import MemberModal from '@/views/modal/MemberModal.vue'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import userImgData from '@/api/userImgData'
 
 const router = useRouter()
 
@@ -25,7 +26,16 @@ const userInfo = computed(() => {
 <template>
 
   <div class='flex'>
-    <p class='flex items-center'>{{ userInfo.userName }}님 안녕하세요 😀</p>
+
+
+
+    <p class='flex items-center mr-5'>{{ userInfo.userName }}님 안녕하세요 😀</p>
+    <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+      <img class="aspect-square h-full w-full" alt="@shadcn"
+        :src="userImgData[userInfo.userId] ? userImgData[userInfo.userId] : '/src/assets/sample.png'" />
+    </span>
+
+
     <button id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation"
       class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       type="button">

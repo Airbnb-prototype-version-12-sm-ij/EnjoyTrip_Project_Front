@@ -3,6 +3,8 @@ import client from '@/api/client'
 import BoardCommentItem from './BoardCommentItem.vue'
 import { ref, onMounted } from 'vue'
 import Swal from 'sweetalert2'
+import userImgData from '@/api/userImgData'
+
 
 const props = defineProps({
   boardId: Number
@@ -73,7 +75,8 @@ onMounted(async () => {
 
     <div class="text-sm flex items-start gap-4" v-show="userId">
       <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-        <img class="aspect-square h-full w-full" alt="@shadcn" src="@/assets/sample.png" />
+        <img class="aspect-square h-full w-full" alt="@shadcn"
+          :src="userImgData[userId] ? userImgData[userId] : '/src/assets/sample.png'" />
       </span>
       <div class="grid gap-1.5 flex-1">
         <div class="flex items-center gap-2">
