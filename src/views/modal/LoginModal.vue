@@ -109,7 +109,7 @@ const login = async (e) => {
                 class="w-full text-white bg-mycolor hover:bg-mycolor-hover focus:ring-4 focus:outline-none focus:mycolor-hover font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
                 Login
               </button>
-              <div class="text-sm font-medium text-mycolor ">
+              <div class="text-sm font-medium  ">
                 Not registered?
                 <SignupModal />
               </div>
