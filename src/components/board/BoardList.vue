@@ -125,7 +125,7 @@ const showList = computed(() => {
   <div v-if="nowRoute !== 'home'" class="fixed bottom-6 right-10 group">
     <button @click="$router.push({ name: 'boardWrite' })" aria-controls="speed-dial-menu-dropdown-alternative"
       aria-expanded="false"
-      class="flex items-center justify-center ml-auto text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
+      class="flex items-center justify-center ml-auto text-white bg-mycolor rounded-full w-14 h-14 hover:bg-mycolor-hover">
       <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
         viewBox="0 0 20 20">
         <path

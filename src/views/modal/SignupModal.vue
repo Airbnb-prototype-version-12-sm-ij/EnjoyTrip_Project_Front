@@ -120,7 +120,7 @@ const signup = async (e) => {
 
 <template>
   <button data-modal-target="signup-modal" data-modal-toggle="signup-modal" type="button"
-    class="text-blue-700 hover:underline dark:text-blue-500">
+    class="text-mycolor hover:underline">
     Create Account
   </button>
   <div id="signup-modal" tabindex="-1" aria-hidden="true"

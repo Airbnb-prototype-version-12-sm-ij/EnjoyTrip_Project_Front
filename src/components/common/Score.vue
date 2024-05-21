@@ -17,7 +17,7 @@ const validScore = computed(() => {
 <template>
   <div class="flex space-x-1">
     <div v-for="i in 5" :key="i" class="w-5 h-5 rounded-full"
-      :class="{ 'bg-[#00af87]': i <= validScore, 'bg-gray-300': i > validScore }"></div>
+      :class="{ 'bg-mycolor': i <= validScore, 'bg-gray-300': i > validScore }"></div>
   </div>
 </template>
 
