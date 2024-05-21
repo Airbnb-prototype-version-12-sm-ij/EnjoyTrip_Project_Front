@@ -35,9 +35,17 @@ const onClickKakaoMapMarker = (item) => {
 
 const loading = ref(true)
 
+const roadIdx = ref(0)
+
+const roadIdxChg = (idx) => {
+  roadIdx.value = idx
+}
+
+const latLngList = ref([])
+
 const mapMarkers = ref([])
 const markerList = ref([])
-const latLngList = ref([])
+
 const lat = ref(0)
 const lng = ref(0)
 const distance = ref(0)
@@ -86,12 +94,7 @@ const getKakaoMap = async () => {
 
     res.data.routes[0].sections.forEach((e) => {
       distance.value += e.distance
-
       e.guides.forEach((e) => {
-        latLngList.value.push({
-          lat: e.y,
-          lng: e.x
-        })
         if (e.name === '') return
         if (e.name === '출발지' || e.name === '경유지' || e.name === '목적지') {
           markerList.value.push({
@@ -110,6 +113,17 @@ const getKakaoMap = async () => {
     setBounds()
     loading.value = false
     emit('loading', false)
+
+    latLngList.value = res.data.routes[0].sections.map((section) => {
+      return section.guides.map((guide) => {
+        return {
+          lat: guide.y,
+          lng: guide.x
+        }
+      })
+    })
+
+    return latLngList.value
   } catch (error) {
     console.error('에러' + error)
   }
@@ -162,10 +176,22 @@ onMounted(async () => {
 
 <template>
   <div class="mt-[56px]">
-    <div v-if="distance > 1000" class="flex justify-end mb-1">
+    <div v-if="distance > 1000" class="flex justify-between mb-1">
+      <div
+        v-for="(item, index) in latLngList"
+        :key="index"
+        class="flex justify-center items-center"
+      >
+        <div
+          class="text-white bg-mycolor hover:bg-mycolor-hover focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          @click="roadIdxChg(index)"
+        >
+          {{ index + 1 }}번째 경로
+        </div>
+      </div>
       <div class="text-[30px]">거리: {{ distance / 1000 }}km</div>
     </div>
-    <div v-else class="flex justify-end mb-1">
+    <div v-else class="flex justify-between mb-1">
       <div class="text-[30px]">거리: {{ distance }}m</div>
     </div>
     <div v-if="!loading">
@@ -201,14 +227,25 @@ onMounted(async () => {
           :visible="item.visible"
           :yAnchor="1.4"
         />
-        <KakaoMapPolyline
-          :latLngList="latLngList"
-          :end-arrow="true"
-          strokeWeight="6"
-          strokeColor="#63adf2"
-          strokeOpacity="0.9"
-          strokeStyle="solid"
-        />
+        <div v-for="(item, index) in latLngList" :key="index">
+          <KakaoMapPolyline
+            v-if="index === roadIdx"
+            :latLngList="item"
+            strokeWeight="6"
+            strokeColor="#63adf2"
+            strokeOpacity="0.9"
+            strokeStyle="solid"
+          />
+          <KakaoMapPolyline
+            v-else
+            :latLngList="item"
+            strokeWeight="6"
+            strokeColor="#63adf2"
+            strokeOpacity="0.9"
+            strokeStyle="shortdot"
+          >
+          </KakaoMapPolyline>
+        </div>
       </KakaoMap>
     </div>
     <div v-else>
