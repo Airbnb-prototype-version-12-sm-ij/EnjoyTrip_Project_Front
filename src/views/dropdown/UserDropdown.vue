@@ -80,7 +80,6 @@ const userInfo = computed(() => {
           >찜 목록</a
         >
       </li>
-
       <li v-if="userInfo !== null && userInfo.grade === 'admin'">
         <MemberModal />
       </li>

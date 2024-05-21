@@ -29,11 +29,9 @@ watchEffect(() => {
     <div class="max-w-5xl mx-auto">
       <div class="flex flex-wrap items-center justify-between mb-8 gap-4">
         <h2 class="text-3xl font-semibold flex items-center">Review</h2>
-        <RouterLink
-          :to="{ name: 'review' }"
+        <RouterLink :to="{ name: 'review', params: { reviewScore: isNaN(reviewScore) ? 0 : reviewScore } }"
           v-show="userInfo"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
-        >
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
           리뷰 작성하기
         </RouterLink>
       </div>
@@ -53,10 +51,7 @@ watchEffect(() => {
               </div>
             </div>
             <div class="space-y-2">
-              <ReviewPercentage
-                v-if="attractionInfo.rating"
-                :reviewScoreCount="attractionInfo.rating"
-              />
+              <ReviewPercentage v-if="attractionInfo.rating" :reviewScoreCount="attractionInfo.rating" />
             </div>
           </div>
           <div class="md:w-2/3">

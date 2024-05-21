@@ -159,7 +159,7 @@ const withdraw = async () => {
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
           <!-- Modal header -->
           <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-            <h3 class="text-xl font-semibold text-mycolor">My info</h3>
+            <h3 class="text-xl font-semibold text-mycolor dark:text-white">My info</h3>
             <button type="button"
               class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               data-modal-hide="myinfo-modal">
@@ -221,7 +221,7 @@ const withdraw = async () => {
               </div>
               <div class="flex items-center mb-4">
                 <input id="info-checkbox" type="checkbox" @click="chgPwd = !chgPwd"
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                  class="checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-mycolor dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2" />
                 <label for="info-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Password
                   Change</label>
                 <div class="flex justify-end w-7/12">
@@ -232,7 +232,7 @@ const withdraw = async () => {
                 </div>
               </div>
               <button @click="modifyPassword" type="submit"
-                class="w-full text-white bg-mycolor hover:bg-mycolor-hover focus:ring-4 focus:outline-none focus:ring-mycolor-hover font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                class="w-full text-white bg-mycolor hover:bg-mycolor-hover focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 비밀번호 변경
               </button>
             </form>

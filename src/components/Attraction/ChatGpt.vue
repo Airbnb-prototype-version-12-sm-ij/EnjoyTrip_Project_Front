@@ -85,7 +85,7 @@ const getExplanation = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-10 -mt-5 mr-1">
+  <div class="flex flex-col w-full h-12 -mt-5 mr-1">
     <div v-if="!explain">
       <div
         @click="getTripRoute"
