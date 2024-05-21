@@ -20,8 +20,8 @@ const markdown = new MarkdownIt()
 
 <template>
   <button
-    class="border-mycolor h-[45px] w-full flex mt-5 -ml-1 px-6 py-3 rounded-md bg-gray-50 text-gray-900 font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-    data-modal-target="gpt-modal" data-modal-toggle="gpt-modal" type="button">
+    class="border-mycolor h-[45px] w-full flex mt-[140px] -ml-2 mr-3 px-6 py-3 rounded-md bg-gray-50 text-gray-900 font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+    data-modal-target="gpt-modal" data-modal-toggle="gpt-modal" type="button" style='width:140px'>
     여행 경로 설명
   </button>
   <teleport to="body">
