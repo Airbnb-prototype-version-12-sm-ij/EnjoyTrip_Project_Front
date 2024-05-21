@@ -1,7 +1,8 @@
 <script setup>
 import { ref, defineEmits } from 'vue'
 import OpenAI from 'openai'
-import MarkdownIt from 'markdown-it'
+// import MarkdownIt from 'markdown-it'
+import ChatGptmodal from '@/views/modal/ChatGptmodal.vue'
 
 const props = defineProps({
   wishList: Object
@@ -13,7 +14,9 @@ const wishList = ref(props.wishList)
 
 const isLoading = ref(false)
 
-const markdown = new MarkdownIt()
+const explain = ref(false)
+
+// const markdown = new MarkdownIt()
 
 let text = ref('')
 
@@ -30,7 +33,7 @@ const getTripRoute = async () => {
   isLoading.value = true
   text.value = wishList.value
   console.log('API 호출')
-  console.log(JSON.stringify(text.value))
+  // console.log(JSON.stringify(text.value))
   const response = await openai.chat.completions.create({
     messages: [
       {
@@ -42,7 +45,7 @@ const getTripRoute = async () => {
         content: JSON.stringify(text.value)
       }
     ],
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-4o',
     max_tokens: 2000
   })
 
@@ -55,6 +58,7 @@ const getTripRoute = async () => {
   await getExplanation()
   emit('update-wishlist', wishList.value)
   isLoading.value = false
+  explain.value = true
 }
 
 const getExplanation = async () => {
@@ -76,24 +80,26 @@ const getExplanation = async () => {
 
   console.log(response.choices[0].message)
   result.value = response.choices[0].message
+  console.log('result.value.content', result.value.content)
 }
 </script>
 
 <template>
-  <div class="border flex items-start justify-start h-[815px] w-full max-w-[640px] rounded-xl">
-    <div class="flex flex-col w-full">
+  <div class="flex flex-col w-full h-10 -mt-5 mr-1">
+    <div v-if="!explain">
       <div
         @click="getTripRoute"
         :style="{
-          width: '300px',
+          width: '250px',
           backgroundColor: isLoading ? '#D3D3D3' : 'white',
           pointerEvents: isLoading ? 'none' : 'auto'
         }"
-        class="border w-full flex mt-5 ml-5 px-6 py-3 rounded-md bg-gray-50 text-gray-900 font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+        class="border h-[45px] w-full flex mt-5 ml-3 px-6 py-3 rounded-md bg-gray-50 text-gray-900 font-medium hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
       >
-        <img src="@/assets/GPT.png" width="60px" />
-        <a class="flex items-center justify-center ml-5">
-          AI 여행 계획 생성
+        <img src="@/assets/GPT.png" width="35px" />
+        <div class="flex items-center justify-center ml-5">
+          <div v-if="!isLoading">AI 여행 계획 생성</div>
+          <div v-else>생성 중...</div>
           <div role="status" class="ml-5" v-show="isLoading">
             <svg
               aria-hidden="true"
@@ -113,32 +119,34 @@ const getExplanation = async () => {
             </svg>
             <span class="sr-only">Loading...</span>
           </div>
-        </a>
+        </div>
       </div>
-
-      <div role="status" class="max-w-2xl animate-pulse mx-10 mt-20 mr-16" v-show="isLoading">
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-4"></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-4"></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-4"></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
-        <span class="sr-only">Loading...</span>
-      </div>
-      <p
-        v-html="markdown.render(result.content)"
-        style="color: black"
-        class="mx-14 mt-14 overflow-y-scroll"
-        v-show="!isLoading"
-      ></p>
     </div>
+    <div v-else>
+      <ChatGptmodal :result="result.content" />
+    </div>
+    <!-- <div role="status" class="max-w-2xl animate-pulse mx-10 mt-20 mr-16" v-show="isLoading">
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-4"></div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-4"></div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-4"></div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
+      <span class="sr-only">Loading...</span>
+    </div> -->
+    <!-- <p
+      v-html="markdown.render(result.content)"
+      style="color: black"
+      class="mx-14 mt-14 overflow-y-scroll"
+      v-show="!isLoading"
+    ></p> -->
   </div>
 </template>
 

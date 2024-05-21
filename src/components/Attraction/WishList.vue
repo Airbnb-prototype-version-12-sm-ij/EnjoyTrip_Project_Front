@@ -52,9 +52,19 @@ const loading = () => {
 </script>
 
 <template>
-  <div class="flex">
-    <div class="mt-[100px] col-span-3 min-w-[100vh]">
-      <h1 style="margin-left: 260px; font-size: 36px">찜 목록</h1>
+  <div class="flex w-full">
+    <div class="mt-[100px] col-span-3">
+      <div class="flex justify-between h-10 mb-2">
+        <h1 style="margin-left: 260px; font-size: 36px">찜 목록</h1>
+        <div v-if="!gptloading">
+          <ChatGpt
+            :wishList="wishList"
+            @update-wishlist="updateWishList"
+            v-if="isInit"
+            class="rounded-xl"
+          />
+        </div>
+      </div>
       <draggable v-model="wishList" v-if="isInit" :key="JSON.stringify(wishList)">
         <template v-slot:item="{ item }">
           <div>
@@ -72,22 +82,14 @@ const loading = () => {
     </div>
     <div v-else>
       <!-- 경로 및 chatgpt -->
-      <div class="flex-col">
+      <div class="flex flex-col mt-[48px]">
         <KakaoMobility
           :wishList="wishList"
           @loading="loading"
           v-if="isInit"
-          class="rounded-xl width-[100vw] height-[100vh]"
+          class="rounded-xl w-full h-full"
           :load="load"
         />
-        <div v-if="!gptloading">
-          <ChatGpt
-            :wishList="wishList"
-            @update-wishlist="updateWishList"
-            v-if="isInit"
-            class="rounded-xl"
-          />
-        </div>
       </div>
     </div>
   </div>
