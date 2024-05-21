@@ -4,7 +4,6 @@ import { useRouter } from 'vue-router'
 import BoaradComment from './BoaradComment.vue'
 // import { useRoute } from 'vue-router'
 import client from '@/api/client'
-import axios from 'axios'
 import Swal from 'sweetalert2'
 
 import userImgData from '@/api/userImgData'
@@ -29,7 +28,7 @@ const objBoard = ref('')
 
 const getBoard = async () => {
   try {
-    const response = await axios.get('http://localhost/posting/' + props.postId)
+    const response = await client.get('/posting/' + props.postId)
     board.value = response.data
   } catch {
     alert('에러가 발생했습니다.')
@@ -67,7 +66,7 @@ onMounted(async () => {
 
   objBoard.value = board.value
 
-  imgPath.value = 'http://localhost/upload_img'
+  imgPath.value = 'http://172.30.1.85/upload_img'
   imgPath.value +=
     '/' + objBoard.value.fileInfo[0].saveFolder + '/' + objBoard.value.fileInfo[0].saveFile
 })

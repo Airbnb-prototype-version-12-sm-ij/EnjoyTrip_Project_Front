@@ -2,7 +2,7 @@
 import client from '@/api/client'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import client from '@/api/client'
 import Swal from 'sweetalert2'
 
 const router = useRouter()
@@ -18,7 +18,7 @@ const board = ref({})
 
 const getBoard = async () => {
   try {
-    const response = await axios.get('http://localhost/posting/' + props.postId)
+    const response = await client.get('/posting/' + props.postId)
     board.value = response.data
   } catch {
     alert('에러가 발생했습니다.')
