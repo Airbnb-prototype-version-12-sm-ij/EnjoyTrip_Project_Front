@@ -10,7 +10,7 @@ const userImgData = {
   ssafyuser7: '/src/assets/profile/민호.jpg',
   ssafyuser8: '/src/assets/profile/준엽.jpg',
   ssafyuser9: '/src/assets/profile/보우.jpg',
-  ssafyuser10: '/src/assets/profile/흑거미.jpg'
+  ssafyuser0: '/src/assets/profile/흑거미.jpg'
 }
 
 export default userImgData
