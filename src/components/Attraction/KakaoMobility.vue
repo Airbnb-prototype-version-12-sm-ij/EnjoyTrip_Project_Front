@@ -131,10 +131,10 @@ const setBounds = () => {
       // eslint-disable-next-line no-undef
       const point = new kakao.maps.LatLng(markerInfo.lat, markerInfo.lng)
       // eslint-disable-next-line no-undef
-      const marker = new kakao.maps.Marker({ position: point })
-      marker.setMap(map.value)
+      // const marker = new kakao.maps.Marker({ position: point })
+      // marker.setMap(map.value)
       bounds.extend(point)
-      mapMarkers.value.push(marker)
+      // mapMarkers.value.push(marker)
     })
     map.value.setBounds(bounds)
   }
@@ -181,8 +181,8 @@ onMounted(async () => {
           v-for="item in markerList"
           :image="{
             imageSrc: `/src/assets/marker/mycolor.svg`,
-            imageWidth: 32,
-            imageHeight: 32,
+            imageWidth: 40,
+            imageHeight: 40,
             imageOption: {}
           }"
           :key="item.name"
@@ -204,8 +204,8 @@ onMounted(async () => {
         <KakaoMapPolyline
           :latLngList="latLngList"
           :end-arrow="true"
-          strokeWeight="9"
-          strokeColor="#83b5d1"
+          strokeWeight="6"
+          strokeColor="#63adf2"
           strokeOpacity="0.9"
           strokeStyle="solid"
         />
