@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
-
+import MarkdownIt from 'markdown-it'
 import { initFlowbite, initModals } from 'flowbite'
 
 onMounted(() => {
@@ -14,7 +14,6 @@ const props = defineProps({
 
 console.log(props.result)
 console.log('타입', typeof props.result)
-import MarkdownIt from 'markdown-it'
 
 const markdown = new MarkdownIt()
 </script>

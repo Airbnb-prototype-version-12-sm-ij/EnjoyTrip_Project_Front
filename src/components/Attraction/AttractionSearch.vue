@@ -308,7 +308,7 @@ const attractionSearch = async (e) => {
       </div>
       <div class="relative w-full">
         <input v-model="title" type="search" id="search-dropdown"
-          class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+          class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-mycolor focus:border-mycolor dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
           placeholder="검색어" required />
         <button type="submit"
           class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-mycolor rounded-e-lg border border-mycolor hover:bg-mycolor-hover focus:ring-4 focus:outline-none focus:ring-mycolor">
