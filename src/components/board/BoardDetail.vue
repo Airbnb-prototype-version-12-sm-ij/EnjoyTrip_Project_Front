@@ -92,10 +92,11 @@ const isImage = computed(() => {
           <div>
             <div class="font-medium">{{ board.userId }}</div>
             <div>{{ board.createdAt }}</div>
+
+            {{ board.sidoName }} {{ board.gugunName }}
+            조회수 : {{ board.hit }}
           </div>
-          {{ board.sidoName }}
-          {{ board.gugunName }}
-          조회수 : {{ board.hit }}
+
         </div>
 
         <div v-show="userId == board.userId">

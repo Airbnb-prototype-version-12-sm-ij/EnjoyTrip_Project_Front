@@ -39,6 +39,8 @@ if (props.data.fileInfo.length > 0) {
       </div>
     </div>
     <div class="flex items-center">
+
+
       <img v-if="imgPath !== ''" alt="Review Image" class="mr-4 rounded-md" height="100" :src="imgPath"
         style="aspect-ratio: 100/100; object-fit: cover" width="100" />
 

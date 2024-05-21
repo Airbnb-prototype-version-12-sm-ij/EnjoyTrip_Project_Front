@@ -39,10 +39,10 @@ const show = (mapRef) => {
   // 키워드로 장소를 검색합니다
   ps.keywordSearch(
     regionData[props.sidoCode]['name'] +
-      ' ' +
-      regionData[props.sidoCode]['children'][props.gugunCode]['name'] +
-      ' ' +
-      mapRef,
+    ' ' +
+    regionData[props.sidoCode]['children'][props.gugunCode]['name'] +
+    ' ' +
+    mapRef,
     placesSearchCB
   )
 }
@@ -79,71 +79,41 @@ const onClickMapMarker = (markerItem) => {
 
 <template>
   <div class="flex-row mt-5">
-    <label class="block mb-1 text-sm" for="visit-type">
-      <strong class="font-xl">주변 시설 검색</strong>
+    <label class="block mb-1" for="visit-type">
+      <h1 class='text-2xl my-3'>주변 시설 검색</h1>
     </label>
     <div class="flex space-x-2">
-      <button
-        @click.prevent="show('전기차충전소')"
+      <button @click.prevent="show('전기차충전소')"
         :class="{ 'border-black bg-yellow-200 border-yellow-200': type === '전기차충전소' }"
-        class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-yellow-200 h-10 px-4 py-2 border-2"
-      >
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-yellow-200 h-10 px-4 py-2 border-2">
         전기차충전소
       </button>
-      <button
-        @click.prevent="show('주유소')"
-        :class="{ 'border-black bg-orange-400 border-orange-400': type === '주유소' }"
-        class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-orange-200 h-10 px-4 py-2 border-2"
-      >
+      <button @click.prevent="show('주유소')" :class="{ 'border-black bg-orange-400 border-orange-400': type === '주유소' }"
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-orange-200 h-10 px-4 py-2 border-2">
         주유소
       </button>
-      <button
-        @click.prevent="show('주차장')"
-        :class="{ 'border-black bg-red-500 border-red-500': type === '주차장' }"
-        class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-red-200 h-10 px-4 py-2 border-2"
-      >
+      <button @click.prevent="show('주차장')" :class="{ 'border-black bg-red-500 border-red-500': type === '주차장' }"
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-red-200 h-10 px-4 py-2 border-2">
         주차장
       </button>
-      <button
-        @click.prevent="show('맛집')"
-        :class="{ 'border-black bg-purple-400 border-purple-400': type === '맛집' }"
-        class="inline-flex items-center justify-center type-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-purple-200 h-10 px-4 py-2 border-2"
-      >
+      <button @click.prevent="show('맛집')" :class="{ 'border-black bg-purple-400 border-purple-400': type === '맛집' }"
+        class="inline-flex items-center justify-center type-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-purple-200 h-10 px-4 py-2 border-2">
         맛집
       </button>
-      <button
-        @click.prevent="show('병원')"
-        :class="{ 'border-black bg-green-500 border-green-500': type === '병원' }"
-        class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-green-200 h-10 px-4 py-2 border-2"
-      >
+      <button @click.prevent="show('병원')" :class="{ 'border-black bg-green-500 border-green-500': type === '병원' }"
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:bg-green-200 h-10 px-4 py-2 border-2">
         병원
       </button>
     </div>
 
-    <KakaoMap
-      :lat="lat"
-      :lng="lng"
-      :draggable="true"
-      width="80rem"
-      height="30rem"
-      level="2"
-      class="mt-5"
-    >
-      <KakaoMapMarker
-        v-for="(marker, index) in markerList"
-        :key="marker.key === undefined ? index : marker.key"
-        :image="{
-          imageSrc: `/src/assets/marker/${markerColor}.svg`,
-          imageWidth: 32,
-          imageHeight: 32,
-          imageOption: {}
-        }"
-        :lat="marker.lat"
-        :lng="marker.lng"
-        :infoWindow="marker.infoWindow"
-        :clickable="true"
-        @onClickKakaoMapMarker="onClickMapMarker(marker)"
-      />
+    <KakaoMap :lat="lat" :lng="lng" :draggable="true" width="80rem" height="30rem" level="2" class="mt-5">
+      <KakaoMapMarker v-for="(marker, index) in markerList" :key="marker.key === undefined ? index : marker.key" :image="{
+        imageSrc: `/src/assets/marker/${markerColor}.svg`,
+        imageWidth: 32,
+        imageHeight: 32,
+        imageOption: {}
+      }" :lat="marker.lat" :lng="marker.lng" :infoWindow="marker.infoWindow" :clickable="true"
+        @onClickKakaoMapMarker="onClickMapMarker(marker)" />
       <KakaoMapMarker :lat="lat" :lng="lng"></KakaoMapMarker>
     </KakaoMap>
   </div>

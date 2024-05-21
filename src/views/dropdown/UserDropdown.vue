@@ -58,7 +58,7 @@ const userInfo = computed(() => {
         <a @click="goTowishList" href="#"
           class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">찜 목록</a>
       </li>
-      <li v-if="userInfo !== null && userInfo.grade === ' admin'">
+      <li v-if="userInfo !== null && userInfo.grade === 'admin'">
         <MemberModal />
       </li>
       <li>

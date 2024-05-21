@@ -46,17 +46,20 @@ onMounted(() => {
 
 <template>
   <div class="max-w-7xl mx-auto py-10 flex flex-col mt-9">
-    <!-- <div class="flex container">
-      <div class="flex mr-auto">
-        <SideMenu />
+
+
+    <div class='flex justify-between mt-2'>
+      <getWeagtherInfo :lat="lat" :lon="lon" />
+
+      <div class="flex justify-end">
+        <RouterLink type="button" :to="{ name: 'search' }"
+          class="flex max-w-[80px] whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-gray-300 hover:text-accent-foreground h-10 px-4 py-2">
+          뒤로가기</RouterLink>
       </div>
-    </div> -->
-    <div class="flex justify-end">
-      <RouterLink type="button" :to="{ name: 'search' }"
-        class="flex max-w-[80px] whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-gray-300 hover:text-accent-foreground h-10 px-4 py-2">
-        뒤로가기</RouterLink>
+
     </div>
     <!-- 관광지 정보 -->
+
     <div
       class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl dark:border-gray-700 dark:bg-gray-800 max-w-screen">
       <!-- 관광지 이미지 -->
@@ -67,11 +70,13 @@ onMounted(() => {
       <!-- 관광지 제목 및 설명 -->
       <div class="flex flex-col justify-between p-4 leading-normal h-[30rem]" style="width: 50%">
         <div class="flex justify-between">
-          <h5 class="mb-4 mt-5 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {{ attractionInfo.title }}
-          </h5>
-          <p class="flex items-center">조회수: {{ attractionInfo.readCount }}</p>
 
+          <div class='flex-row'>
+            <p class="flex items-center">조회수: {{ attractionInfo.readCount }}</p>
+            <h5 class="mb-4 mt-5 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+              {{ attractionInfo.title }}
+            </h5>
+          </div>
           <div class="flex gap-3">
             <!-- 인스타 태그 검색 -->
             <a :href="'https://www.instagram.com/explore/tags/' +
@@ -95,7 +100,6 @@ onMounted(() => {
           </div>
         </div>
 
-        <getWeagtherInfo :lat="lat" :lon="lon" />
 
         <p class="scrollBar overflow-auto mb-3 font-normal text-gray-700 dark:text-gray-400">
           {{ attractionInfo.overview }}
