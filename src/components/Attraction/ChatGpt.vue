@@ -79,23 +79,20 @@ const getTripRoute = async () => {
 
 const getExplanation = async () => {
   const response = await openai.chat.completions.create({
-    messages: [{
-      role: 'system',
-      content: `나의 정보 ${age.value} ${together.value} ` + import.meta.env.VITE_PROMPT
-    },
-    {
-      role: 'user',
-      content: JSON.stringify(text.value)
-    },
-    {
-      role: 'assistant',
-      content: result.value
-    },
-    {
-      role: 'user',
-      content:
-        '해당 여행 경로에 대한 설명, 여행 경로 순서를 정한 이유, 예상 소요시간, 경비등의 이유를 문단 사이에 띄어쓰기를 하여 마크다운 형식으로 분류별로 사용자 친화적으로 제공하시오  그리고 그 외의 답변은 허용하지 않습니다'
-    }
+    messages: [
+      {
+        role: 'user',
+        content: JSON.stringify(text.value)
+      },
+      {
+        role: 'assistant',
+        content: result.value
+      },
+      {
+        role: 'user',
+        content:
+          `${together.value} ${age.value}에게 해당 여행 경로에 대한 설명, 여행 경로 순서를 정한 이유, 예상 소요시간, 경비등의 이유를 문단 사이에 띄어쓰기를 하여 마크다운 형식으로 분류별로 사용자 친화적으로 제공하시오  그리고 그 외의 답변은 허용하지 않습니다`
+      }
     ],
     model: 'gpt-4o',
     max_tokens: 2000
@@ -195,7 +192,7 @@ const ages = [
 
     </div>
     <div v-else>
-      <ChatGptmodal :result="result.content" />
+      <ChatGptmodal :result="result.content" :age='age' :together='together' />
     </div>
     <!-- <div role="status" class="max-w-2xl animate-pulse mx-10 mt-20 mr-16" v-show="isLoading">
       <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-340 mb-4"></div>
