@@ -179,6 +179,12 @@ onMounted(async () => {
       >
         <KakaoMapMarker
           v-for="item in markerList"
+          :image="{
+            imageSrc: `/src/assets/marker/mycolor.svg`,
+            imageWidth: 32,
+            imageHeight: 32,
+            imageOption: {}
+          }"
           :key="item.name"
           :lat="item.lat"
           :lng="item.lng"
@@ -199,7 +205,7 @@ onMounted(async () => {
           :latLngList="latLngList"
           :end-arrow="true"
           strokeWeight="9"
-          strokeColor="#0066FF"
+          strokeColor="#83b5d1"
           strokeOpacity="0.9"
           strokeStyle="solid"
         />
