@@ -8,7 +8,6 @@ import Swal from 'sweetalert2'
 
 import userImgData from '@/api/userImgData'
 
-
 const router = useRouter()
 
 const isLoading = ref(true)
@@ -66,7 +65,8 @@ onMounted(async () => {
 
   objBoard.value = board.value
 
-  imgPath.value = 'http://172.30.1.85/upload_img'
+  // imgPath.value = 'http://172.30.1.85/upload_img'
+  imgPath.value = 'http://localhost/upload_img'
   imgPath.value +=
     '/' + objBoard.value.fileInfo[0].saveFolder + '/' + objBoard.value.fileInfo[0].saveFile
 })
@@ -84,36 +84,49 @@ const isImage = computed(() => {
       <div class="flex justify-between items-center gap-4 text-sm text-gray-500">
         <div class="flex items-center gap-4">
           <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-            <img class="aspect-square h-full w-full" alt="@shadcn"
-              :src="userImgData[board.userId] ? userImgData[board.userId] : '/src/assets/sample.png'" />
+            <img
+              class="aspect-square h-full w-full"
+              alt="@shadcn"
+              :src="
+                userImgData[board.userId] ? userImgData[board.userId] : '/src/assets/sample.png'
+              "
+            />
           </span>
 
           <div>
             <div class="font-medium">{{ board.userId }}</div>
             <div>{{ board.createdAt }}</div>
 
-            {{ board.sidoName }} {{ board.gugunName }}
-            조회수 : {{ board.hit }}
+            {{ board.sidoName }} {{ board.gugunName }} 조회수 : {{ board.hit }}
           </div>
-
         </div>
 
         <div v-show="userId == board.userId">
-          <button @click="goToModify"
-            class="inline-flex items-center justify-center rounded-md bg-green-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 mr-2">
+          <button
+            @click="goToModify"
+            class="inline-flex items-center justify-center rounded-md bg-green-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 mr-2"
+          >
             수정
           </button>
 
-          <button @click="deleteBoard"
-            class="inline-flex items-center justify-center rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+          <button
+            @click="deleteBoard"
+            class="inline-flex items-center justify-center rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+          >
             삭제
           </button>
         </div>
       </div>
     </div>
 
-    <img v-if="isImage" :src="imgPath" alt="Autumn Leaves" width="1200" height="800"
-      class="rounded-lg object-cover w-full aspect-[3/2]" />
+    <img
+      v-if="isImage"
+      :src="imgPath"
+      alt="Autumn Leaves"
+      width="1200"
+      height="800"
+      class="rounded-lg object-cover w-full aspect-[3/2]"
+    />
 
     <video v-if="!isImage" :src="imgPath" controls></video>
 
