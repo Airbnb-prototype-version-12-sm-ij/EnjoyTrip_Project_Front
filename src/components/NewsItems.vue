@@ -1,0 +1,56 @@
+<script setup>
+const props = defineProps({
+  news: Object
+})
+
+console.log(props.news)
+
+const openLink = () => {
+  window.open(props.news.link)
+}
+</script>
+
+<template>
+  <div
+    @click="openLink"
+    class="dark:bg-gray-950 group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
+  >
+    <img
+      :src="news.img"
+      width="300"
+      height="300"
+      class="object-cover w-full h-60"
+      style="aspect-ratio: 300 / 300; object-fit: cover"
+    />
+
+    <div class="bg-white p-4 dark:bg-gray-950">
+      <h3 class="font-semibold text-lg md:text-xl group-hover:underline dark:text-white"></h3>
+      <div class="flex justify-between">
+        <p class="text-gray-500 dark:text-gray-400 mt-2">{{ news.title }}</p>
+      </div>
+      <div class="flex items-center justify-between mt-4">
+        <div class="flex items-center space-x-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="w-4 h-4 text-gray-500 dark:text-gray-400"
+          >
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            ></path>
+          </svg>
+          <span class="text-gray-500 dark:text-gray-400 text-sm">25 likes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped></style>
