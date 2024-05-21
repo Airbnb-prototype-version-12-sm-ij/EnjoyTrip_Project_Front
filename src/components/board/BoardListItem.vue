@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref, computed } from 'vue'
+import userImgData from '@/api/userImgData';
 
 const router = useRouter()
 
@@ -24,6 +25,13 @@ const isImage = computed(() => {
   const extension = imgPath.value.split('.').pop().toLowerCase()
   return extension === 'jpg' || extension === 'jpeg' || extension === 'png' || extension === 'gif'
 })
+
+
+const userImg = computed(() => {
+  return props.board.userId
+})
+
+
 </script>
 
 <template>
@@ -40,14 +48,27 @@ const isImage = computed(() => {
       style="aspect-ratio: 300 / 300; object-fit: cover"></video>
 
     <div class="bg-white p-4 dark:bg-gray-950">
-      <h3 class="font-semibold text-lg md:text-xl group-hover:underline dark:text-white">
-        {{ props.board.title }}
-      </h3>
+
+      <div class='flex'>
+        <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full mr-3">
+          <img class="aspect-square h-full w-full" alt="@shadcn"
+            :src="userImgData[userImg] ? userImgData[userImg] : '/src/assets/sample.png'" />
+        </span>
+
+        <h3 class="font-semibold text-lg md:text-xl group-hover:underline dark:text-white">
+          {{ props.board.title }}
+        </h3>
+      </div>
       <div class="flex justify-between">
         <p class="text-gray-500 dark:text-gray-400 mt-2">
           {{ props.board.createdAt.split(' ')[0] }}
         </p>
+
+
+
         <p class="text-gray-500 dark:text-gray-400 mt-2">작성자: {{ props.board.userId }}</p>
+
+
       </div>
       <div class="flex items-center justify-between mt-4">
         <div class="flex items-center space-x-2">
