@@ -89,6 +89,7 @@ const signup = async (e) => {
       userEmail: email.value
     })
 
+
     if (response.status !== 200) {
       Swal.fire({
         title: '회원가입 실패',
@@ -112,7 +113,7 @@ const signup = async (e) => {
     Toast.fire({
       icon: 'error',
       title: '회원가입 실패',
-      text: error.response.data.message
+      text: error.response.data
     })
   }
 }
@@ -159,7 +160,7 @@ const signup = async (e) => {
               </div>
               <div v-else>
                 <p class="mt-2 text-sm text-gray-400 dark:text-gray-500">
-                  <span class="font-medium">(3-15자리) 영어와 숫자로 입력해주세요</span>
+                  <span class="font-medium">(3-15자리 둘다 포함) 영어와 숫자로 입력해주세요</span>
                 </p>
               </div>
 
@@ -198,7 +199,7 @@ const signup = async (e) => {
               </div>
               <div v-else>
                 <p class="mt-2 text-sm text-gray-400 dark:text-gray-500">
-                  <span class="font-medium">(3-15자리) 영어와 숫자로 입력해주세요</span>
+                  <span class="font-medium">(3-15자리 둘다 포함) 영어와 숫자로 입력해주세요</span>
                 </p>
               </div>
             </div>
@@ -239,7 +240,8 @@ const signup = async (e) => {
               </div>
               <div v-else>
                 <p class="mt-2 text-sm text-gray-400 dark:text-gray-500">
-                  <span class="font-medium">한글만 입력해주세요</span>
+                  <span class="font-medium">(제발
+                    )한글만 입력해주세요</span>
                 </p>
               </div>
             </div>
