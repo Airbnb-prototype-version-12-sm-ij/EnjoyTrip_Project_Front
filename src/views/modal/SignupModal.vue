@@ -112,7 +112,7 @@ const signup = async (e) => {
     Toast.fire({
       icon: 'error',
       title: '회원가입 실패',
-      text: '회원 정보를 올바르게 입력해주세요'
+      text: error.response.data.message
     })
   }
 }
