@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, nextTick, watch } from 'vue'
-import { useAttractionInfoStore } from '@/store/attrationStore'
+import { useAttractionStore, useAttractionInfoStore } from '@/store/attrationStore'
 import client from '@/api/client'
 import { initFlowbite, initCarousels } from 'flowbite'
 
@@ -8,6 +8,8 @@ const attractions = ref([])
 const loading = ref(true)
 const infoStore = useAttractionInfoStore()
 const carouselRef = ref(null)
+
+const store = useAttractionStore()
 
 const loadImage = (src) => {
   return new Promise((resolve, reject) => {
@@ -32,6 +34,7 @@ const getCarousel = async () => {
     await Promise.all(images)
     await nextTick()
     attractions.value = res.data
+    store.setItems(res.data)
     loading.value = false
   } catch (err) {
     console.error('Carousel 데이터 로드 실패:', err)
