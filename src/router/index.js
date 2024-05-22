@@ -23,7 +23,7 @@ const router = createRouter({
       path: '/review',
       name: 'review',
       component: () => import('@/components/Review/ReviewWriteView.vue'),
-      params: true
+      props: true
     },
     {
       path: '/board/:boardId',
