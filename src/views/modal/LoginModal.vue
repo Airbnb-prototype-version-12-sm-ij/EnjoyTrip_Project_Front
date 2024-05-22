@@ -32,12 +32,7 @@ const login = async (e) => {
       userPassword: userPassword.value
     })
 
-    if (response.status !== 200) {
-      Toast.fire({
-        icon: 'error',
-        title: '로그인 실패'
-      })
-    }
+
 
     sessionStorage.setItem('memberDto', JSON.stringify(response.data))
 
@@ -50,10 +45,9 @@ const login = async (e) => {
       router.go(0)
     })
   } catch (error) {
-    console.error('에러' + error)
     Toast.fire({
       icon: 'error',
-      title: error
+      title: error + "\n로그인 실패"
     })
   }
 }

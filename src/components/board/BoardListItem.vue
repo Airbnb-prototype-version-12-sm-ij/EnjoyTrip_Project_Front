@@ -11,7 +11,7 @@ const props = defineProps({
 
 const imgPath = ref('')
 if (props.board && props.board.fileInfo && props.board.fileInfo.length > 0) {
-  imgPath.value = 'http://172.30.1.85/upload_img'
+  imgPath.value = 'http://192.168.28.55/upload_img'
   // imgPath.value = 'http://localhost/upload_img'
   imgPath.value += '/' + props.board.fileInfo[0].saveFolder + '/' + props.board.fileInfo[0].saveFile
 }
