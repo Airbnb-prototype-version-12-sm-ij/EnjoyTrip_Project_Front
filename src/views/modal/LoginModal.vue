@@ -47,7 +47,7 @@ const login = async (e) => {
   } catch (error) {
     Toast.fire({
       icon: 'error',
-      title: error + "\n로그인 실패"
+      title: "아이디 비밀번호를 확인하세요!"
     })
   }
 }
